@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class AppComponent {
   searchValue: string = '';
-  title = 'Quanlykho';
+  title = 'Warehouse Management';
   products?: Product[];
   items: MenuItem[] = [];
   constructor(private productService: ProductService) {}
