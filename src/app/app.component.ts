@@ -19,6 +19,7 @@ export class AppComponent {
       { icon: 'pi pi-github', routerLink: '/home' },
       {
         label: 'Statistics',
+        routerLink:"/statistic",
         icon: 'pi pi-chart-line',
         // items: [
         //   {

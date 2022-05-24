@@ -11,9 +11,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
-
+import { FeatureStatisticComponent } from './feature-statistic/feature-statistic.component';
+import {ChartModule} from 'primeng/chart';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FeatureStatisticComponent],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -23,6 +24,7 @@ import { AccordionModule } from 'primeng/accordion';
     AppRoutingModule,
     ButtonModule,
     AccordionModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent],
