@@ -42,8 +42,8 @@ export class AppComponent {
         label: 'Product Status',
         icon: '',
         items: [
-          { label: 'Import Status', icon: 'pi pi-sign-in' },
-          { label: 'Export Status', icon: 'pi pi-sign-out' },
+          { label: 'Import Status', icon: 'pi pi-sign-in',  command: () => this.imports() },
+          { label: 'Export Status', icon: 'pi pi-sign-out',  command: () => this.exports() },
         ],
       },
       {
@@ -61,5 +61,11 @@ export class AppComponent {
     this.productService
       .getProducts()
       .subscribe((data) => (this.products = data));
+  }
+  imports(): void{
+    alert("dung");
+  }
+  exports(): void{
+    alert("du");
   }
 }
