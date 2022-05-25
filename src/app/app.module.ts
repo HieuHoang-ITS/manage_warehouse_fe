@@ -11,10 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
+import { TableModule } from 'primeng/table';
+import { NewOrderComponent } from './new-order/new-order.component';
 import { OrderstatusComponent } from './orderstatus/orderstatus.component';
-
 @NgModule({
-  declarations: [AppComponent, OrderstatusComponent],
+  declarations: [AppComponent, OrderstatusComponent, NewOrderComponent],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -24,7 +25,7 @@ import { OrderstatusComponent } from './orderstatus/orderstatus.component';
     AppRoutingModule,
     ButtonModule,
     AccordionModule,
-
+    TableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
