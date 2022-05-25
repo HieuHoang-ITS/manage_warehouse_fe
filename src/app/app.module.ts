@@ -11,9 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
+import { NewOrderComponent } from './new-order/new-order.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NewOrderComponent],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -23,6 +25,7 @@ import { AccordionModule } from 'primeng/accordion';
     AppRoutingModule,
     ButtonModule,
     AccordionModule,
+    TableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
