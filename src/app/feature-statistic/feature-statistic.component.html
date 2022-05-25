@@ -1,7 +1,11 @@
 <div class="container">
 <h1 style="text-align:center;font-weight: 1000;">BIỂU ĐỒ DOANH THU XUẤT NHẬP THEO THÁNG</h1>
-<div class="card" style="width:1700px;height: 700px; ">
+<div class="field col-12 md:col-4">
+    <label for="monthpicker">Month Picker</label>
+    <p-calendar [(ngModel)]="date9" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+</div>
+
+<div class="card" style="width:1300px;height: 700px;margin-left: 350px;">
     <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
-    
 </div>
 </div>

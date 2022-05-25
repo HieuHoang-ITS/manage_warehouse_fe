@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
 import { FeatureStatisticComponent } from './feature-statistic/feature-statistic.component';
 import {ChartModule} from 'primeng/chart';
+import {CalendarModule} from 'primeng/calendar';
 @NgModule({
   declarations: [AppComponent, FeatureStatisticComponent],
   imports: [
@@ -24,7 +25,8 @@ import {ChartModule} from 'primeng/chart';
     AppRoutingModule,
     ButtonModule,
     AccordionModule,
-    ChartModule
+    ChartModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
