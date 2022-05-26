@@ -13,9 +13,13 @@ import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
 import { NewOrderComponent } from './new-order/new-order.component';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
 
 @NgModule({
-  declarations: [AppComponent, NewOrderComponent],
+  declarations: [AppComponent, NewOrderComponent, DetailOrderComponent],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -26,6 +30,9 @@ import { TableModule } from 'primeng/table';
     ButtonModule,
     AccordionModule,
     TableModule,
+    DialogModule,
+    BrowserAnimationsModule,
+    ToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

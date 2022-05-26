@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Order } from '../models/order';
 import { NewOrderService } from '../services/new-order.service';
 @Component({
@@ -7,20 +8,28 @@ import { NewOrderService } from '../services/new-order.service';
   styleUrls: ['./new-order.component.scss'],
 })
 export class NewOrderComponent implements OnInit {
-  products: product[] = [
-    { code: 'h1', name: 'Pink Band', category: 'ok', quantity: 4 },
-    { code: 'h2', name: 'Blue Band', category: 'not ok', quantity: 4 },
-  ];
-  constructor(private newOrderService: NewOrderService) {}
+  orderList?: Order[];
+  url: string = '';
+  orderType: string = '';
+  searchValue: string = '';
+  selectedOrder: Order = {} as any;
+  public modalDisplay: boolean = false;
+  constructor(
+    private newOrderService: NewOrderService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.url = this.document.location.href;
+    this.orderType = this.url.split('/orders/')[1];
+  }
 
   ngOnInit(): void {
-    this.newOrderService.getNewOrders();
+    if (this.orderType.length > 0) {
+      this.newOrderService.getNewOrders(this.orderType).subscribe((data) => {
+        this.orderList = data;
+      });
+    }
   }
-}
-
-interface product {
-  code: string;
-  name: string;
-  category: string;
-  quantity: number;
+  selectOrder(order: Order) {
+    this.selectedOrder = order;
+  }
 }
