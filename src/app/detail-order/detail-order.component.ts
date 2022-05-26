@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../models/order';
 import { DetailOrder } from '../models/detail-order';
 import { DetailOrderService } from '../services/detail-order.service';
+import { DetailOrderDisplay } from '../models/detail-order-display';
 @Component({
   selector: 'app-detail-order',
   templateUrl: './detail-order.component.html',
@@ -9,15 +10,28 @@ import { DetailOrderService } from '../services/detail-order.service';
 })
 export class DetailOrderComponent implements OnInit {
   @Input() parentOrder?: Order;
-  detailOrderList: DetailOrder[] = [];
+  dOrderDisplayList: DetailOrderDisplay[] = [];
+  lockedOrder: DetailOrderDisplay[] = [];
   constructor(private detailOrderService: DetailOrderService) {}
 
   ngOnInit(): void {
     this.detailOrderService
       .getDetailOrders(this.parentOrder!.id)
       .subscribe((response) => {
-        this.detailOrderList = response;
-        console.log(this.detailOrderList);
+        this.dOrderDisplayList = response;
+        console.log(this.dOrderDisplayList);
       });
+  }
+
+  lockOrder(order: DetailOrderDisplay, frozen: boolean, index: number) {
+    if (frozen) {
+      this.dOrderDisplayList = this.dOrderDisplayList.filter(
+        (c, i) => i !== index
+      );
+      this.lockedOrder.push(order);
+    } else {
+      this.lockedOrder = this.lockedOrder.filter((c, i) => i !== index);
+      this.dOrderDisplayList.push(order);
+    }
   }
 }

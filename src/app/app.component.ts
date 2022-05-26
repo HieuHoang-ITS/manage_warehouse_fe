@@ -33,17 +33,17 @@ export class AppComponent {
       {
         label: 'Export/Import',
         icon: '',
-        routerLink: 'orders',
+        // routerLink: 'orders/total',
         items: [
-          {
-            label: 'Export List',
-            icon: 'pi pi-sign-in',
-            routerLink: 'orders/export',
-          },
           {
             label: 'Import List',
             icon: 'pi pi-sign-out',
             routerLink: 'orders/import',
+          },
+          {
+            label: 'Export List',
+            icon: 'pi pi-sign-in',
+            routerLink: 'orders/export',
           },
         ],
       },

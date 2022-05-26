@@ -5,14 +5,20 @@
       <i class="pi pi-bars mx-2"></i>
       <span class="p-float-label p-input-icon-right mr-4">
         <input
+          (keydown.enter)="search()"
           type="text"
           pInputText
           placeholder="Search"
           [(ngModel)]="searchValue"
           class="w-20rem"
         />
-        <i class="pi pi-search"></i>
+        <i class="pi pi-search cursor-pointer" (click)="search()"></i>
       </span>
+      <p-dropdown
+        [options]="filters"
+        [(ngModel)]="selectedFilter"
+        optionLabel="label"
+      ></p-dropdown>
 
       <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
     </div>
@@ -22,14 +28,17 @@
         label="New"
         icon="pi pi-plus"
         styleClass="p-button-success"
+        routerLink="register"
       ></p-button>
       <p-button
-        label="delete"
+        label="Clear Record"
         icon="pi pi-times"
         styleClass="p-button-danger"
+        (click)="deleteQueue()"
       ></p-button>
     </div>
   </p-toolbar>
+  <p-messages [(value)]="msg"></p-messages>
 
   <p-table
     [value]="orderList"
@@ -37,12 +46,15 @@
     [rows]="10"
     selectionMode="multiple"
     responsiveLayout="scroll"
+    [(selection)]="selectedQueue"
   >
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
         <th>Trading Type</th>
+        <th>Curator</th>
         <th>Customer Name</th>
+        <th>Customer Phone</th>
         <th>Status</th>
         <th>Total Price</th>
         <th>Create Date</th>
@@ -53,7 +65,9 @@
       <tr [pSelectableRow]="order">
         <td>{{ order.id }}</td>
         <td>{{ order.trading_type }}</td>
+        <td>{{ order.user_name }}</td>
         <td>{{ order.customer_name }}</td>
+        <td>{{ order.customer_phone }}</td>
         <td>{{ order.status }}</td>
         <td>{{ order.total_price }}</td>
         <td>{{ order.created_at }}</td>
@@ -66,6 +80,15 @@
             (click)="modalDisplay = true; selectOrder(order)"
           ></button>
         </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer"
+      ><tr
+        class="text-center"
+        style="text-align: center"
+        *ngIf="orderList.length == 0"
+      >
+        Nothing in here
       </tr>
     </ng-template>
   </p-table>

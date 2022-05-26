@@ -17,9 +17,12 @@ import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DetailOrderComponent } from './detail-order/detail-order.component';
-
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { DropdownModule } from 'primeng/dropdown';
+import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
 @NgModule({
-  declarations: [AppComponent, NewOrderComponent, DetailOrderComponent],
+  declarations: [AppComponent, NewOrderComponent, DetailOrderComponent, AddNewOrderComponent],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -33,6 +36,9 @@ import { DetailOrderComponent } from './detail-order/detail-order.component';
     DialogModule,
     BrowserAnimationsModule,
     ToolbarModule,
+    MessageModule,
+    MessagesModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
