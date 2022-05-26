@@ -6,12 +6,12 @@ import { DetailOrderDisplay } from '../models/detail-order-display';
   providedIn: 'root',
 })
 export class DetailOrderService {
-  url = 'http://localhost:8080/api/orders';
+  ordersUrl = 'http://localhost:8080/api/orders';
   constructor(private http: HttpClient) {}
 
   getDetailOrders(id: number) {
     return this.http
-      .get<DetailOrderDisplay[]>(this.url + '/detail/' + id)
+      .get<DetailOrderDisplay[]>(this.ordersUrl + '/detail/' + id)
       .pipe();
   }
 }

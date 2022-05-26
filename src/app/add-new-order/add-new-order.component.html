@@ -1,1 +1,57 @@
-<p>add-new-order works!</p>
+<div class="card">
+  <div class="flex flex-row">
+    <div class="col-8" pDroppable="products">
+      <p-table class="" [value]="productList">
+        <ng-template pTemplate="header">
+          <th>Id</th>
+          <th>Category</th>
+          <th>Name</th>
+          <th>Provider</th>
+          <th>Unit</th>
+          <th>Price</th>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr class="line-height-3">
+            <td>{{ product.id }}</td>
+            <td>{{ product.category_id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.provider_id }}</td>
+            <td>{{ product.unit }}</td>
+            <td>{{ product.price }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-4 drag-column">
+      <div class="border-bottom-1 py-2" *ngFor="let product of productList">
+        <div
+          class="product-item flex-row flex-wrap align-items-center"
+          pDraggable="products"
+        >
+          <div class="flex flex-column col-6 left-0">
+            <div class="product-label">
+              {{ product.name }} - {{ product.provider_id }}: this is provider
+              name
+            </div>
+            <div class="product-ctg">
+              {{ product.category_id }}: this is category name
+            </div>
+          </div>
+          <div
+            class="flex flex-column col-6 text-right mt-3"
+            style="float: right"
+          >
+            <div class="product-price">
+              <i class="pi pi-dollar"></i>
+              {{ product.price }}
+            </div>
+            <div class="product-status">
+              {{ product.unit }}: this is category status
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="background-color: aqua; min-height: 500px">Order Section</div>
+</div>

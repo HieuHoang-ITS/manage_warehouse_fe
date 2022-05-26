@@ -21,8 +21,14 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
+import { DragDropModule } from 'primeng/dragdrop';
 @NgModule({
-  declarations: [AppComponent, NewOrderComponent, DetailOrderComponent, AddNewOrderComponent],
+  declarations: [
+    AppComponent,
+    NewOrderComponent,
+    DetailOrderComponent,
+    AddNewOrderComponent,
+  ],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -39,6 +45,7 @@ import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
     MessageModule,
     MessagesModule,
     DropdownModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
