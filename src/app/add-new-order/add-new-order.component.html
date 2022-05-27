@@ -34,6 +34,7 @@
                 [options]="userList"
                 [(ngModel)]="selectedUser"
                 optionLabel="full_name"
+                class="w-12rem"
               ></p-dropdown>
             </span>
             <span class="flex flex-column flex-wrap ml-1">
@@ -76,11 +77,23 @@
         <p-tabPanel header="Customer">
           <div class="flex flex-column">
             <label for="cname" class="mb-1">Customer Name</label>
-            <input id="cname" type="text" pInputText placeholder="Name" />
+            <input
+              id="cname"
+              type="text"
+              [(ngModel)]="customerName"
+              pInputText
+              placeholder="Name"
+            />
           </div>
           <div class="flex flex-column mt-2">
             <label for="cphone" class="mb-1">Customer Phone</label>
-            <input id="cphone" type="text" pInputText placeholder="Phone" />
+            <input
+              id="cphone"
+              type="text"
+              [(ngModel)]="customerPhone"
+              pInputText
+              placeholder="Phone"
+            />
           </div>
         </p-tabPanel>
       </p-tabView>
