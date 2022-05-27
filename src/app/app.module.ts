@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,8 +16,22 @@ import {ChartModule} from 'primeng/chart';
 import {CalendarModule} from 'primeng/calendar';
 import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
+import {ToolbarModule} from 'primeng/toolbar';
+import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
+import { NewOrderComponent } from './new-order/new-order.component';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { TableModule } from 'primeng/table';
+
 @NgModule({
-  declarations: [AppComponent, FeatureStatisticComponent],
+  declarations: [
+    AppComponent, 
+    FeatureStatisticComponent,
+    NewOrderComponent,
+    DetailOrderComponent,
+    AddNewOrderComponent
+  ],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -30,11 +44,16 @@ import {DropdownModule} from 'primeng/dropdown';
     ChartModule,
     CalendarModule,
     BrowserAnimationsModule,
+    MessageModule,
     DialogModule,
-    DropdownModule
+    DropdownModule,
+    ToolbarModule,
+    TableModule,
+    MessagesModule
 
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {}
