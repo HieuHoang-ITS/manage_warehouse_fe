@@ -23,6 +23,8 @@ import { NewOrderComponent } from './new-order/new-order.component';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
+
 
 @NgModule({
   declarations: [
@@ -30,9 +32,11 @@ import { TableModule } from 'primeng/table';
     FeatureStatisticComponent,
     NewOrderComponent,
     DetailOrderComponent,
-    AddNewOrderComponent
+    AddNewOrderComponent,
+    OrderstatusComponent
   ],
   imports: [
+
     FormsModule,
     HttpClientModule,
     MenubarModule,
