@@ -13,6 +13,7 @@ export interface OrderDisplay {
 
 export interface productDisplay {
   id: any;
+  provider_id: any;
   product_name: string;
   category_name: string;
   provider_name: string;
@@ -35,12 +36,18 @@ export interface DetailOrderDisplay {
   category_status: string;
   amount: number;
 }
+export interface DetailListUpdate {
+  product_id: any;
+  order_id: any;
+  amount: number;
+}
 export interface newOrderSave {
   trading_type: string;
+  user_id: any;
   customer_name: string;
   customer_phone: string;
   status: string;
   total_price: number;
   created_at: Date;
-  products: productDisplay[];
+  details: DetailListUpdate[];
 }

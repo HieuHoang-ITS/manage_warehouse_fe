@@ -41,6 +41,7 @@ export class NewOrderComponent implements OnInit {
     if (this.orderType.length > 0) {
       this.newOrderService.getNewOrders(this.orderType).subscribe((data) => {
         this.orderList0 = data;
+        console.log(this.orderList0);
         for (let i = 0; i < this.orderList0.length; i++) {
           if (this.orderList0[i].status.trim() === '1') {
             this.orderList0[i].status = 'Chấp thuận';
@@ -99,7 +100,7 @@ export class NewOrderComponent implements OnInit {
     this.msg = [];
     console.log(this.selectedQueue);
     this.selectedQueue.forEach((element) => {
-      if (element.status.match('Đang chờ xử lí'))
+      if (element.status.toLowerCase().includes('chờ'))
         this.msg.push({
           severity: 'warn',
           summary: 'Warning',

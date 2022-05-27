@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { productDisplay } from '../models/order-display';
+import { DetailListUpdate } from '../models/order-display';
 import { newOrderSave } from '../models/order-display';
 import { ProductService } from '../services/product.service';
 import { NewOrderService } from '../services/new-order.service';
@@ -63,15 +64,25 @@ export class AddNewOrderComponent implements OnInit {
     );
   }
   saveFunction() {
+    let detailListUpdate: DetailListUpdate[] = [];
+    this.selectedProductList.forEach((item) => {
+      detailListUpdate.push({
+        product_id: item.id,
+        order_id: '',
+        amount: item.order_amount,
+      });
+    });
     this.newOrderSave = {
       trading_type: this.orderType,
+      user_id: this.selectedUser.id,
       customer_name: this.customerName,
       customer_phone: this.customerPhone,
       status: 'Chờ xác nhận',
       total_price: this.totalPrice,
       created_at: new Date(),
-      products: this.selectedProductList,
+      details: detailListUpdate!,
     };
+    console.log(this.newOrderSave);
     this.newOrderService.addNew(this.newOrderSave);
   }
   clearFunction() {
