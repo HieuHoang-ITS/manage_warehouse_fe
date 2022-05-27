@@ -5,19 +5,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 //primeng
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
-import { FeatureStatisticComponent } from './statis/statis.component';
-import {ChartModule} from 'primeng/chart';
-import {CalendarModule} from 'primeng/calendar';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
+import { NewOrderComponent } from './new-order/new-order.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { DropdownModule } from 'primeng/dropdown';
+import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
+import { DragDropModule } from 'primeng/dragdrop';
+import { TabViewModule } from 'primeng/tabview';
 @NgModule({
-  declarations: [AppComponent, FeatureStatisticComponent],
+  declarations: [
+    AppComponent,
+    NewOrderComponent,
+    DetailOrderComponent,
+    AddNewOrderComponent,
+  ],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -27,12 +39,15 @@ import {DropdownModule} from 'primeng/dropdown';
     AppRoutingModule,
     ButtonModule,
     AccordionModule,
-    ChartModule,
-    CalendarModule,
-    BrowserAnimationsModule,
+    TableModule,
     DialogModule,
-    DropdownModule
-
+    BrowserAnimationsModule,
+    ToolbarModule,
+    MessageModule,
+    MessagesModule,
+    DropdownModule,
+    DragDropModule,
+    TabViewModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
