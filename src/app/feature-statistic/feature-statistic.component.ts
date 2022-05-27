@@ -9,16 +9,19 @@ import { Subscription } from 'rxjs';
 export class FeatureStatisticComponent implements OnInit {
   basicData: any;
   basicOptions: any;
-  date9: Date;
-  dates: Date[]
+  date9?: Date;
+  date10?: Date;
+  dates?: Date[];
 
-  rangeDates: Date[] 
+  rangeDates?: Date[] 
 
-  minDate: Date 
+  minDate?: Date 
 
-  maxDate: Date 
+  maxDate?: Date 
 
-  invalidDates: Array<Date> 
+  invalidDates?: Array<Date> 
+  
+  
   constructor() { }
 
 
@@ -65,5 +68,13 @@ export class FeatureStatisticComponent implements OnInit {
         invalidDate.setDate(today.getDate() - 1);
         this.invalidDates = [today,invalidDate];
     }
+    loading = [false, false, false, false]
 
-  }
+    load(index : any) {
+        this.loading[index] = true;
+        setTimeout(() => this.loading[index] = false, 1000);
+    }
+
+}
+
+  

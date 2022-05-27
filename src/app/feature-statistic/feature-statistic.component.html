@@ -1,11 +1,13 @@
 <div class="container">
-<h1 style="text-align:center;font-weight: 1000;">BIỂU ĐỒ DOANH THU XUẤT NHẬP THEO THÁNG</h1>
-<div class="field col-12 md:col-4">
-    <label for="monthpicker">Month Picker</label>
-    <p-calendar [(ngModel)]="date9" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+<p style="text-align:center;font-weight: 1000; font-size: 150%;">BIỂU ĐỒ DOANH THU XUẤT NHẬP THEO THÁNG</p>
+<div class=" field col-12 md:col-4 " style="float: right;padding-left: 15%;">
+    <p-calendar placeholder="Month" [(ngModel)]="date9"  view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+    
+    <p-button label="Search" icon="pi pi-search" [loading]="loading[0]" (onClick)="load(0)"></p-button>
 </div>
 
-<div class="card" style="width:1300px;height: 700px;margin-left: 350px;">
+
+<div class="card" style="width:80%;height: 700px; padding-left: 10%;">
     <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
 </div>
 </div>
