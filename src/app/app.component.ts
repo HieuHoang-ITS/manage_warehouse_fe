@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from './models/product';
-import { NewOrderService } from './services/new-order.service';
+import { ProductService } from './services/product.service';
 import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-root',
@@ -12,13 +12,15 @@ export class AppComponent {
   title = 'Warehouse Management';
   products?: Product[];
   items: MenuItem[] = [];
-  constructor(private newOrderService: NewOrderService) {}
-
+  
+  constructor(private productService: ProductService) {}
   ngOnInit() {
+    this.getProducts();
     this.items = [
       { icon: 'pi pi-github', routerLink: '/home' },
       {
         label: 'Statistics',
+        routerLink:"/statistic",
         icon: 'pi pi-chart-line',
         // items: [
         //   {
@@ -33,18 +35,9 @@ export class AppComponent {
       {
         label: 'Export/Import',
         icon: '',
-        // routerLink: 'orders/total',
         items: [
-          {
-            label: 'Import List',
-            icon: 'pi pi-sign-out',
-            routerLink: 'orders/import',
-          },
-          {
-            label: 'Export List',
-            icon: 'pi pi-sign-in',
-            routerLink: 'orders/export',
-          },
+          { label: 'Export List', icon: 'pi pi-sign-in' },
+          { label: 'Import List', icon: 'pi pi-sign-out', style: '' },
         ],
       },
       {
@@ -65,5 +58,10 @@ export class AppComponent {
         ],
       },
     ];
+  }
+  getProducts(): void {
+    this.productService
+      .getProducts()
+      .subscribe((data) => (this.products = data));
   }
 }
