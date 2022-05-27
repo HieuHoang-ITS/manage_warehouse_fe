@@ -12,7 +12,13 @@ export class CategorytService {
         return this.http.get(this.categoryUrl).pipe();
     }
 
-    save(name: string, status: string): Observable<any> {
-        return this.http.post(this.categoryUrl + "/insert", JSON.stringify({ name: name, status: status }))
+    save(data: any): Observable<any> {
+        return this.http.post('this.categoryUrl' + "/insert", data)
+    }
+    delete(id: number): Observable<any> {
+        return this.http.delete(this.categoryUrl + "/${id}");
+    }
+    update(id: any, data: any) {
+        return this.http.put(this.categoryUrl + "/{id}", data)
     }
 }

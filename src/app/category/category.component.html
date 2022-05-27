@@ -1,5 +1,6 @@
 <p>category works!</p>
 <div class="ui-g">
+  <p-toast></p-toast>
   <p-panel
     header="danh sach loai hang"
     [toggleable]="true"
@@ -23,6 +24,9 @@
       styleClass="p-datatable-gridlines"
       [paginator]="true"
       [rows]="10"
+      selectionMode="single"
+      [(selection)]="selectedCategory"
+      dataKey="id"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -32,7 +36,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-category>
-        <tr>
+        <tr [pSelectableRow]="category">
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
           <td>{{ category.status }}</td>
@@ -51,7 +55,13 @@
           <label for="Input_ID">Id</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="id" #addid [style]="{ width: '350px' }" />
+          <input
+            pInputText
+            id="id"
+            #addid
+            [style]="{ width: '350px' }"
+            [(ngModel)]="addCategory.id"
+          />
         </div>
       </div>
       <div class="ui-g-12">
@@ -59,7 +69,14 @@
           <label for="Input_Name">Name</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="name" #addname [style]="{ width: '350px' }" />
+          <input
+            pInputText
+            id="name"
+            #addname
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addCategory.name"
+          />
         </div>
       </div>
       <div class="ui-g-12">
@@ -72,6 +89,8 @@
             id="status"
             #addstatus
             [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addCategory.status"
           />
         </div>
       </div>
@@ -80,7 +99,7 @@
       <p-button
         label="Save"
         styleClass="ui-button-info"
-        (click)="save(addname.value, addstatus.value)"
+        (click)="save()"
         icon="pi pi-check-circle"
       ></p-button>
     </p-footer>
