@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../models/order';
 import { DetailOrder } from '../models/detail-order';
 import { DetailOrderService } from '../services/detail-order.service';
-import { DetailOrderDisplay } from '../models/detail-order-display';
+import { DetailOrderDisplay } from '../models/order-display';
 @Component({
   selector: 'app-detail-order',
   templateUrl: './detail-order.component.html',

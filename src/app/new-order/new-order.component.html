@@ -28,7 +28,7 @@
         label="New"
         icon="pi pi-plus"
         styleClass="p-button-success"
-        routerLink="/orders/register"
+        routerLink="/orders/{{ orderType }}/register"
       ></p-button>
       <p-button
         label="Clear Record"
@@ -82,14 +82,13 @@
         </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="footer"
-      ><tr
-        class="text-center"
-        style="text-align: center"
+    <ng-template pTemplate="footer">
+      <div
+        class="flex align-items-center justify-content-between"
         *ngIf="orderList.length == 0"
       >
         Nothing in here
-      </tr>
+      </div>
     </ng-template>
   </p-table>
 </div>

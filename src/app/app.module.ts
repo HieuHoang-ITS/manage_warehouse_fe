@@ -22,6 +22,7 @@ import { MessagesModule } from 'primeng/messages';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
 import { DragDropModule } from 'primeng/dragdrop';
+import { TabViewModule } from 'primeng/tabview';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { DragDropModule } from 'primeng/dragdrop';
     MessagesModule,
     DropdownModule,
     DragDropModule,
+    TabViewModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
