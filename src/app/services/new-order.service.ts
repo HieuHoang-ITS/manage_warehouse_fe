@@ -34,7 +34,7 @@ export class NewOrderService {
   }
 
   addNew(newOrderSave: newOrderSave) {
-    return this.http
+    this.http
       .post<newOrderSave[]>(this.url + '/register/save', newOrderSave)
       .subscribe((response) => console.log(response));
   }
