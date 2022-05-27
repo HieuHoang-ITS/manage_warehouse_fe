@@ -1,13 +1,44 @@
 <div class="container">
-<p style="text-align:center;font-weight: 1000; font-size: 150%;">BIỂU ĐỒ DOANH THU XUẤT NHẬP THEO THÁNG</p>
-<div class=" field col-12 md:col-4 " style="float: right;padding-left: 15%;">
-    <p-calendar placeholder="Month" [(ngModel)]="date9"  view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
-    
-    <p-button label="Search" icon="pi pi-search" [loading]="loading[0]" (onClick)="load(0)"></p-button>
-</div>
+    <p style="text-align:center;font-weight: 1000; font-size: 150%;">BIỂU ĐỒ DOANH THU XUẤT NHẬP THEO THÁNG</p>
+    <div class=" field col-12 md:col-4 " style="float: right;padding-left: 15%;">
+        <p-calendar placeholder="Month" [(ngModel)]="date9" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+            inputId="monthpicker"></p-calendar>
+
+        <p-button (click)="showModalDialog()" icon="pi pi-external-link" label="Show"></p-button>
+        <p-dialog header="TỔNG SỐ HÀNG HÓA NHẬP XUẤT" [(visible)]="displayModal" [modal]="true" [style]="{width: '30%'}"
+            [draggable]="false" [resizable]="false">
+            <div class="douhtnut" style="height:500px ;width: 500px;">
+                <p-chart type="doughnut" [data]="data" [options]="chartOptions" style="width:100px ;height: 200px ;">
+                </p-chart>
+            </div>
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text">
+                </p-button>
+            </ng-template>
+        </p-dialog>
 
 
-<div class="card" style="width:80%;height: 700px; padding-left: 10%;">
-    <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
-</div>
+    </div>
+
+    <div class="card" style="width:80%;height: 700px; padding-left: 10%;">
+        <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+    </div>
+    <div style="float: right;padding-right: 5%">
+        <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-dropdown>
+        <p-button (click)="showModalDialogpie()" icon="pi pi-external-link" label="Show"></p-button>
+        <p-dialog header="TỶ LỆ % NHẬP XUẤT" [(visible)]="displayModalpie" [modal]="true" [style]="{width: '30%'}"
+            [draggable]="false" [resizable]="false">
+            <div class="pie" style="height:500px ;width: 500px;">
+                <p-chart type="pie" [data]="datapie" [options]="chartOptionspie" style="width:100px ;height: 200px ;">
+                </p-chart>
+                <p-chart type="pie" [data]="datapie1" [options]="chartOptionspie1" style="width:100px ;height: 200px ;">
+                </p-chart>
+            </div>
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="displayModalpie=false" label="Ok" styleClass="p-button-text">
+                </p-button>
+            </ng-template>
+        </p-dialog>
+
+    </div>
 </div>

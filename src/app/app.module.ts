@@ -14,6 +14,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { FeatureStatisticComponent } from './feature-statistic/feature-statistic.component';
 import {ChartModule} from 'primeng/chart';
 import {CalendarModule} from 'primeng/calendar';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
 @NgModule({
   declarations: [AppComponent, FeatureStatisticComponent],
   imports: [
@@ -27,7 +29,9 @@ import {CalendarModule} from 'primeng/calendar';
     AccordionModule,
     ChartModule,
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DialogModule,
+    DropdownModule
 
   ],
   providers: [],

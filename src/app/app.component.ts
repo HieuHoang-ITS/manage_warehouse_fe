@@ -12,6 +12,7 @@ export class AppComponent {
   title = 'Warehouse Management';
   products?: Product[];
   items: MenuItem[] = [];
+  
   constructor(private productService: ProductService) {}
   ngOnInit() {
     this.getProducts();
