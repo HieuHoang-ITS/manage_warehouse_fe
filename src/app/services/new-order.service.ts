@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../models/order';
-import { OrderDisplay, productDisplay } from '../models/order-display';
+import {
+  newOrderSave,
+  OrderDisplay,
+  productDisplay,
+} from '../models/order-display';
 import { User } from '../models/user';
 
 @Injectable({
@@ -27,5 +31,11 @@ export class NewOrderService {
   }
   userDisplay() {
     return this.http.get<User[]>(this.url + '/register/user').pipe();
+  }
+
+  addNew(newOrderSave: newOrderSave) {
+    this.http
+      .post(this.url + '/register/save', newOrderSave)
+      .subscribe((response) => console.log(response));
   }
 }

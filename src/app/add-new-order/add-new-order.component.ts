@@ -72,6 +72,7 @@ export class AddNewOrderComponent implements OnInit {
       created_at: new Date(),
       products: this.selectedProductList,
     };
+    this.newOrderService.addNew(this.newOrderSave);
   }
   clearFunction() {
     this.selectedProductList = [];
