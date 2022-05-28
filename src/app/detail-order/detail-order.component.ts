@@ -22,7 +22,6 @@ export class DetailOrderComponent implements OnInit {
         console.log(this.dOrderDisplayList);
       });
   }
-
   lockOrder(order: DetailOrderDisplay, frozen: boolean, index: number) {
     if (frozen) {
       this.dOrderDisplayList = this.dOrderDisplayList.filter(

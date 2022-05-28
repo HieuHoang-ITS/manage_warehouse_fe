@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { OrderService } from '../services/order.service';
 import { User } from '../models/user';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-orderstatus',
   templateUrl: './orderstatus.component.html',
@@ -23,7 +24,13 @@ export class OrderstatusComponent implements OnInit {
   order?: Order;
   orderDetail: any[]=[];
   status?: string;
-  constructor( private route: ActivatedRoute, private location: Location, private orderService: OrderService, private primengConfig: PrimeNGConfig) { }
+  timeOrder?: Date;
+  loaihoadon?: string;
+  mahoadoan?: number;
+  time?: string;
+  
+  manhanvien?: number;
+  constructor(private route: ActivatedRoute, private location: Location, private orderService: OrderService, private primengConfig: PrimeNGConfig) { }
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     const type = parseInt(this.route.snapshot.paramMap.get('type')!, 10);
@@ -53,7 +60,7 @@ export class OrderstatusComponent implements OnInit {
     order.description=description;
     order.status=status;
    if(order.trading_type="import")
-   {
+    {
     this.orderService.updateOrder(order.id,order).subscribe(
       ()=>{this.orderService.getOrders(1).subscribe(data=> this.orders=data)});
     }
@@ -64,13 +71,67 @@ export class OrderstatusComponent implements OnInit {
     }
     }
   }
-  Search(mahoadon: string, searchtime: Date, loaihoadon: number) : void
+  Search(mahoadon: string, searchtime: Date, loaihoadon: string) : void
   {
     if(searchtime instanceof Date)
     {
-      let date: Date = new Date("2019-01-16");  
-      searchtime=date;
+      this.timeOrder=searchtime;
+      let year=searchtime.toLocaleString('en-us', { year: 'numeric' })
+      let longMonth = searchtime.toLocaleString('en-us', { month: 'numeric' })
+      let day=searchtime.toLocaleString('en-us', { day: 'numeric' })
+      this.time=""+year;
+      this.time+="-"+longMonth; 
+      this.time+="-"+day;
+      alert(this.time);
     }
-    alert(searchtime);
+    else{
+      let date: Date = new Date("2000-10-10"); 
+      this.timeOrder=date;
+      this.time="2000-10-10";
+    }
+    if(loaihoadon)
+    {
+      if(loaihoadon==="nhap")
+      {
+        this.loaihoadon="import";
+      }
+      if(loaihoadon==="xuat")
+      {
+        this.loaihoadon="export";
+      }
+    }
+    else
+    {
+      this.loaihoadon='o';
+    }
+    if(mahoadon)
+    {
+      this.mahoadoan=Number(mahoadon);
+      if(isNaN(this.mahoadoan))
+      this.mahoadoan=0;
+      //alert(this.mahoadoan);
+    }
+    else{
+      this.mahoadoan=0;
+      //alert(this.mahoadoan);
+    }
+    if(this.nhanvien)
+    {
+      this.manhanvien=this.nhanvien.id;
+      alert(this.manhanvien);
+    }
+    else{
+      this.manhanvien=0;
+      alert(this.manhanvien);
+    }
+    this.orderService.
+    searchOrder(this.mahoadoan,this.manhanvien!,this.time,this.loaihoadon!)
+    .subscribe(
+      data=>
+      {
+        this.orders=data;  
+        console.log(data)
+      } 
+     );
   }
 }
