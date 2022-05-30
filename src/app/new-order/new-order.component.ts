@@ -45,6 +45,11 @@ export class NewOrderComponent implements OnInit {
     if (this.orderType.length > 0) {
       this.newOrderService.getNewOrders(this.orderType).subscribe((data) => {
         this.orderList0 = data;
+        this.orderList0.forEach((item) => {
+          if (item.status.includes('1')) item.status = 'Thành Công';
+          if (item.status.includes('2')) item.status = 'Chờ Xác Nhận';
+          if (item.status.includes('3')) item.status = 'Hủy';
+        });
         console.log(this.orderList0);
         this.orderList = this.orderList0;
       });

@@ -101,7 +101,7 @@ export class AddNewOrderComponent implements OnInit {
         user_id: this.selectedUser.id,
         customer_name: this.customerName,
         customer_phone: this.customerPhone,
-        status: 'Chờ xác nhận',
+        status: '2',
         description: '',
         total_price: this.totalPrice,
         created_at: this.createDate,
