@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,8 +26,34 @@ import { ConfirmationService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { FeatureStatisticComponent } from './statis/statis.component';
+import { ChartModule } from 'primeng/chart';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
+import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
+import { NewOrderComponent } from './new-order/new-order.component';
+import { DragDropModule } from 'primeng/dragdrop';
+import { TabViewModule } from 'primeng/tabview';
+import { HomepageComponent } from './homepage/homepage.component';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
+
 @NgModule({
-  declarations: [AppComponent, CategoryComponent, ProviderComponent, ProductComponent, UserComponent],
+  declarations: [
+    AppComponent,
+    FeatureStatisticComponent,
+    NewOrderComponent,
+    DetailOrderComponent,
+    AddNewOrderComponent,
+    HomepageComponent,
+    OrderstatusComponent,
+    CategoryComponent,
+    ProviderComponent,
+    ProductComponent,
+    UserComponent
+
+  ],
   imports: [
     FormsModule,
     HttpClientModule,
@@ -43,13 +69,20 @@ import { ToastModule } from 'primeng/toast';
     MenuModule,
     DialogModule,
     ConfirmDialogModule,
-    MessagesModule,
     MessageModule,
-    ToastModule
-
+    ToastModule,
+    ToolbarModule,
+    MessagesModule,
+    DropdownModule,
+    DragDropModule,
+    TabViewModule,
+    ChartModule,
+    CalendarModule,
 
   ],
+
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
