@@ -44,6 +44,7 @@ export class OrderstatusComponent implements OnInit {
   }
   getOrder(type: any): void {
     this.orderService.getOrders(type).subscribe((data) => {
+      console.log('Check Order: '+this.orders)
       this.orders = data;
     });
     this.orderService.getUsers().subscribe((data) => {

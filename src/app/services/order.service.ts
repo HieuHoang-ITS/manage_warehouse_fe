@@ -19,6 +19,7 @@ export class OrderService {
   //   return this.http.get<Product[]>(this.productUrl).pipe();
   // }
   getOrders(type: any): Observable<Order[]>{
+    console.log('Check Order: ')
     return this.http.get<Order[]>(this.orderUrl+type).pipe();
   }
   getOrderDetail(id: any): Observable<any[]>{
