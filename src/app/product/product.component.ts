@@ -50,7 +50,7 @@ export class ProductComponent implements OnInit {
     this.displaySaveDiglog = true;
   }
   save() {
-    const ca = {
+    let pr = {
       id: this.addProduct.id,
       name: this.addProduct.name,
       unit: this.addProduct.unit,
@@ -59,15 +59,18 @@ export class ProductComponent implements OnInit {
       category_id: this.addProduct.category_id,
       provider_id: this.addProduct.provider_id
     };
-    if (ca.id == null) {
-      this.productservice.save(ca).subscribe(
+    if (pr.id == null) {
+      this.productservice.save(pr).subscribe(
         Response => { console.log(Response) }
       )
-      console.log("add function")
+      console.log(pr)
+      pr.id = this.product[this.product.length - 1].id + 1
+      this.product.push(pr as Product)
     }
+
     else {
-      console.log(ca)
-      this.productservice.update(ca, ca.id).subscribe(() =>
+      console.log(pr)
+      this.productservice.update(pr, pr.id).subscribe(() =>
         this.productservice.getAll().subscribe(
           (result: any) => {
             this.product = result;
@@ -78,21 +81,10 @@ export class ProductComponent implements OnInit {
 
         ));
     }
-    this.product.push(ca as Product)
-    // this.validarCategory(this.addCategory)
+
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
 
   }
-  // validarCategory(addCategory: Category) {
-  //   let index = this.category.findIndex((e) => e.id == addCategory.id);
-
-  //   if (index != -1) {
-  //     this.category[index] = addCategory;
-  //   } else {
-  //     this.category.push(addCategory);
-  //   }
-
-  // }
   deletecategory() {
     if (this.selectedProduct == null || this.selectedProduct.id == null) {
       this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
@@ -157,7 +149,7 @@ export class ProductComponent implements OnInit {
     ];
     this.items1 = [
       {
-        label: "AddCategory",
+        label: "AddProduct",
         icon: "pi pi-fw pi-user-plus",
         command: () => this.showSaveDialog(false)
       },

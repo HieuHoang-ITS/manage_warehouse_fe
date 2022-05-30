@@ -15,6 +15,7 @@ export class DetailOrderComponent implements OnInit {
   constructor(private detailOrderService: DetailOrderService) {}
 
   ngOnInit(): void {
+    // Get detail list based on selected-order id
     this.detailOrderService
       .getDetailOrders(this.parentOrder!.id)
       .subscribe((response) => {
@@ -22,7 +23,7 @@ export class DetailOrderComponent implements OnInit {
         console.log(this.dOrderDisplayList);
       });
   }
-
+  // Function for locking and unlocking a single record
   lockOrder(order: DetailOrderDisplay, frozen: boolean, index: number) {
     if (frozen) {
       this.dOrderDisplayList = this.dOrderDisplayList.filter(

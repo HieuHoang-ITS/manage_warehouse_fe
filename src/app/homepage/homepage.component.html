@@ -1,0 +1,76 @@
+<div class="card mx-5">
+  <h1>Dashboard</h1>
+  <div
+    class="flex flex-row align-content-between justify-content-between w-full mb-3"
+  >
+    <div
+      class="flex flex-row align-items-center bg-cyan-200 px-5 border-round py-4"
+    >
+      <span class="mr-8">
+        <h1>{{ homeDisplay.totalOrders }}</h1>
+        <p>Total Orders</p>
+      </span>
+      <span class="ml-8"
+        ><i class="pi pi-save opacity-40" style="font-size: 50px"></i
+      ></span>
+    </div>
+    <div
+      class="flex flex-row align-items-center bg-blue-200 px-5 border-round py-5"
+    >
+      <span class="mr-8">
+        <h1>{{ homeDisplay.totalProducts }}</h1>
+        <p>Total Products</p>
+      </span>
+      <span class="ml-8"
+        ><i class="pi pi-home opacity-40" style="font-size: 50px"></i
+      ></span>
+    </div>
+    <div
+      class="flex flex-row align-items-center bg-pink-200 px-5 border-round py-4"
+    >
+      <span class="mr-8">
+        <h1>{{ homeDisplay.totalCategories }}</h1>
+        <p>Total Categories</p>
+      </span>
+      <span class="ml-8"
+        ><i class="pi pi-book opacity-40" style="font-size: 50px"></i
+      ></span>
+    </div>
+    <div
+      class="flex flex-row align-items-center bg-green-200 px-5 border-round py-4"
+    >
+      <span class="mr-8">
+        <h1>{{ homeDisplay.totalProviders }}</h1>
+        <p>Total Providers</p>
+      </span>
+      <span class="ml-8"
+        ><i class="pi pi-building opacity-40" style="font-size: 50px"></i
+      ></span>
+    </div>
+  </div>
+  <p-table
+    [value]="orderList"
+    selectionMode="multiple"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="caption">
+      <label>Recent Orders</label>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Curator</th>
+        <th>Customer Name</th>
+        <th>Total Price</th>
+        <th>Create Date</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order>
+      <tr [pSelectableRow]="order">
+        <td>{{ order.user_name }}</td>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.total_price | currency: " " }} VND</td>
+        <td>{{ order.created_at | date }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

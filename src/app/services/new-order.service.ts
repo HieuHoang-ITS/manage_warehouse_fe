@@ -20,22 +20,25 @@ export class NewOrderService {
   typeOrder(type: string) {
     this.orderType = type;
   }
+  // Get all order records
   getNewOrders(type: string) {
     console.log(type);
     return this.http.get<OrderDisplay[]>(this.url + '/' + type).pipe();
   }
+  // Get formatted-products-to-display format list
   productDisplay() {
     return this.http
       .get<productDisplay[]>(this.url + '/register/product')
       .pipe();
   }
+  // Get users list
   userDisplay() {
     return this.http.get<User[]>(this.url + '/register/user').pipe();
   }
-
+  // Post new order record
   addNew(newOrderSave: newOrderSave) {
     this.http
-      .post(this.url + '/register/save', newOrderSave)
+      .post<newOrderSave[]>(this.url + '/register/save', newOrderSave)
       .subscribe((response) => console.log(response));
   }
 }

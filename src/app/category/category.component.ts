@@ -44,15 +44,19 @@ export class CategoryComponent implements OnInit {
     this.displaySaveDiglog = true;
   }
   save() {
-    const ca = {
+    let ca = {
       id: this.addCategory.id,
       name: this.addCategory.name,
       status: this.addCategory.status,
     };
     if (ca.id == null) {
       this.categoryService.save(ca).subscribe(
-        Response => { console.log(Response) }
+        Response => {
+          console.log(Response)
+        }
       )
+      ca.id = this.category[this.category.length - 1].id + 1
+      this.category.push(ca as Category)
       console.log("add function")
     }
     else {
@@ -70,21 +74,10 @@ export class CategoryComponent implements OnInit {
         ));
     }
 
-    this.category.push(ca as Category)
-    // this.validarCategory(this.addCategory)
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
 
   }
-  // validarCategory(addCategory: Category) {
-  //   let index = this.category.findIndex((e) => e.id == addCategory.id);
 
-  //   if (index != -1) {
-  //     this.category[index] = addCategory;
-  //   } else {
-  //     this.category.push(addCategory);
-  //   }
-
-  // }
   deletecategory() {
     if (this.selectedCategory == null || this.selectedCategory.id == null) {
       this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });

@@ -33,6 +33,10 @@ import { NewOrderComponent } from './new-order/new-order.component';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { DragDropModule } from 'primeng/dragdrop';
+import { TabViewModule } from 'primeng/tabview';
+import { HomepageComponent } from './homepage/homepage.component';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +47,13 @@ import { TableModule } from 'primeng/table';
     CategoryComponent,
     ProviderComponent,
     UserComponent,
-    ProductComponent
+    ProductComponent,
+    HomepageComponent,
+    OrderstatusComponent,
+    CategoryComponent,
+    ProviderComponent,
+    ProductComponent,
+    UserComponent
   ],
   imports: [
     FormsModule,
@@ -60,22 +70,22 @@ import { TableModule } from 'primeng/table';
     MenuModule,
     DialogModule,
     ConfirmDialogModule,
-    MessagesModule,
     MessageModule,
     ToastModule,
     ChartModule,
     CalendarModule,
-    BrowserAnimationsModule,
-    MessageModule,
-    DialogModule,
-    DropdownModule,
     ToolbarModule,
-    TableModule,
-    MessagesModule
+    MessagesModule,
+    DropdownModule,
+    DragDropModule,
+    TabViewModule,
+
+
 
   ],
+
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
