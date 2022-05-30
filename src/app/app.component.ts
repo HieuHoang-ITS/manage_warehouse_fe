@@ -12,12 +12,11 @@ export class AppComponent {
   title = 'Warehouse Management';
   products?: Product[];
   items: MenuItem[] = [];
-
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
   ngOnInit() {
     this.getProducts();
     this.items = [
-      { icon: 'pi pi-github', routerLink: '/home' },
+      { icon: 'pi pi-github', routerLink: 'home' },
       {
         label: 'Statistics',
         routerLink: '/statistic',
@@ -53,7 +52,7 @@ export class AppComponent {
         label: 'Product Status',
         icon: '',
         items: [
-          { label: 'Import Status', icon: 'pi pi-sign-in',  "routerLink": "orderstatus/import/1"},
+          { label: 'Import Status', icon: 'pi pi-sign-in', "routerLink": "orderstatus/import/1" },
           { label: 'Export Status', icon: 'pi pi-sign-out', "routerLink": "orderstatus/export/2" },
         ],
       },
@@ -61,9 +60,10 @@ export class AppComponent {
         label: 'Systems',
         icon: '',
         items: [
-          { label: 'Category', icon: 'pi pi-book' },
+          { label: 'Category', icon: 'pi pi-book', routerLink: "/category" },
           { label: 'Provider', icon: 'pi pi-building' },
-          { label: 'Price', icon: 'pi pi-dollar' },
+          { label: 'User', icon: 'pi pi-dollar' },
+          { label: 'Product', icon: 'pi pi-dollar' },
         ],
       },
     ];

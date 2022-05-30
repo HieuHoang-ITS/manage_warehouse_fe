@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CategoryComponent } from './category/category.component';
 import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NewOrderComponent } from './new-order/new-order.component';
@@ -23,10 +24,14 @@ const routes: Routes = [
   { path: 'orderstatus/import/:type', component: OrderstatusComponent },
   { path: 'orderstatus/export/:type', component: OrderstatusComponent },
 
+
+
+  { path: 'category', component: CategoryComponent }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
