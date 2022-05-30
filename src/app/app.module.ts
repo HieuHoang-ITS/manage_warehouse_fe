@@ -31,6 +31,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { HomepageComponent } from './homepage/homepage.component';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     DetailOrderComponent,
     AddNewOrderComponent,
     HomepageComponent,
+    OrderstatusComponent,
   ],
   imports: [
     FormsModule,

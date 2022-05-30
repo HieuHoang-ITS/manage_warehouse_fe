@@ -53,8 +53,8 @@ export class AppComponent {
         label: 'Product Status',
         icon: '',
         items: [
-          { label: 'Import Status', icon: 'pi pi-sign-in' },
-          { label: 'Export Status', icon: 'pi pi-sign-out' },
+          { label: 'Import Status', icon: 'pi pi-sign-in',  "routerLink": "orderstatus/import/1"},
+          { label: 'Export Status', icon: 'pi pi-sign-out', "routerLink": "orderstatus/export/2" },
         ],
       },
       {

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NewOrderComponent } from './new-order/new-order.component';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'orders/import', component: NewOrderComponent },
   { path: 'orders/import/register', component: AddNewOrderComponent },
   { path: 'orders/export/register', component: AddNewOrderComponent },
+  { path: 'orderstatus/import/:type', component: OrderstatusComponent },
+  { path: 'orderstatus/export/:type', component: OrderstatusComponent },
 ];
 
 @NgModule({
