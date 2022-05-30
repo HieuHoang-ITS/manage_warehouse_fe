@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'orders/import', component: NewOrderComponent },
   { path: 'orders/import/register', component: AddNewOrderComponent },
   { path: 'orders/export/register', component: AddNewOrderComponent },
-  { path: '/statistic', component: FeatureStatisticComponent },
+  { path: 'statistic', component: FeatureStatisticComponent },
 ];
 
 @NgModule({
