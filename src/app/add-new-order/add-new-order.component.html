@@ -1,27 +1,35 @@
 <div class="card">
   <p-toolbar>
     <div class="p-toolbar-group-left">
-      <h2>Register New Order - ID : 15</h2>
+      <div>
+        <h2>Register New Order</h2>
+        <p>Create date: {{ createDate | date }}</p>
+      </div>
     </div>
     <div class="p-toolbar-group-right">
       <p-button
-        icon="pi pi-trash"
-        styleClass="p-button-success p-button-rounded p-button-outlined"
-        (click)="clearFunction()"
-      ></p-button>
-      <p-button
-        icon="pi pi-times"
-        styleClass="p-button-warning p-button-rounded p-button-outlined"
-        routerLink="/orders/{{ orderType }}"
-      ></p-button>
-      <i class="pi pi-bars mx-2"></i>
-      <p-button
+        label="Save"
         icon="pi pi-save "
         styleClass="p-button-info p-button-rounded p-button-outlined"
         (click)="saveFunction()"
       ></p-button>
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        styleClass="p-button-warning p-button-rounded p-button-outlined"
+        (click)="routingBack()"
+      ></p-button>
+      <!-- routerLink="/orders/{{ orderType | lowercase }}" -->
+      <i class="pi pi-bars mx-2"></i>
+      <p-button
+        icon="pi pi-trash"
+        label="Clear"
+        styleClass="p-button-success p-button-rounded p-button-outlined"
+        (click)="clearFunction()"
+      ></p-button>
     </div>
   </p-toolbar>
+  <p-toast></p-toast>
   <div class="flex flex-row">
     <div class="col-3">
       <p-tabView>
@@ -68,7 +76,7 @@
                 pInputText
                 class="w-12rem"
                 type="text"
-                [value]="totalPrice"
+                [value]="totalPrice | currency: ' '"
                 disabled
               />
             </span>
@@ -83,7 +91,9 @@
               [(ngModel)]="customerName"
               pInputText
               placeholder="Name"
+              required
             />
+            <!-- <small id="email-help" class="ng-invalid">Not a valid name.</small> -->
           </div>
           <div class="flex flex-column mt-2">
             <label for="cphone" class="mb-1">Customer Phone</label>
@@ -108,22 +118,33 @@
             <th>Unit</th>
             <th>Price</th>
             <th>Amount</th>
+            <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-product let-index="rowIndex">
           <tr class="line-height-3">
             <td>{{ product.category_name }}</td>
             <td>{{ product.product_name }}</td>
             <td>{{ product.provider_name }}</td>
             <td>{{ product.unit }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ product.price | currency: " " }} VND</td>
             <td>
               <input
                 pInputText
                 type="text"
                 [(ngModel)]="product.order_amount"
-                (ngModelChange)="updateTotalPrice()"
+                [(value)]="product.order_amount"
+                (input)="checkAmount(index); updateTotalPrice()"
+                [disabled]="amountStatus[index]"
               />
+            </td>
+            <td>
+              <p-button
+                type="button"
+                icon="pi pi-times"
+                class="p-button-raised p-button-rounded p-button-outlined"
+                (click)="popOut(index)"
+              ></p-button>
             </td>
           </tr>
         </ng-template>
@@ -162,12 +183,12 @@
           <td>{{ product.amount }}</td>
           <td>{{ product.unit }}</td>
           <td>{{ product.category_status }}</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.price | currency: " " }} VND</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="flex align-items-center justify-content-between">
-          Total records: {{ productList ? productList.length : 0 }} products
+          Total: {{ productList ? productList.length : 0 }} products
         </div>
       </ng-template>
     </p-table>

@@ -26,6 +26,11 @@ import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { DragDropModule } from 'primeng/dragdrop';
 import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { HomepageComponent } from './homepage/homepage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +38,7 @@ import { TabViewModule } from 'primeng/tabview';
     NewOrderComponent,
     DetailOrderComponent,
     AddNewOrderComponent,
+    HomepageComponent,
   ],
   imports: [
     FormsModule,
@@ -54,8 +60,10 @@ import { TabViewModule } from 'primeng/tabview';
     TabViewModule,
     ChartModule,
     CalendarModule,
+    ConfirmDialogModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

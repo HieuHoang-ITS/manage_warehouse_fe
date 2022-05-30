@@ -1,3 +1,5 @@
+import { Order } from './order';
+
 export interface OrderDisplay {
   id?: any;
   user_id: string;
@@ -42,12 +44,6 @@ export interface DetailListUpdate {
   amount: number;
 }
 export interface newOrderSave {
-  trading_type: string;
-  user_id: any;
-  customer_name: string;
-  customer_phone: string;
-  status: string;
-  total_price: number;
-  created_at: Date;
+  order: Order;
   details: DetailListUpdate[];
 }

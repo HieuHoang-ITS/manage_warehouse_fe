@@ -34,11 +34,15 @@
         label="Clear Record"
         icon="pi pi-times"
         styleClass="p-button-danger"
-        (click)="deleteQueue()"
+        (click)="deleteConfirm()"
       ></p-button>
     </div>
   </p-toolbar>
   <p-messages [(value)]="msg"></p-messages>
+  <p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
 
   <p-table
     [value]="orderList"
@@ -67,8 +71,8 @@
         <td>{{ order.customer_name }}</td>
         <td>{{ order.customer_phone }}</td>
         <td>{{ order.status }}</td>
-        <td>{{ order.total_price }}</td>
-        <td>{{ order.created_at }}</td>
+        <td>{{ order.total_price | currency: " " }} VND</td>
+        <td>{{ order.created_at | date }}</td>
         <td>
           <button
             type="button"
