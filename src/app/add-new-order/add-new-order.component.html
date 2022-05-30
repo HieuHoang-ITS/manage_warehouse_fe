@@ -1,0 +1,162 @@
+<div class="card">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h2>Register New Order - ID : 15</h2>
+    </div>
+    <div class="p-toolbar-group-right">
+      <p-button
+        icon="pi pi-trash"
+        styleClass="p-button-success p-button-rounded p-button-outlined"
+        (click)="clearFunction()"
+      ></p-button>
+      <p-button
+        icon="pi pi-times"
+        styleClass="p-button-warning p-button-rounded p-button-outlined"
+        routerLink="/orders/{{ orderType }}"
+      ></p-button>
+      <i class="pi pi-bars mx-2"></i>
+      <p-button
+        icon="pi pi-save "
+        styleClass="p-button-info p-button-rounded p-button-outlined"
+        (click)="saveFunction()"
+      ></p-button>
+    </div>
+  </p-toolbar>
+  <div class="flex flex-row">
+    <div class="col-3">
+      <p-tabView>
+        <p-tabPanel header="Detail">
+          <div class="flex flex-row flex-wrap">
+            <span class="flex flex-column flex-wrap">
+              <label for="username" class="mb-1">User Name</label>
+              <p-dropdown
+                id="username"
+                [options]="userList"
+                [(ngModel)]="selectedUser"
+                optionLabel="full_name"
+              ></p-dropdown>
+            </span>
+            <span class="flex flex-column flex-wrap ml-1">
+              <label for="username" class="mb-1">Phone</label>
+              <input
+                id="username"
+                type="text"
+                pInputText
+                class="w-12rem"
+                [value]="selectedUser.tel"
+                disabled
+              />
+            </span>
+          </div>
+          <div class="flex flex-row flex-wrap">
+            <span class="flex flex-column flex-wrap">
+              <label for="ordertype" class="mb-1">Trading Type</label>
+              <input
+                id="ordertype"
+                pInputText
+                type=""
+                for="ordertype"
+                class="w-12rem"
+                [value]="orderType"
+                disabled
+              />
+            </span>
+            <span class="flex flex-column flex-wrap ml-1">
+              <label for="price" class="mb-1">Total Price</label>
+              <input
+                pInputText
+                class="w-12rem"
+                type="text"
+                [value]="totalPrice"
+                disabled
+              />
+            </span>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Customer">
+          <div class="flex flex-column">
+            <label for="cname" class="mb-1">Customer Name</label>
+            <input id="cname" type="text" pInputText placeholder="Name" />
+          </div>
+          <div class="flex flex-column mt-2">
+            <label for="cphone" class="mb-1">Customer Phone</label>
+            <input id="cphone" type="text" pInputText placeholder="Phone" />
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+    <div class="col-9" pDroppable="products" (onDrop)="drop()">
+      <p-table class="" [value]="selectedProductList">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Provider</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr class="line-height-3">
+            <td>{{ product.category_name }}</td>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.provider_name }}</td>
+            <td>{{ product.unit }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="product.order_amount"
+                (ngModelChange)="updateTotalPrice()"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="col-12 drag-column">
+    <p-table [value]="productList" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="caption">
+        <label> Products </label>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="w-10rem">ID</th>
+          <th>Product name</th>
+          <th>Category name</th>
+          <th>Provider name</th>
+          <th>Provider address</th>
+          <th>Amount</th>
+          <th>Unit</th>
+          <th>status</th>
+          <th>price</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr
+          pDraggable="products"
+          (onDragStart)="dragStart(product)"
+          (onDragEnd)="dragEnd()"
+        >
+          <td class="w-10rem">{{ product.id }}</td>
+          <td>{{ product.product_name }}</td>
+          <td>{{ product.category_name }}</td>
+          <td>{{ product.provider_name }}</td>
+          <td>{{ product.provider_address }}</td>
+          <td>{{ product.amount }}</td>
+          <td>{{ product.unit }}</td>
+          <td>{{ product.category_status }}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="flex align-items-center justify-content-between">
+          Total records: {{ productList ? productList.length : 0 }} products
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

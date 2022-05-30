@@ -1,0 +1,102 @@
+<div *ngIf="orderList">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h2>List Order Type: {{ orderType }}</h2>
+      <i class="pi pi-bars mx-2"></i>
+      <span class="p-float-label p-input-icon-right mr-4">
+        <input
+          (keydown.enter)="search()"
+          type="text"
+          pInputText
+          placeholder="Search"
+          [(ngModel)]="searchValue"
+          class="w-20rem"
+        />
+        <i class="pi pi-search cursor-pointer" (click)="search()"></i>
+      </span>
+      <p-dropdown
+        [options]="filters"
+        [(ngModel)]="selectedFilter"
+        optionLabel="label"
+      ></p-dropdown>
+
+      <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
+    </div>
+
+    <div class="p-toolbar-group-right">
+      <p-button
+        label="New"
+        icon="pi pi-plus"
+        styleClass="p-button-success"
+        routerLink="/orders/{{ orderType }}/register"
+      ></p-button>
+      <p-button
+        label="Clear Record"
+        icon="pi pi-times"
+        styleClass="p-button-danger"
+        (click)="deleteQueue()"
+      ></p-button>
+    </div>
+  </p-toolbar>
+  <p-messages [(value)]="msg"></p-messages>
+
+  <p-table
+    [value]="orderList"
+    [paginator]="true"
+    [rows]="10"
+    selectionMode="multiple"
+    responsiveLayout="scroll"
+    [(selection)]="selectedQueue"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Trading Type</th>
+        <th>Curator</th>
+        <th>Customer Name</th>
+        <th>Customer Phone</th>
+        <th>Status</th>
+        <th>Total Price</th>
+        <th>Create Date</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order>
+      <tr [pSelectableRow]="order">
+        <td>{{ order.id }}</td>
+        <td>{{ order.trading_type }}</td>
+        <td>{{ order.user_name }}</td>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.customer_phone }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.total_price }}</td>
+        <td>{{ order.created_at }}</td>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-check-circle"
+            (click)="modalDisplay = true; selectOrder(order)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div
+        class="flex align-items-center justify-content-between"
+        *ngIf="orderList.length == 0"
+      >
+        Nothing in here
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog
+  header="Detail Invoice"
+  class="p-element ng-tns-c114-71 ng-star-inserted"
+  [(visible)]="modalDisplay"
+  *ngIf="modalDisplay"
+>
+  <app-detail-order [parentOrder]="selectedOrder"></app-detail-order>
+</p-dialog>

@@ -1,0 +1,67 @@
+<div class="card">
+  <p-table
+    [value]="dOrderDisplayList"
+    [frozenValue]="lockedOrder"
+    [scrollable]="true"
+    scrollHeight="400px"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Category Name</th>
+        <th>Provider Name</th>
+        <th>Address</th>
+        <th>Tel</th>
+        <th>Unit</th>
+        <th>Status</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="frozenbody" let-order let-index="rowIndex">
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.product_name }}</td>
+        <td>{{ order.category_name }}</td>
+        <td>{{ order.provider_name }}</td>
+        <td>{{ order.provider_address }}</td>
+        <td>{{ order.provider_tel }}</td>
+        <td>{{ order.product_unit }}</td>
+        <td>{{ order.category_status }}</td>
+        <td>{{ order.amount }}</td>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-lock"
+            (click)="lockOrder(order, false, index)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order let-index="rowIndex">
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.product_name }}</td>
+        <td>{{ order.category_name }}</td>
+        <td>{{ order.provider_name }}</td>
+        <td>{{ order.provider_address }}</td>
+        <td>{{ order.provider_tel }}</td>
+        <td>{{ order.product_unit }}</td>
+        <td>{{ order.category_status }}</td>
+        <td>{{ order.amount }}</td>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-lock-open"
+            (click)="lockOrder(order, true, index)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

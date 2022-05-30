@@ -13,12 +13,16 @@ export class CategorytService {
     }
 
     save(data: any): Observable<any> {
-        return this.http.post('this.categoryUrl' + "/insert", data)
+        return this.http.post(this.categoryUrl + "/insert", data)
     }
     delete(id: number): Observable<any> {
-        return this.http.delete(this.categoryUrl + "/${id}");
+        let deleteUrl = this.categoryUrl + "/delete/" + id;
+        console.log(deleteUrl);
+        return this.http.delete(deleteUrl);
     }
-    update(id: any, data: any) {
-        return this.http.put(this.categoryUrl + "/{id}", data)
+    update(data: Category, id: any): Observable<any> {
+        let updateUrl = this.categoryUrl + "/update/" + id;
+        console.log(data);
+        return this.http.put(updateUrl, data).pipe();
     }
 }

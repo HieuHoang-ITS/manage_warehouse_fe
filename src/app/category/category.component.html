@@ -1,10 +1,14 @@
 <p>category works!</p>
 <div class="ui-g">
   <p-toast></p-toast>
+  <p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
   <p-panel
     header="danh sach loai hang"
     [toggleable]="true"
-    [style]="{ width: '70%' }"
+    [style]="{ width: '100%' }"
   >
     <div style="margin-bottom: 20px">
       <p-menubar [model]="items1"></p-menubar>
@@ -30,9 +34,13 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Status</th>
+          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name">
+            Name <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">
+            Status <p-sortIcon field="status"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-category>
@@ -50,20 +58,6 @@
     [style]="{ width: '400px' }"
   >
     <div class="ui-g ui-fluid">
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="Input_ID">Id</label>
-        </div>
-        <div class="ui-g-8">
-          <input
-            pInputText
-            id="id"
-            #addid
-            [style]="{ width: '350px' }"
-            [(ngModel)]="addCategory.id"
-          />
-        </div>
-      </div>
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="Input_Name">Name</label>
