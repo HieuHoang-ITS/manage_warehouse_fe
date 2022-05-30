@@ -51,9 +51,9 @@ export class OrderstatusComponent implements OnInit {
   }
   updateOrder(order: Order, description: string, status: string): void{
     // alert(order.customer_name);
-    if(description=="")
+    if(description.trim()=="" || !status)
     {
-      alert(order.description);
+      alert("Chọn trạng thái, ghi rõ lí do");
     }
     else{
     this.geeks=false;
@@ -71,6 +71,12 @@ export class OrderstatusComponent implements OnInit {
     }
     }
   }
+  
+ ClickedOut(event: any) {
+  if(event.target.className === "hover_bkgr_fricc") {
+    this.geeks = false;
+  } 
+}
   Search(mahoadon: string, searchtime: Date, loaihoadon: string) : void
   {
     if(searchtime instanceof Date)
@@ -82,7 +88,7 @@ export class OrderstatusComponent implements OnInit {
       this.time=""+year;
       this.time+="-"+longMonth; 
       this.time+="-"+day;
-      alert(this.time);
+     // alert(this.time);
     }
     else{
       let date: Date = new Date("2000-10-10"); 
@@ -118,11 +124,11 @@ export class OrderstatusComponent implements OnInit {
     if(this.nhanvien)
     {
       this.manhanvien=this.nhanvien.id;
-      alert(this.manhanvien);
+      //alert(this.manhanvien);
     }
     else{
       this.manhanvien=0;
-      alert(this.manhanvien);
+      //alert(this.manhanvien);
     }
     this.orderService.
     searchOrder(this.mahoadoan,this.manhanvien!,this.time,this.loaihoadon!)
