@@ -44,7 +44,7 @@ export class AddNewOrderComponent implements OnInit {
     this.orderType = this.pageUrl
       .split('/orders/')[1]
       .split('/register')[0]
-      .toUpperCase();
+      .toLowerCase();
   }
 
   ngOnInit(): void {
@@ -172,7 +172,7 @@ export class AddNewOrderComponent implements OnInit {
   // Function for updating order.totalprice based on inputted detail.order_amount of detail records
   // In export order, check if desired amount <= actual goods amount in warehouse
   checkAmount(index: number): boolean {
-    if (this.orderType.match('EXPORT')) {
+    if (this.orderType.match('export')) {
       if (
         this.selectedProductList[index].order_amount >
         this.selectedProductList[index].amount

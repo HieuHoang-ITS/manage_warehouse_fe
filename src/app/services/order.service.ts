@@ -28,12 +28,12 @@ export class OrderService {
     return this.http.put<Order>(this.orderUpdateUrl+id, order)
   }
   // /2/1/?ngay=1/1/19&loai=export
-  searchOrder(id_order: number, id_user: number, ngay: Date, loai: string): Observable<Order[]>
+  searchOrder(id_order: number, id_user: number, ngay: string, loai: string): Observable<Order[]>
   {
     return this.http.get<Order[]>(this.orderSearchUrl+
       id_order+'/'+id_user+"/?ngay="+ ngay+"&loai="+loai)
   }
-  searchOrde(id_order: number, id_user: number, ngay: Date, loai: string): Observable<Order[]>
+  searchOrde(id_order: number, id_user: number, ngay: string, loai: string): Observable<Order[]>
   {
     return this.http.get<Order[]>('${this.orderSearchUrl}/${id_order}/${id_user}/?ngay=${ngay}&loai=${loai}')
   }

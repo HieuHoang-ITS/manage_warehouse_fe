@@ -81,7 +81,6 @@ export class NewOrderComponent implements OnInit {
               .toUpperCase()
               .includes(this.searchValue.toUpperCase())
           );
-
           break;
       }
     }
