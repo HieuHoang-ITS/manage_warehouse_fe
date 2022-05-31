@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ThongKe } from '../models/thongke';
 import { ThongkeService } from '../services/thongke.service';
-
+import { pieChart } from '../models/thongke';
+import { MenuItemContent } from 'primeng/menu';
 @Component({
   selector: 'app-feature-statistic',
   templateUrl: './statis.component.html',
@@ -15,7 +16,7 @@ export class FeatureStatisticComponent implements OnInit {
   datapie1: any;
 
   chartOptionspie1: any;
-  
+  pie_chart:pieChart[] = [];
 
   cities: City[] =[];
   selectedCity?: City ;
@@ -25,7 +26,7 @@ export class FeatureStatisticComponent implements OnInit {
   displayModalpie: boolean = false;
   basicData: any;
   basicOptions: any;
-  date9?: Date;
+  pieChartDate: Date = new Date();
   date10?: Date;
 
   dates?: Date[];
@@ -51,46 +52,102 @@ export class FeatureStatisticComponent implements OnInit {
     this.displayModal = true;
 }
 showModalDialogpie() {
+  let month = this.pieChartDate.getMonth() + 1;
+  let year = this.pieChartDate.getFullYear() ;
+  this.updatePieChartXuat(month,year);
+  this.updatePieChartNhap(month,year);
   this.displayModalpie = true;
 }
-
-  ngOnInit(): void {
-    this.datapie = {
-      labels: ['NHẬP'],
-      datasets: [
-          {
-              data: [60, 40,],
-              backgroundColor: [
-                  
-                  "#66BB6A",
-                  "#FFA726"
-              ],
-              hoverBackgroundColor: [
-                  
-                  "#81C784",
-                  "#FFB74D"
-              ]
-          }
-      ]
-  };
-  this.datapie1 = {
-    labels: ['XUẤT'],
+updatePieChartXuat(month:number,year:number){
+  this.thongkeService.getExportPerc(month, year).subscribe((item)=>{
+    this.pie_chart=item
+    console.log(this.pie_chart)
+    let phantramList:number[] = []
+    let nameList: string[] = [];
+  this.pie_chart.forEach(item =>{
+    phantramList.push(item.phantram);
+    nameList.push(item.nameloai);
+  })
+  console.log(nameList);
+  this.datapie = {
+    labels: nameList,
     datasets: [
         {
-            data: [40, 60,],
+            data: phantramList,
             backgroundColor: [
-                
-                "#66BB6A",
-                "#FFA726"
+              "orange",
+                "blue",
+                "red",
+                "black",
+                "pink",
+                "yellow",
+                "brown",
             ],
             hoverBackgroundColor: [
-                
+              "#66BB6A",
                 "#81C784",
                 "#FFB74D"
             ]
         }
     ]
-};
+  };
+  console.log(this.datapie);
+  });
+}
+updatePieChartNhap(month:number,year:number){
+  this.thongkeService.getImportPerc(month, year).subscribe((item)=>{
+    this.pie_chart=item
+    console.log(this.pie_chart)
+    let phantramList:number[] = []
+    let nameList: string[] = [];
+  this.pie_chart.forEach(item =>{
+    phantramList.push(item.phantram);
+    nameList.push(item.nameloai);
+  })
+  console.log(nameList);
+  this.datapie1 = {
+    labels: nameList,
+    datasets: [
+        {
+            data: phantramList,
+            backgroundColor: [
+              "orange",
+                "blue",
+                "red",
+                "black",
+                "pink",
+                "yellow",
+                "brown",
+            ],
+            hoverBackgroundColor: [
+              "#66BB6A",
+                "#81C784",
+                "#FFB74D"
+            ]
+        }
+    ]
+  };
+  console.log(this.datapie1);
+  });
+}
+
+
+  ngOnInit(): void {
+    this.basicData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
+      datasets: [
+        {
+          label: 'Doanh thu theo năm',
+          data: this.tienThang,
+          fill: false,
+          borderColor: '#42A5F5'
+          ,
+          tension: .4
+        }
+      ]
+    }
+  
+  
     this.data = {
       labels: ['Tổng số hàng hóa nhập','Tổng số hàng hóa xuất',],
       datasets: [
@@ -126,7 +183,7 @@ showModalDialogpie() {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
       datasets: [
         {
-          label: 'Doanh thu theo tháng',
+          label: 'Doanh thu theo năm',
           data: this.tienThang,
           fill: false,
           borderColor: '#42A5F5'
