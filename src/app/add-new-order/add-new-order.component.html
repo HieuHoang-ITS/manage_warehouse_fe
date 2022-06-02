@@ -2,81 +2,56 @@
   <p-toolbar>
     <div class="p-toolbar-group-left">
       <div>
-        <h2>Register New Order</h2>
+        <h3>Trading Type: {{ orderType | uppercase }}</h3>
         <p>Create date: {{ createDate | date }}</p>
       </div>
-    </div>
-    <div class="p-toolbar-group-right">
-      <p-button
+      <!-- <i class="pi pi-bars mx-2"></i> -->
+      <!-- <p-button
         label="Save"
         icon="pi pi-save "
         styleClass="p-button-info p-button-rounded p-button-outlined"
         (click)="saveFunction()"
       ></p-button>
       <p-button
-        label="Cancel"
-        icon="pi pi-times"
-        styleClass="p-button-warning p-button-rounded p-button-outlined"
-        (click)="routingBack()"
-      ></p-button>
-      <!-- routerLink="/orders/{{ orderType | lowercase }}" -->
-      <i class="pi pi-bars mx-2"></i>
-      <p-button
         icon="pi pi-trash"
         label="Clear"
         styleClass="p-button-success p-button-rounded p-button-outlined"
         (click)="clearFunction()"
-      ></p-button>
+      ></p-button> -->
+    </div>
+    <div class="p-toolbar-group-right">
+      <h1>{{ totalPrice | currency: " " }} VND</h1>
     </div>
   </p-toolbar>
-  <p-toast></p-toast>
   <div class="flex flex-row">
     <div class="col-3">
       <p-tabView>
         <p-tabPanel header="Detail">
-          <div class="flex flex-row flex-wrap">
+          <div class="flex flex-column flex-wrap">
             <span class="flex flex-column flex-wrap">
               <label for="username" class="mb-1">User Name</label>
-              <p-dropdown
-                id="username"
-                [options]="userList"
-                [(ngModel)]="selectedUser"
-                optionLabel="full_name"
-                class="w-12rem"
-              ></p-dropdown>
+              <div>
+                <p-dropdown
+                  id="username"
+                  [options]="userList"
+                  [(ngModel)]="selectedUser"
+                  optionLabel="full_name"
+                ></p-dropdown>
+                <button
+                  pButton
+                  icon="pi pi-user "
+                  class="ml-5 p-button-outlined p-button-rounded"
+                ></button>
+              </div>
             </span>
-            <span class="flex flex-column flex-wrap ml-1">
+            <span class="flex flex-column flex-wrap mt-2">
               <label for="username" class="mb-1">Phone</label>
               <input
                 id="username"
                 type="text"
                 pInputText
-                class="w-12rem"
+                class=""
                 [value]="selectedUser.tel"
-                disabled
-              />
-            </span>
-          </div>
-          <div class="flex flex-row flex-wrap">
-            <span class="flex flex-column flex-wrap">
-              <label for="ordertype" class="mb-1">Trading Type</label>
-              <input
-                id="ordertype"
-                pInputText
-                type=""
-                for="ordertype"
-                class="w-12rem"
-                [value]="orderType"
-                disabled
-              />
-            </span>
-            <span class="flex flex-column flex-wrap ml-1">
-              <label for="price" class="mb-1">Total Price</label>
-              <input
-                pInputText
-                class="w-12rem"
-                type="text"
-                [value]="totalPrice | currency: ' '"
                 disabled
               />
             </span>
@@ -134,8 +109,8 @@
                 type="text"
                 [(ngModel)]="product.order_amount"
                 [(value)]="product.order_amount"
-                (input)="checkAmount(index); updateTotalPrice()"
-                [disabled]="amountStatus[index]"
+                (input)="checkAmount(index, $event); updateTotalPrice()"
+                required
               />
             </td>
             <td>

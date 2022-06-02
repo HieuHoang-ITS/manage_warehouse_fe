@@ -30,7 +30,6 @@ export class AddNewOrderComponent implements OnInit {
   userList: User[] = [];
   selectedUser: User = {} as any;
   amountInputIsEnable: boolean = true;
-  amountStatus: boolean[] = [];
 
   constructor(
     private productService: ProductService,
@@ -41,18 +40,17 @@ export class AddNewOrderComponent implements OnInit {
   ) {
     // Read url and get type(export / import)
     this.pageUrl = this.document.location.href;
-    this.orderType = this.pageUrl
-      .split('/orders/')[1]
-      .split('/register')[0]
-      .toLowerCase();
+    this.orderType = this.pageUrl.split('/orders/')[1].toLowerCase();
   }
 
   ngOnInit(): void {
     // Get products list on initializing
-    this.newOrderService.productDisplay().subscribe((response) => {
-      this.productList = response;
-      this.productList = this.arraySort(this.productList);
-    });
+    this.newOrderService
+      .productDisplay(this.orderType)
+      .subscribe((response) => {
+        this.productList = response;
+        this.productList = this.arraySort(this.productList);
+      });
 
     // Get users list on initializing
     this.newOrderService.userDisplay().subscribe((response) => {
@@ -78,13 +76,14 @@ export class AddNewOrderComponent implements OnInit {
   }
   drop() {
     this.selectedProductList.push(this.draggedProduct);
-    this.amountStatus.push(false);
     this.productList = this.productList.filter(
       (item) => item.id != this.draggedProduct.id
     );
   }
   popOut(index: number) {
+    this.productList.push(this.selectedProductList[index]);
     this.selectedProductList.splice(index, 1);
+    this.productList = this.arraySort(this.productList);
   }
 
   // ============================================
@@ -122,14 +121,11 @@ export class AddNewOrderComponent implements OnInit {
       };
       console.log(this.newOrderSave);
       this.newOrderService.addNew(this.newOrderSave);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Congratulation',
-        detail: 'New Order Registered',
-      });
-      // setTimeout(this.routingBack, 3000);
-      await this.delay(3000);
-      this.routingBack;
+      // this.messageService.add({
+      //   severity: 'success',
+      //   summary: 'Congratulation',
+      //   detail: 'New Order Registered',
+      // });
     } else {
       if (this.selectedProductList.length < 1)
         this.messageService.add({
@@ -171,7 +167,7 @@ export class AddNewOrderComponent implements OnInit {
   // ============================================
   // Function for updating order.totalprice based on inputted detail.order_amount of detail records
   // In export order, check if desired amount <= actual goods amount in warehouse
-  checkAmount(index: number): boolean {
+  checkAmount(index: number, element: any): boolean {
     if (this.orderType.match('export')) {
       if (
         this.selectedProductList[index].order_amount >
@@ -179,7 +175,12 @@ export class AddNewOrderComponent implements OnInit {
       ) {
         this.selectedProductList[index].order_amount =
           this.selectedProductList[index].amount;
-        this.amountStatus[index] = true;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Warning',
+          detail: 'Not enough amount to export ',
+        });
+        element.sty;
       }
     }
     return false;
