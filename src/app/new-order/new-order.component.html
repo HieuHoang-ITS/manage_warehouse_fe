@@ -1,44 +1,95 @@
+<p-toast></p-toast>
 <div *ngIf="orderList">
   <p-toolbar>
     <div class="p-toolbar-group-left">
-      <h2>List Order Type: {{ orderType }}</h2>
+      <h2>List Order Type: {{ orderType | uppercase }}</h2>
       <i class="pi pi-bars mx-2"></i>
-      <span class="p-float-label p-input-icon-right mr-4">
+      <span class="p-float-label p-input-icon-right">
         <input
           (keydown.enter)="search()"
           type="text"
           pInputText
-          placeholder="Search"
-          [(ngModel)]="searchValue"
-          class="w-20rem"
+          placeholder="ID"
+          [(ngModel)]="searchID"
         />
-        <i class="pi pi-search cursor-pointer" (click)="search()"></i>
+        <i
+          class="pi pi-ellipsis-v cursor-pointer"
+          (click)="filter.toggle($event)"
+        ></i>
       </span>
-      <p-dropdown
-        [options]="filters"
-        [(ngModel)]="selectedFilter"
-        optionLabel="label"
-      ></p-dropdown>
-
-      <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
+      <button
+        type="text"
+        pButton
+        icon="pi pi-search"
+        class=""
+        label=""
+        (click)="search()"
+      ></button>
+      <p-overlayPanel #filter [dismissable]="false" [showCloseIcon]="true">
+        <ng-template pTemplate>
+          <div class="flex flex-row flex-wrap">
+            <p-dropdown
+              [options]="users"
+              [(ngModel)]="selectedUser"
+              optionLabel="full_name"
+              placeholder="Select user"
+            ></p-dropdown>
+            <p-dropdown
+              [options]="status"
+              [(ngModel)]="selectedStatus"
+              optionLabel="label"
+              placeholder="Select status"
+            ></p-dropdown>
+            <p-calendar
+              [(ngModel)]="dateValue"
+              [hourFormat]="'24'"
+              dateFormat="mm/dd/yy"
+              [showButtonBar]="true"
+              [showIcon]="true"
+            ></p-calendar>
+            <button
+              pButton
+              icon="pi pi-refresh"
+              class="p-button-outlined p-button-rounded ml-2"
+              (click)="refreshFilter()"
+            ></button>
+          </div>
+        </ng-template>
+      </p-overlayPanel>
     </div>
 
     <div class="p-toolbar-group-right">
-      <p-button
-        label="New"
-        icon="pi pi-plus"
-        styleClass="p-button-success"
-        routerLink="/orders/{{ orderType }}/register"
-      ></p-button>
-      <p-button
-        label="Clear Record"
-        icon="pi pi-times"
-        styleClass="p-button-danger"
-        (click)="deleteConfirm()"
-      ></p-button>
+      <div *ngIf="isbuttonInRecord">
+        <p-button
+          label="New"
+          icon="pi pi-plus"
+          styleClass="p-button-success"
+          [disabled]="true"
+        ></p-button>
+        <p-button
+          label="Clear Record"
+          icon="pi pi-times"
+          styleClass="p-button-danger"
+          [disabled]="true"
+        ></p-button>
+      </div>
+      <div *ngIf="!isbuttonInRecord">
+        <p-button
+          label="New"
+          icon="pi pi-plus"
+          styleClass="p-button-success"
+          (click)="modalRegDisplay = true"
+        ></p-button>
+        <p-button
+          label="Clear Record"
+          icon="pi pi-times"
+          styleClass="p-button-danger"
+          (click)="deleteConfirm()"
+        ></p-button>
+      </div>
     </div>
   </p-toolbar>
-  <p-messages [(value)]="msg"></p-messages>
+  <!-- <p-messages [(value)]="msg"></p-messages> -->
   <p-confirmDialog
     header="Confirmation"
     icon="pi pi-exclamation-triangle"
@@ -54,13 +105,25 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Curator</th>
-        <th>Customer Name</th>
-        <th>Customer Phone</th>
-        <th>Status</th>
-        <th>Total Price</th>
-        <th>Create Date</th>
+        <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="user_name">
+          Curator<p-sortIcon field="user_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="customer_name">
+          Customer Name<p-sortIcon field="customer_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="customer_phone">
+          Customer Phone<p-sortIcon field="customer_phone"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status">
+          Status<p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th pSortableColumn="total_price">
+          Total Price<p-sortIcon field="total_price"></p-sortIcon>
+        </th>
+        <th pSortableColumn="created_at">
+          Create Date<p-sortIcon field="created_at"></p-sortIcon>
+        </th>
         <th></th>
       </tr>
     </ng-template>
@@ -79,7 +142,7 @@
             pButton
             pRipple
             icon="pi pi-check-circle"
-            (click)="modalDisplay = true; selectOrder(order)"
+            (click)="modalDetailDisplay = true; selectOrder(order)"
           ></button>
         </td>
       </tr>
@@ -97,8 +160,31 @@
 <p-dialog
   header="Detail Invoice"
   class="p-element ng-tns-c114-71 ng-star-inserted"
-  [(visible)]="modalDisplay"
-  *ngIf="modalDisplay"
+  [(visible)]="modalDetailDisplay"
+  *ngIf="modalDetailDisplay"
 >
   <app-detail-order [parentOrder]="selectedOrder"></app-detail-order>
+</p-dialog>
+<p-dialog
+  header="Register New Order"
+  class="p-element ng-tns-c114-71 ng-star-inserted"
+  [style]="{ width: '95%' }"
+  [(visible)]="modalRegDisplay"
+  *ngIf="modalRegDisplay"
+>
+  <app-add-new-order></app-add-new-order>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-trash"
+      label="Clear"
+      styleClass="p-button-danger p-button-rounded"
+      (click)="clearFunction()"
+    ></p-button>
+    <p-button
+      label="Save"
+      icon="pi pi-save "
+      styleClass="p-button-info p-button-rounded"
+      (click)="saveFunction()"
+    ></p-button
+  ></ng-template>
 </p-dialog>
