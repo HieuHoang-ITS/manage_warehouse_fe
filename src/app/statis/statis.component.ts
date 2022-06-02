@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ThongKe } from '../models/thongke';
 import { ThongkeService } from '../services/thongke.service';
 import { pieChart } from '../models/thongke';
+import { doughChart } from '../models/thongke';
 import { MenuItemContent } from 'primeng/menu';
 @Component({
   selector: 'app-feature-statistic',
@@ -16,10 +17,10 @@ export class FeatureStatisticComponent implements OnInit {
   datapie1: any;
 
   chartOptionspie1: any;
-  pie_chart:pieChart[] = [];
-
-  cities: City[] =[];
-  selectedCity?: City ;
+  pie_chart: pieChart[] = [];
+  doughnut_chart: doughChart[] = [];
+  cities: City[] = [];
+  selectedCity?: City;
   data: any;
   chartOptions: any;
   displayModal: boolean = false;
@@ -28,145 +29,147 @@ export class FeatureStatisticComponent implements OnInit {
   basicOptions: any;
   pieChartDate: Date = new Date();
   date10?: Date;
+  month: number = this.pieChartDate.getMonth();
+  year: number = this.pieChartDate.getFullYear();;
 
   dates?: Date[];
   thongkethang: ThongKe[] = [];
   rangeDates?: Date[]
-
   minDate?: Date
-
   maxDate?: Date
   thang: any[] = [];
   tienThang: ThongKe[] = []
   invalidDates?: Array<Date>
 
-  
-  constructor(private thongkeService: ThongkeService) {this.cities = [
-    {name: 'Mặt hàng 1', code: 'NY'},
-    {name: 'Mặt hàng 2', code: 'RM'},
-    {name: 'Mặt hàng 3', code: 'LDN'},
-    {name: 'Mặt hàng 4', code: 'IST'},
-    {name: 'Mặt hàng 5', code: 'PRS'}
-]; }
-  showModalDialog() {
-    this.displayModal = true;
-}
-showModalDialogpie() {
-  let month = this.pieChartDate.getMonth() + 1;
-  let year = this.pieChartDate.getFullYear() ;
-  this.updatePieChartXuat(month,year);
-  this.updatePieChartNhap(month,year);
-  this.displayModalpie = true;
-}
-updatePieChartXuat(month:number,year:number){
-  this.thongkeService.getExportPerc(month, year).subscribe((item)=>{
-    this.pie_chart=item
-    console.log(this.pie_chart)
-    let phantramList:number[] = []
-    let nameList: string[] = [];
-  this.pie_chart.forEach(item =>{
-    phantramList.push(item.phantram);
-    nameList.push(item.nameloai);
-  })
-  console.log(nameList);
-  this.datapie = {
-    labels: nameList,
-    datasets: [
-        {
-            data: phantramList,
-            backgroundColor: [
-              "orange",
-                "blue",
-                "red",
-                "black",
-                "pink",
-                "yellow",
-                "brown",
-            ],
-            hoverBackgroundColor: [
-              "#66BB6A",
-                "#81C784",
-                "#FFB74D"
-            ]
-        }
-    ]
-  };
-  console.log(this.datapie);
-  });
-}
-updatePieChartNhap(month:number,year:number){
-  this.thongkeService.getImportPerc(month, year).subscribe((item)=>{
-    this.pie_chart=item
-    console.log(this.pie_chart)
-    let phantramList:number[] = []
-    let nameList: string[] = [];
-  this.pie_chart.forEach(item =>{
-    phantramList.push(item.phantram);
-    nameList.push(item.nameloai);
-  })
-  console.log(nameList);
-  this.datapie1 = {
-    labels: nameList,
-    datasets: [
-        {
-            data: phantramList,
-            backgroundColor: [
-              "orange",
-                "blue",
-                "red",
-                "black",
-                "pink",
-                "yellow",
-                "brown",
-            ],
-            hoverBackgroundColor: [
-              "#66BB6A",
-                "#81C784",
-                "#FFB74D"
-            ]
-        }
-    ]
-  };
-  console.log(this.datapie1);
-  });
-}
 
+  constructor(private thongkeService: ThongkeService) {
+    this.cities = [
+      { name: 'Mặt hàng 1', code: 'NY' },
+      { name: 'Mặt hàng 2', code: 'RM' },
+      { name: 'Mặt hàng 3', code: 'LDN' },
+      { name: 'Mặt hàng 4', code: 'IST' },
+      { name: 'Mặt hàng 5', code: 'PRS' }
+    ];
+  }
+
+  showModalDialogpie() {
+    const newDate = new Date();    
+    let month1 = newDate.getMonth()+1;
+    let year1=newDate.getFullYear();
+    let month = this.pieChartDate.getMonth() + 1;
+    let year = this.pieChartDate.getFullYear();
+    this.updatePieChartXuat(month, year);
+    this.updatePieChartNhap(month, year);
+    this.updateDoughnutChartNhapXuat(month, year)
+  }
+  updatePieChartXuat(month: number, year: number) {
+    console.log(month+1+" "+year);
+    this.thongkeService.getExportPerc(month, year).subscribe((item) => {
+      this.pie_chart = item
+      let phantramList: number[] = []
+      let nameList: string[] = [];
+      this.pie_chart.forEach(item => {
+        phantramList.push(item.phantram);
+        nameList.push(item.nameloai);
+      })
+      this.datapie = {
+        labels: nameList,
+        datasets: [
+          {
+            data: phantramList,
+            backgroundColor: [
+              "orange",
+              "blue",
+              "red",
+              "black",
+              "pink",
+              "yellow",
+              "brown",
+            ],
+            hoverBackgroundColor: [
+              "#66BB6A",
+              "#81C784",
+              "#FFB74D"
+            ]
+          }
+        ]
+      };
+
+    });
+  }
+  updatePieChartNhap(month: number, year: number) {
+    this.thongkeService.getImportPerc(month, year).subscribe((item) => {
+      this.pie_chart = item
+      let phantramList: number[] = []
+      let nameList: string[] = [];
+      this.pie_chart.forEach(item =>{
+        phantramList.push(item.phantram);
+        nameList.push(item.nameloai);
+      })
+      this.datapie1 = {
+        labels: nameList,
+        datasets: [
+          {
+            data: phantramList,
+            backgroundColor: [
+              "orange",
+              "blue",
+              "red",
+              "black",
+              "pink",
+              "yellow",
+              "brown",
+            ],
+            hoverBackgroundColor: [
+              "#66BB6A",
+              "#81C784",
+              "#FFB74D"
+            ]
+          }
+        ]
+      };
+
+    });
+  }
+  
+  updateDoughnutChartNhapXuat(month: number, year: number) {
+    let soluongxuatList = 0;
+    this.thongkeService.getExportDouc(month, year).subscribe((item) => {
+      this.doughnut_chart = item
+      this.doughnut_chart.forEach(item => {
+        soluongxuatList += item.tongsoluong;
+      })
+      let soluongnhapList = 0;
+      this.thongkeService.getImportDouc(month, year).subscribe((item) => {
+        this.doughnut_chart = item
+        this.doughnut_chart.forEach(item => {
+          soluongnhapList += item.tongsoluong;
+        })
+        this.data = {
+          labels: ['Total Import','Total Export'],
+          datasets: [
+              {
+                  data: [soluongnhapList, soluongxuatList],
+                  backgroundColor: [
+                      
+                      "#36A2EB",
+                      "#FFCE56"
+                  ],
+                  hoverBackgroundColor: [
+                      
+                      "#36A2EB",
+                      "#FFCE56"
+                  ]
+              }
+          ]
+      };
+     // console.log(this.data)
+      });
+    });
+    
+  }
 
   ngOnInit(): void {
-    this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
-      datasets: [
-        {
-          label: 'Doanh thu theo năm',
-          data: this.tienThang,
-          fill: false,
-          borderColor: '#42A5F5'
-          ,
-          tension: .4
-        }
-      ]
-    }
-  
-  
-    this.data = {
-      labels: ['Tổng số hàng hóa nhập','Tổng số hàng hóa xuất',],
-      datasets: [
-          {
-              data: [300, 50, ],
-              backgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  
-              ],
-              hoverBackgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  
-              ]
-          }
-      ]
-    };
-    
     let playStore: any = [];
     let playStor: any = [];
     this.thongkeService.getDoanhThuTheoThang().subscribe(data => {
@@ -176,39 +179,20 @@ updatePieChartNhap(month:number,year:number){
         playStore.push(value.gia);
         playStor.push(value.thang)
       });
-    })
-    //console.log(playStore);
-    this.tienThang = playStore;
-    this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
-      datasets: [
-        {
-          label: 'Doanh thu theo năm',
-          data: this.tienThang,
-          fill: false,
-          borderColor: '#42A5F5'
-          ,
-          tension: .4
-        }
-      ]
-    }
-    let today = new Date();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    let prevMonth = (month === 0) ? 11 : month - 1;
-    let prevYear = (prevMonth === 11) ? year - 1 : year;
-    let nextMonth = (month === 11) ? 0 : month + 1;
-    let nextYear = (nextMonth === 0) ? year + 1 : year;
-    this.minDate = new Date();
-    this.minDate.setMonth(prevMonth);
-    this.minDate.setFullYear(prevYear);
-    this.maxDate = new Date();
-    this.maxDate.setMonth(nextMonth);
-    this.maxDate.setFullYear(nextYear);
+      this.tienThang = playStore;
 
-    let invalidDate = new Date();
-    invalidDate.setDate(today.getDate() - 1);
-    this.invalidDates = [today, invalidDate];
+      this.basicData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
+        datasets: [
+          {
+            label: 'Doanh thu theo năm',
+            backgroundColor: 'red',
+            data: this.tienThang
+          }
+
+        ]
+      };
+    })
   }
   loading = [false, false, false, false]
 

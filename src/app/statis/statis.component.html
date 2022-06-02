@@ -1,47 +1,37 @@
-<div class="container">
-    <p style="text-align:center;font-weight: 1000; font-size: 150%;">BIỂU ĐỒ DOANH THU THEO NĂM</p>
-    <div class=" field col-12 md:col-4 " style="float: right;padding-left:15%;">
-            <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-dropdown>
-        <p-button (click)="showModalDialog()" icon="pi pi-external-link" label="Show"></p-button>
-        <p-dialog header="TỔNG SỐ HÀNG HÓA NHẬP XUẤT" [(visible)]="displayModal" [modal]="true" [style]="{width: '30%'}"
-            [draggable]="false" [resizable]="false">
-            <div class="douhtnut" style="height:500px ;width: 500px;">
-                <p-chart type="doughnut" [data]="data" [options]="chartOptions" style="width:100px ;height: 200px ;">
-                </p-chart>
-            </div>
-            <ng-template pTemplate="footer">
-                <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text">
-                </p-button>
-            </ng-template>
-        </p-dialog>
-
-
-    </div>
-
-    <div class="card" style="width:80%;height: 700px; padding-left: 10%;">
-        <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
-    </div>
-    <div style="float: right;padding-right: 1%">
-        <p-calendar placeholder="Month" [(ngModel)]="pieChartDate" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+<div style="display:flex ;">
+    <p-calendar placeholder="Month" [(ngModel)]="pieChartDate" view="month" dateFormat="mm/yy" [readonlyInput]="true"
             inputId="monthpicker"></p-calendar>
-        <p-button (click)="showModalDialogpie()" icon="pi pi-external-link" label="Show"></p-button>
-        <p-dialog header="TỶ LỆ % NHẬP XUẤT" [(visible)]="displayModalpie" [modal]="true" [style]="{width: '30%'}"
-            [draggable]="false" [resizable]="false">
-            <div class="pie" style="height:500px ;width: 500px;">
-                <label for="export-chart" style="font-weight:bold ;text-align:center ;">Export</label>
-                <p-chart id="export-chart" type="pie" [data]="datapie" [options]="chartOptionspie" style="width:100px ;height: 200px ;">
-                </p-chart>
-                <label for="import-chart" style="font-weight:bold ;text-align:center ;">Import</label>
-                <p-chart id="import-chart" type="pie" [data]="datapie1" [options]="chartOptionspie1" style="width:100px ;height: 200px ;">
-                </p-chart>
-            </div>
-            <ng-template pTemplate="footer">
-                <p-button icon="pi pi-check" (click)="displayModalpie=false" label="Ok" styleClass="p-button-text">
-                </p-button>
-            </ng-template>
-        </p-dialog>
-
-    
+    <p-button (click)="showModalDialogpie()" icon="pi pi-external-link" label="Show"></p-button>
+</div>
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <p-button label="1 tháng" icon="pi pi-plus"></p-button>
+        <p-button label="3 tháng" icon="pi pi-upload" styleClass="p-button-success"></p-button>
+        <p-button label="6 tháng" icon="pi pi-upload" styleClass="p-button-success"></p-button>    
+        <!-- <i class="pi pi-bars"></i> -->
     </div>
+    
+    <div class="p-toolbar-group-right">
+        <!-- <p-button icon="pi pi-search"></p-button>
+        <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
+        <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button> -->
+    </div>
+</p-toolbar>
+<div class="container" style="display:flex ;">
+    <div class="chart" style="width:40% ;">
+    <div class="doughnut" style="width:70%; padding-left: 20% ;">
+        <p-chart type="doughnut" [data]="data" [options]="chartOptions" [style]="{'width': '20%'}"></p-chart>
+    </div>
+    <div class="pie" style="width: 100%;display: flex;padding-top: 1%;padding-left: 1%;">
+        <label for="export-chart" style="font-weight:bold ;text-align:center ;">Ex</label>
+        <p-chart id="export-chart" type="pie" [data]="datapie" [options]="chartOptions"  [style]="{'width': '50%'}"></p-chart>
+        <label for="import-chart" style="font-weight:bold ;text-align:center ;">Im</label>
+        <p-chart id="import-chart" type="pie" [data]="datapie1" [options]="chartOptions"  [style]="{'width': '50%'}"></p-chart>
+    </div>
+</div>
+<div class="card" style="width:50%;padding-left: 10%;">
+        <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+    </div>
+    
     
 </div>

@@ -9,3 +9,9 @@ export interface pieChart{
     tongsoluong: number;
     phantram: number;
 }
+export interface doughChart{
+    nameloai: string;
+    tongsanpham: number;
+    tongsoluong: number;
+    phantram: number;
+}
