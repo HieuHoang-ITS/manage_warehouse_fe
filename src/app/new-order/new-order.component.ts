@@ -1,10 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Order } from '../models/order';
 import { NewOrderService } from '../services/new-order.service';
 import { Message } from 'primeng/api';
-import { OrderDisplay } from '../models/order-display';
+import { Filters, OrderDisplay } from '../models/order-display';
 import { ConfirmationService } from 'primeng/api';
+import { AddNewOrderComponent } from '../add-new-order/add-new-order.component';
+import { MessageService } from 'primeng/api';
+import { User } from '../models/user';
 @Component({
   selector: 'app-new-order',
   templateUrl: './new-order.component.html',
@@ -17,20 +20,30 @@ export class NewOrderComponent implements OnInit {
   selectedQueue: Order[] = [];
   url: string = '';
   orderType: string = '';
-  searchValue: string = '';
   selectedOrder: Order = {} as any;
   msg: Message[] = [];
-  public modalDisplay: boolean = false;
+  modalDetailDisplay: boolean = false;
+  modalRegDisplay: boolean = false;
+  isbuttonInRecord: boolean = false;
+
   // Define filter variable
-  selectedFilter: filterInterface = {} as any;
-  filters: filterInterface[] = [
-    { type: 1, label: 'Mã đơn hàng' },
-    { type: 2, label: 'Tên khách hàng' },
-    { type: 3, label: 'Trạng thái' },
-    { type: 4, label: 'Người phụ trách' },
+  searchID: string = '';
+  users: User[] = [];
+
+  selectedUser?: User;
+  selectedStatus: statusDisplay = {} as any;
+  status: statusDisplay[] = [
+    { type: 1, label: 'Thành Công' },
+    { type: 2, label: 'Chờ Xác Nhận' },
+    { type: 3, label: 'Hủy' },
   ];
+  dateValue?: Date;
+
+  @ViewChild(AddNewOrderComponent)
+  private addNewOrder!: AddNewOrderComponent;
   // Constructer
   constructor(
+    private messageService: MessageService,
     private newOrderService: NewOrderService,
     private confirmationService: ConfirmationService,
     @Inject(DOCUMENT) private document: Document
@@ -40,51 +53,77 @@ export class NewOrderComponent implements OnInit {
     this.orderType = this.url.split('/orders/')[1];
   }
   ngOnInit(): void {
-    // Get all order records
+    this.getAllOrders();
+    this.getAllUsers();
+  }
+  // ==========================================
+  // Get table records
+  getAllOrders() {
     if (this.orderType.length > 0) {
       this.newOrderService.getNewOrders(this.orderType).subscribe((data) => {
-        this.orderList0 = data;
-        console.log(this.orderList0);
-        this.orderList = this.orderList0;
+        this.orderList = data;
+        this.orderList = this.orderList.sort((a, b) => (a.id > b.id ? 1 : -1));
+        this.orderList.forEach((item) => {
+          if (item.status.includes('1')) item.status = 'Thành Công';
+          if (item.status.includes('2')) item.status = 'Chờ Xác Nhận';
+          if (item.status.includes('3')) item.status = 'Hủy';
+        });
+        console.log('Order Display: ' + this.orderList);
       });
     }
+    if (this.orderType.toLowerCase().includes('record'))
+      this.isbuttonInRecord = true;
+  }
+  getAllUsers() {
+    this.newOrderService.userDisplay().subscribe((response) => {
+      this.users = response;
+    });
   }
   // ==========================================
   // Filter-based search function
   search() {
-    console.log(this.selectedFilter.type);
-    if (this.searchValue.length < 1) {
-      this.orderList = this.orderList0;
-    } else {
-      switch (this.selectedFilter.type) {
-        case 1:
-          this.orderList = this.orderList0?.filter(
-            (item) => item.id == this.searchValue
-          );
-          break;
-        case 2:
-          this.orderList = this.orderList0?.filter((item) =>
-            item.customer_name
-              .toUpperCase()
-              .includes(this.searchValue.toUpperCase())
-          );
-          break;
-        case 3:
-          this.orderList = this.orderList0?.filter((item) =>
-            item.status.toUpperCase().includes(this.searchValue.toUpperCase())
-          );
-          break;
-        case 4:
-          this.orderList = this.orderList0?.filter((item) =>
-            item.user_name
-              .toUpperCase()
-              .includes(this.searchValue.toUpperCase())
-          );
-          break;
-      }
-    }
+    let id;
+    let uid;
+    let status;
+    let date;
+    if (this.searchID) id = this.searchID;
+    else id = '';
+    if (this.selectedUser) uid = this.selectedUser.id;
+    else uid = '';
+    if (this.selectedStatus) status = String(this.selectedStatus.type);
+    else status = '';
+    if (this.dateValue) {
+      let year = String(this.dateValue.getFullYear());
+      let month = String(this.dateValue.getMonth() + 1);
+      let day = String(this.dateValue.getDate());
+      date = year + '-' + month + '-' + day;
+    } else date = '';
+    let filters = {
+      id: id,
+      username: uid,
+      status: status,
+      date: date,
+    };
+    console.log('Filter: ' + filters);
+    this.newOrderService
+      .searchByFilter(filters, this.orderType)
+      .subscribe((response) => {
+        this.orderList = response;
+        this.orderList = this.orderList.sort((a, b) => (a.id > b.id ? 1 : -1));
+        console.log(this.orderList);
+        this.orderList.forEach((item) => {
+          if (item.status.includes('1')) item.status = 'Thành Công';
+          if (item.status.includes('2')) item.status = 'Chờ Xác Nhận';
+          if (item.status.includes('3')) item.status = 'Hủy';
+        });
+      });
   }
-
+  // Refresh the selected filters
+  refreshFilter() {
+    this.selectedUser = {} as any;
+    this.selectedStatus = {} as any;
+    this.dateValue = undefined;
+  }
   // ==========================================
   // Select and delete functions
   selectOrder(order: Order) {
@@ -104,11 +143,11 @@ export class NewOrderComponent implements OnInit {
     });
   }
   deleteQueue() {
-    this.msg = [];
-    console.log(this.selectedQueue);
+    console.log('Selected Orders: ' + this.selectedQueue);
+    let deleteIDs: number[] = [];
     this.selectedQueue.forEach((element) => {
       if (element.status.toLowerCase().includes('chờ'))
-        this.msg.push({
+        this.messageService.add({
           severity: 'warn',
           summary: 'Warning',
           detail:
@@ -118,14 +157,37 @@ export class NewOrderComponent implements OnInit {
         });
       else {
         this.orderList = this.orderList?.filter((item) => item != element);
+        deleteIDs.push(element.id);
       }
     });
+    if (deleteIDs.length > 0) this.newOrderService.deleteDisplayList(deleteIDs);
     this.selectedQueue = [];
   }
+  clearFunction() {
+    this.addNewOrder.clearFunction();
+    // delay
+  }
+  public delay(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
+  // ==========================================
+  //Save Function
+  saveFunction() {
+    let status = this.addNewOrder.saveFunction();
+    if (status) {
+      this.modalRegDisplay = false;
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Congratulation',
+        detail: 'New Order Registered',
+      });
+      setTimeout(() => {
+        this.getAllOrders();
+      }, 500);
+    }
+  }
 }
-
-// Define filter interface
-interface filterInterface {
+interface statusDisplay {
   type: number;
   label: string;
 }

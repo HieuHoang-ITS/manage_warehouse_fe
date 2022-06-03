@@ -11,20 +11,20 @@ import {MessageService} from 'primeng/api';
 @Component({
   selector: 'app-orderstatus',
   templateUrl: './orderstatus.component.html',
-  styleUrls: ['./orderstatus.component.scss']
+  styleUrls: ['./orderstatus.component.scss'],
 })
 export class OrderstatusComponent implements OnInit {
   first_description?: string;
   nhanvien?: User;
-  statuss: string[]=["thanhcong","huy"];
-  type_tradings: string[]=["nhap","xuat"];
+  statuss: string[] = ['thanhcong', 'huy'];
+  type_tradings: string[] = ['nhap', 'xuat'];
   description?: string;
-  users?: any[]=[];
-  geeks: boolean=false;
+  users?: any[] = [];
+  geeks: boolean = false;
   selectstatus?: string;
-  orders: Order[]=[];
+  orders: Order[] = [];
   order?: Order;
-  orderDetail: any[]=[];
+  orderDetail: any[] = [];
   status?: string;
   timeOrder?: Date;
   loaihoadon?: string;
@@ -32,26 +32,29 @@ export class OrderstatusComponent implements OnInit {
   time?: string;
   first_status?: string;
   manhanvien?: number;
-  constructor(private messageService: MessageService,private route: ActivatedRoute, private location: Location, private orderService: OrderService, private primengConfig: PrimeNGConfig) { }
+  constructor(private messageService: MessageService,
+    private route: ActivatedRoute, private location: Location,
+     private orderService: OrderService,
+      private primengConfig: PrimeNGConfig) { }
+
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     const type = parseInt(this.route.snapshot.paramMap.get('type')!, 10);
-    this.getOrder(type)
+    this.getOrder(type);
     console.log(this.route.url);
   }
   getOrder(type: any) : void{
     this.orderService.getOrders(type).subscribe(data=>{ this.orders=data;
      });
     this.orderService.getUsers().subscribe(data=>{this.users=data})
-    
   }
-  detailOrder(order: Order): void{
+  detailOrder(order: Order): void {
     //console.log("dung");
     this.geeks=true;
     this.order=order;
     this.orderService.getOrderDetail(order.id).subscribe(data=>{this.orderDetail=data; console.log(data)});
   }
-  updateOrder(order: Order, description: string, status: string): void{
+  updateOrder(order: Order, description: string, status: string): void {
     // alert(order.customer_name);
     if(description.trim()=="" || !status)
     {
@@ -104,49 +107,41 @@ export class OrderstatusComponent implements OnInit {
       this.timeOrder=date;
       this.time="0000-00-00";
     }
-    if(loaihoadon)
-    {
-      if(loaihoadon==="nhap")
-      {
-        this.loaihoadon="import";
+    if (loaihoadon) {
+      if (loaihoadon === 'nhap') {
+        this.loaihoadon = 'import';
       }
-      if(loaihoadon==="xuat")
-      {
-        this.loaihoadon="export";
+      if (loaihoadon === 'xuat') {
+        this.loaihoadon = 'export';
       }
+    } else {
+      this.loaihoadon = 'o';
     }
-    else
-    {
-      this.loaihoadon='o';
-    }
-    if(mahoadon)
-    {
-      this.mahoadoan=Number(mahoadon);
-      if(isNaN(this.mahoadoan))
-      this.mahoadoan=0;
+    if (mahoadon) {
+      this.mahoadoan = Number(mahoadon);
+      if (isNaN(this.mahoadoan)) this.mahoadoan = 0;
+      //alert(this.mahoadoan);
+    } else {
+      this.mahoadoan = 0;
       //alert(this.mahoadoan);
     }
-    else{
-      this.mahoadoan=0;
-      //alert(this.mahoadoan);
-    }
-    if(this.nhanvien)
-    {
-      this.manhanvien=this.nhanvien.id;
+    if (this.nhanvien) {
+      this.manhanvien = this.nhanvien.id;
+      //alert(this.manhanvien);
+    } else {
+      this.manhanvien = 0;
       //alert(this.manhanvien);
     }
-    else{
-      this.manhanvien=0;
-      //alert(this.manhanvien);
-    }
-    this.orderService.
-    searchOrder(this.mahoadoan,this.manhanvien!,this.time,this.loaihoadon!)
-    .subscribe(
-      data=>
-      {
-        this.orders=data;  
-        console.log(data)
-      } 
-     );
+    this.orderService
+      .searchOrder(
+        this.mahoadoan,
+        this.manhanvien!,
+        this.time,
+        this.loaihoadon!
+      )
+      .subscribe((data) => {
+        this.orders = data;
+        console.log(data);
+      });
   }
 }

@@ -1,0 +1,101 @@
+<p>category works!</p>
+<div class="ui-g">
+  <p-toast></p-toast>
+  <p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
+  <p-panel
+    header="danh sach loai hang"
+    [toggleable]="true"
+    [style]="{ width: '100%' }"
+  >
+    <div style="margin-bottom: 20px">
+      <p-menubar [model]="items1"></p-menubar>
+    </div>
+    <ng-template pTemplate="icons">
+      <button
+        pButton
+        class="p-panel-header-icon p-link"
+        icon="pi pi-cog"
+        (click)="menu.toggle($event)"
+      ></button>
+      <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+    </ng-template>
+
+    <p-table
+      [value]="category"
+      styleClass="p-datatable-gridlines"
+      [paginator]="true"
+      [rows]="10"
+      selectionMode="single"
+      [(selection)]="selectedCategory"
+      dataKey="id"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name">
+            Name <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">
+            Status <p-sortIcon field="status"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-category>
+        <tr [pSelectableRow]="category">
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>{{ category.status }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+  <p-dialog
+    header="Nueva category"
+    [(visible)]="displaySaveDiglog"
+    [style]="{ width: '400px' }"
+  >
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Name">Name</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="name"
+            #addname
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addCategory.name"
+          />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Status">Status</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="status"
+            #addstatus
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addCategory.status"
+          />
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <p-button
+        label="Save"
+        styleClass="ui-button-info"
+        (click)="save()"
+        icon="pi pi-check-circle"
+      ></p-button>
+    </p-footer>
+  </p-dialog>
+</div>
