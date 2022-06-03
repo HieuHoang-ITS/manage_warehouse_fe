@@ -1,5 +1,5 @@
 <div class="hover_bkgr_fricc" (click)="ClickedOut($event)">
-  <p-toast position="top-right"></p-toast>
+  <!-- <<<<<<< HEAD
   <div class="mt-8 mb-5 ml-2">
     <div class="flex">
       <div>
@@ -46,6 +46,54 @@
           optionLabel="full_name"
           [showClear]="true"
         >
+======= -->
+  <p-toast position="top-right"></p-toast>
+  <div class="mt-8 mb-5 ml-2">
+    <div class="flex">
+      <div>
+        <label>Mã Đơn Hàng</label>
+        <input
+          class="ml-2"
+          #mahoadon
+          type="text"
+          (blur)="Search(mahoadon.value, searchtime.value, loaihoadon.value)"
+          (keyup.enter)="
+            Search(mahoadon.value, searchtime.value, loaihoadon.value)
+          "
+          pInputText
+        />
+      </div>
+      <div>
+        <label class="ml-5">Thời gian</label>
+        <p-calendar
+          class="ml-2"
+          placeholder="time"
+          (keyup.enter)="
+            Search(mahoadon.value, searchtime.value, loaihoadon.value)
+          "
+          (blur)="Search(mahoadon.value, searchtime.value, loaihoadon.value)"
+          #searchtime
+        ></p-calendar>
+      </div>
+      <div class="ml-5">
+        <p-dropdown
+          [options]="type_tradings"
+          #loaihoadon
+          placeholder="Chọn loại hóa đơn"
+          optionLabel=""
+          [showClear]="true"
+        >
+        </p-dropdown>
+      </div>
+      <div class="ml-5">
+        <p-dropdown
+          *ngIf="users"
+          [options]="users"
+          [(ngModel)]="nhanvien"
+          placeholder="Chọn nhân viên"
+          optionLabel="full_name"
+          [showClear]="true"
+        >
         </p-dropdown>
       </div>
       <div class="ml-5">
@@ -63,7 +111,10 @@
       <tr>
         <th>mã đơn hàng</th>
         <th>ngày tháng yêu cầu</th>
-        <th>tổng tiền</th>
+        <th pSortableColumn="total_price">
+          tổng tiền<p-sortIcon field="total_price"></p-sortIcon>
+        </th>
+        <th>Loại hóa đơn</th>
         <th>lý do</th>
         <th>trạng thái của đơn hàng</th>
         <th></th>
@@ -76,6 +127,7 @@
           {{ order.created_at | date }}
         </td>
         <td>{{ order.total_price | currency: " " }} VND</td>
+        <td>{{ order.trading_type }}</td>
         <td>{{ order.description }}</td>
         <td [ngSwitch]="order.status">
           <span *ngSwitchCase="1">Thành công</span>
@@ -90,31 +142,43 @@
       </tr>
     </ng-template>
   </p-table>
-  <p-dialog position="top" header="Chi Tiết Hóa Đơn" [(visible)]="geeks">
-    <p-dropdown
-      class="mr-8"
-      [options]="statuss"
-      #status
-      placeholder="Trang thái đơn hàng"
-      optionLabel=""
-      [showClear]="true"
-    >
-    </p-dropdown>
-    <input
-      #desciption
-      type="text"
-      class="p-inputtext-lg"
-      placeholder="Lí do cập nhât"
-      pInputText
-    />
-    <button
-      class="ml-8"
-      *ngIf="order"
-      pButton
-      type="button"
-      label="Cập nhật"
-      (click)="updateOrder(order, desciption.value, status.value)"
-    ></button>
+  <p-dialog
+    [dismissableMask]="true"
+    [modal]="true"
+    position="center"
+    header="Chi Tiết Hóa Đơn"
+    [(visible)]="geeks"
+    onHide="clickshow(event)"
+  >
+    <div class="flex">
+      <p-dropdown
+        class="mr-4"
+        [(ngModel)]="first_status"
+        [options]="statuss"
+        #status
+        placeholder="Trang thái đơn hàng"
+        optionLabel=""
+        [showClear]="true"
+      >
+      </p-dropdown>
+      <div>
+        <textarea
+          #desciption
+          [(ngModel)]="first_description"
+          pInputTextarea
+          placeholder="Lí do cập nhât"
+        ></textarea>
+      </div>
+      <button
+        class="ml-8 h-4rem"
+        *ngIf="order"
+        pButton
+        type="button"
+        label="Cập nhật"
+        (click)="updateOrder(order, desciption.value, status.value)"
+      ></button>
+    </div>
+    <!-- <input #desciption type="text" class="p-inputtext-lg" placeholder="Lí do cập nhât" pInputText /> -->
 
     <div class="mt-5" *ngIf="order">
       <span>Mã Hóa Đơn: </span><span>{{ order.id }}</span>

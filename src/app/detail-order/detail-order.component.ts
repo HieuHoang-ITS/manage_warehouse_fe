@@ -13,7 +13,6 @@ export class DetailOrderComponent implements OnInit {
   dOrderDisplayList: DetailOrderDisplay[] = [];
   lockedOrder: DetailOrderDisplay[] = [];
   constructor(private detailOrderService: DetailOrderService) {}
-
   ngOnInit(): void {
     // Get detail list based on selected-order id
     this.detailOrderService

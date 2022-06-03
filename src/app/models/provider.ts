@@ -1,5 +1,5 @@
 export interface Provider {
-  id?: any,
+  id: any,
   name: string,
   address: string,
   tel: string,
