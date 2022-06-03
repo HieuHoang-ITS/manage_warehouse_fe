@@ -1,9 +1,7 @@
 <p-toast></p-toast>
 <div *ngIf="orderList">
   <p-toolbar>
-    <div class="p-toolbar-group-left">
-      <h2>List Order Type: {{ orderType | uppercase }}</h2>
-      <i class="pi pi-bars mx-2"></i>
+    <div class="p-toolbar-group-left flex-row flex align-items-center">
       <span class="p-float-label p-input-icon-right">
         <input
           (keydown.enter)="search()"
@@ -12,50 +10,39 @@
           placeholder="ID"
           [(ngModel)]="searchID"
         />
-        <i
-          class="pi pi-ellipsis-v cursor-pointer"
-          (click)="filter.toggle($event)"
-        ></i>
       </span>
+      <p-dropdown
+        [options]="users"
+        [(ngModel)]="selectedUser"
+        optionLabel="full_name"
+        placeholder="Select user"
+      ></p-dropdown>
+      <p-dropdown
+        [options]="status"
+        [(ngModel)]="selectedStatus"
+        optionLabel="label"
+        placeholder="Select status"
+      ></p-dropdown>
+      <p-calendar
+        [(ngModel)]="dateValue"
+        [hourFormat]="'24'"
+        dateFormat="mm/dd/yy"
+        [showButtonBar]="true"
+        [showIcon]="true"
+      ></p-calendar>
+      <i class="pi pi-bars mx-2"></i>
       <button
-        type="text"
+        pButton
+        icon="pi pi-refresh"
+        class="p-button-outlined p-ripple"
+        (click)="refreshFilter()"
+      ></button>
+      <button
         pButton
         icon="pi pi-search"
-        class=""
-        label=""
+        class="p-button-outlined p-ripple ml-1"
         (click)="search()"
       ></button>
-      <p-overlayPanel #filter [dismissable]="false" [showCloseIcon]="true">
-        <ng-template pTemplate>
-          <div class="flex flex-row flex-wrap">
-            <p-dropdown
-              [options]="users"
-              [(ngModel)]="selectedUser"
-              optionLabel="full_name"
-              placeholder="Select user"
-            ></p-dropdown>
-            <p-dropdown
-              [options]="status"
-              [(ngModel)]="selectedStatus"
-              optionLabel="label"
-              placeholder="Select status"
-            ></p-dropdown>
-            <p-calendar
-              [(ngModel)]="dateValue"
-              [hourFormat]="'24'"
-              dateFormat="mm/dd/yy"
-              [showButtonBar]="true"
-              [showIcon]="true"
-            ></p-calendar>
-            <button
-              pButton
-              icon="pi pi-refresh"
-              class="p-button-outlined p-button-rounded ml-2"
-              (click)="refreshFilter()"
-            ></button>
-          </div>
-        </ng-template>
-      </p-overlayPanel>
     </div>
 
     <div class="p-toolbar-group-right">
@@ -103,6 +90,9 @@
     responsiveLayout="scroll"
     [(selection)]="selectedQueue"
   >
+    <ng-template pTemplate="caption">
+      <h2>List Order Type: {{ orderType | uppercase }}</h2>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
