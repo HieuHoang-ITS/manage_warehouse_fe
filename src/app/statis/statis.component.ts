@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ThongKe } from '../models/thongke';
+import { productTable, ThongKe } from '../models/thongke';
 import { ThongkeService } from '../services/thongke.service';
 import { pieChart } from '../models/thongke';
 import { doughChart } from '../models/thongke';
@@ -16,6 +16,7 @@ export class FeatureStatisticComponent implements OnInit {
   chartOptionspie: any;
   datapie1: any;
 
+  productList:productTable[] = []
   chartOptionspie1: any;
   pie_chart: pieChart[] = [];
   doughnut_chart: doughChart[] = [];
@@ -51,7 +52,12 @@ export class FeatureStatisticComponent implements OnInit {
       { name: 'Mặt hàng 5', code: 'PRS' }
     ];
   }
-
+  getProductTable(month: number, year: number){
+    this.thongkeService.getProductTable(month, year).subscribe((item)=>{
+      this.productList = item;
+      console.log("product table data: "+this.productList);
+    })
+  }
   showModalDialogpie() {
     const newDate = new Date();    
     let month1 = newDate.getMonth()+1;
@@ -61,6 +67,7 @@ export class FeatureStatisticComponent implements OnInit {
     this.updatePieChartXuat(month, year);
     this.updatePieChartNhap(month, year);
     this.updateDoughnutChartNhapXuat(month, year)
+    this.getProductTable(month,year);
   }
   updatePieChartXuat(month: number, year: number) {
     console.log(month+1+" "+year);
@@ -78,9 +85,9 @@ export class FeatureStatisticComponent implements OnInit {
           {
             data: phantramList,
             backgroundColor: [
+              "#36A2EB",
+              "#36A2EB",
               "orange",
-              "blue",
-              "red",
               "black",
               "pink",
               "yellow",
@@ -112,9 +119,30 @@ export class FeatureStatisticComponent implements OnInit {
           {
             data: phantramList,
             backgroundColor: [
+              "#36A2EB",
+              "#36A2EB",
               "orange",
-              "blue",
-              "red",
+              "black",
+              "pink",
+              "yellow",
+              "brown",
+            ],
+            hoverBackgroundColor: [
+              "#66BB6A",
+              "#81C784",
+              "#FFB74D"
+            ]
+          }
+        ]
+      };this.datapie1 = {
+        labels: nameList,
+        datasets: [
+          {
+            data: phantramList,
+            backgroundColor: [
+              "#36A2EB",
+              "#36A2EB",
+              "orange",
               "black",
               "pink",
               "yellow",
@@ -170,6 +198,69 @@ export class FeatureStatisticComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data = {
+      labels: [null],
+      datasets: [
+          {
+              data: [0,100],
+              backgroundColor: [
+                  
+                  "#36A2EB",
+                  "#FFCE56"
+              ],
+              hoverBackgroundColor: [
+                  
+                  "#36A2EB",
+                  "#FFCE56"
+              ]
+          }
+      ]
+      
+  };
+  this.datapie1 = {
+    labels: [null],
+    datasets: [
+      {
+        data: [0,100],
+        backgroundColor: [
+          "#36A2EB",
+          "#36A2EB",
+          "orange",
+          "black",
+          "pink",
+          "yellow",
+          "brown",
+        ],
+        hoverBackgroundColor: [
+          "#66BB6A",
+          "#81C784",
+          "#FFB74D"
+        ]
+      }
+    ]
+  };
+  this.datapie = {
+    labels: [null],
+    datasets: [
+      {
+        data: [0,100],
+        backgroundColor: [
+          "#36A2EB",
+          "#36A2EB",
+          "orange",
+          "black",
+          "pink",
+          "yellow",
+          "brown",
+        ],
+        hoverBackgroundColor: [
+          "#66BB6A",
+          "#81C784",
+          "#FFB74D"
+        ]
+      }
+    ]
+  };
     let playStore: any = [];
     let playStor: any = [];
     this.thongkeService.getDoanhThuTheoThang().subscribe(data => {
@@ -186,7 +277,7 @@ export class FeatureStatisticComponent implements OnInit {
         datasets: [
           {
             label: 'Doanh thu theo năm',
-            backgroundColor: 'red',
+            backgroundColor: 'black',
             data: this.tienThang
           }
 

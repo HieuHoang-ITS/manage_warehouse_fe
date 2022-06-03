@@ -15,3 +15,10 @@ export interface doughChart{
     tongsoluong: number;
     phantram: number;
 }
+
+export interface productTable{
+    id:number;
+	name:string ;
+	total_price:number;
+	soluong:number;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Product } from '../models/product';
-import { ThongKe } from '../models/thongke';
+import { productTable, ThongKe } from '../models/thongke';
 import { pieChart } from '../models/thongke';
 import {doughChart} from '../models/thongke';
 // import { ThongKe } from '../models/Thongke';
@@ -15,6 +15,7 @@ export class ThongkeService {
   piechartUrlnhap ="http://localhost:8080/api/thongkeloainhap/"
   doughnutChartxuat ="http://localhost:8080/api/thongkeloaixuat/"
   doughnutChartnhap  = "http://localhost:8080/api/thongkeloainhap/"
+  productListURL = "http://localhost:8080/thongkebasanphamnhapnhieunhat/";
   constructor(private httpclient: HttpClient) { }
   getDoanhThuTheoThang() : Observable<ThongKe[]>
   {
@@ -31,5 +32,8 @@ export class ThongkeService {
   }
   getImportDouc(month: number, year: number) {
     return this.httpclient.get<doughChart[]>(this.doughnutChartnhap+month+'/'+year)
+  }
+  getProductTable(month: number, year: number) {
+    return this.httpclient.get<productTable[]>(this.productListURL+month+ '/'+year)
   }
 }
