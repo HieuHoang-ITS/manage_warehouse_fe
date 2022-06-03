@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 //Component
 import { UserComponent } from './user/user.component';
 import { FeatureStatisticComponent } from './statis/statis.component';
@@ -55,10 +55,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ProductComponent,
     HomepageComponent,
     OrderstatusComponent,
-    CategoryComponent,
-    ProviderComponent,
-    ProductComponent,
-    UserComponent,
   ],
   imports: [
     FormsModule,
@@ -84,10 +80,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     DragDropModule,
     TabViewModule,
-    ChartModule,
-    CalendarModule,
-    ConfirmDialogModule,
-    ToastModule,
     InputTextareaModule,
     MultiSelectModule,
     OverlayPanelModule,
@@ -98,4 +90,4 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }

@@ -26,10 +26,14 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'product', component: ProductComponent },
   { path: 'category', component: CategoryComponent },
+  { path: 'provider', component: ProviderComponent },
+  { path: 'user', component: UserComponent }
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
