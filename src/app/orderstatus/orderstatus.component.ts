@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 import { Order } from '../models/order';
 import { ActivatedRoute } from '@angular/router';
@@ -30,12 +30,12 @@ export class OrderstatusComponent implements OnInit {
   time?: string;
 
   manhanvien?: number;
-  constructor(
+  constructor(private messageService: MessageService,
     private route: ActivatedRoute,
     private location: Location,
     private orderService: OrderService,
     private primengConfig: PrimeNGConfig
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     const type = parseInt(this.route.snapshot.paramMap.get('type')!, 10);
@@ -44,7 +44,7 @@ export class OrderstatusComponent implements OnInit {
   }
   getOrder(type: any): void {
     this.orderService.getOrders(type).subscribe((data) => {
-      console.log('Check Order: '+this.orders)
+      console.log('Check Order: ' + this.orders)
       this.orders = data;
     });
     this.orderService.getUsers().subscribe((data) => {
@@ -64,7 +64,7 @@ export class OrderstatusComponent implements OnInit {
   updateOrder(order: Order, description: string, status: string): void {
     // alert(order.customer_name);
     if (description.trim() == '' || !status) {
-      alert('Chọn trạng thái, ghi rõ lí do');
+      this.messageService.add({ severity: 'error', summary: 'Cập nhật không thành công', detail: 'chọn trạng thái, ghi rõ lí do' });
     } else {
       this.geeks = false;
       order.description = description;

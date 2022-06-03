@@ -60,8 +60,8 @@ export class AppComponent {
         icon: '',
         items: [
           { label: 'Category', icon: 'pi pi-book', routerLink: "/category" },
-          { label: 'Provider', icon: 'pi pi-building' },
-          { label: 'User', icon: 'pi pi-user' },
+          { label: 'Provider', icon: 'pi pi-building', routerLink: "/provider" },
+          { label: 'User', icon: 'pi pi-user', routerLink: "/user" },
           { label: 'Product', icon: 'pi pi-home', routerLink: "/product" },
         ],
       },

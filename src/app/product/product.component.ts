@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem, Message, MessageService } from 'primeng/api';
+import { productDisplay } from '../models/order-display';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 
@@ -16,12 +17,16 @@ export class ProductComponent implements OnInit {
   displaySaveDiglog: boolean = false;
   msgs: Message[] = []
   selectedProduct: Product = {} as any
+  productList: productDisplay[] = [];
+  nhacap?: String
+  tenhang?: String
+  loaihang?: String
 
-  constructor(private productservice: ProductService, private messageService: MessageService, private confirmService: ConfirmationService) { }
+  constructor(private productService: ProductService, private messageService: MessageService, private confirmService: ConfirmationService) { }
   getAll() {
-    this.productservice.getAll().subscribe(
+    this.productService.getAll().subscribe(
       (result: any) => {
-        this.product = result;
+        this.productList = result;
         console.log(result)
       },
       error => {
@@ -30,12 +35,18 @@ export class ProductComponent implements OnInit {
 
     )
   }
+  refrsesh() {
+    this.getAll()
+    this.nhacap = '';
+    this.loaihang = '';
+    this.tenhang = '';
+  }
   showSaveDialog(editar: boolean) {
     if (editar) {
       if (this.selectedProduct != null && this.selectedProduct.id != null) {
         this.addProduct = this.selectedProduct;
       } else {
-        this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
+        this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "chon muc can update" });
         return;
       }
     } else {
@@ -60,18 +71,18 @@ export class ProductComponent implements OnInit {
       provider_id: this.addProduct.provider_id
     };
     if (pr.id == null) {
-      this.productservice.save(pr).subscribe(
+      this.productService.save(pr).subscribe(
         Response => { console.log(Response) }
       )
-      console.log(pr)
-      pr.id = this.product[this.product.length - 1].id + 1
-      this.product.push(pr as Product)
+      setTimeout(() => {
+        this.getAll();
+      }, 500);
     }
 
     else {
       console.log(pr)
-      this.productservice.update(pr, pr.id).subscribe(() =>
-        this.productservice.getAll().subscribe(
+      this.productService.update(pr, pr.id).subscribe(() =>
+        this.productService.getAll().subscribe(
           (result: any) => {
             this.product = result;
           },
@@ -82,18 +93,18 @@ export class ProductComponent implements OnInit {
         ));
     }
 
-    this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
-
+    this.messageService.add({ severity: 'success', summary: "Resultado", detail: "add thanh cong" })
+    this.displaySaveDiglog = false
   }
   deletecategory() {
     if (this.selectedProduct == null || this.selectedProduct.id == null) {
-      this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
+      this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "chon muc can xoa" });
       return;
     }
     this.confirmService.confirm({
       message: " ban co muon xoa khong",
       accept: () => {
-        this.productservice.delete(this.selectedProduct.id).subscribe(
+        this.productService.delete(this.selectedProduct.id).subscribe(
           (result: any) => {
             console.log('')
           }
@@ -109,6 +120,17 @@ export class ProductComponent implements OnInit {
     if (index != -1) {
       this.product.splice(index, 1);
     }
+  }
+  search(tenhanghoa: String, loaihanghoa: String, nhacungcap: String) {
+    this.productService.search(tenhanghoa, loaihanghoa, nhacungcap).subscribe(
+      Response => {
+        this.productList = Response;
+        console.log(Response)
+
+      }
+
+    )
+
   }
   ngOnInit(): void {
 

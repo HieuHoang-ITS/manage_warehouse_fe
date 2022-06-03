@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
+  type_tradings: string[] = ['Name', 'Xuất'];
   category: Category[] = [];
   addCategory: Category = {} as any;
   items: MenuItem[] = [];
@@ -17,7 +18,9 @@ export class CategoryComponent implements OnInit {
   displaySaveDiglog: boolean = false;
   msgs: Message[] = []
   selectedCategory: Category = {} as any
-
+  name?: string;
+  status?: string;
+  ten?: String
   constructor(private categoryService: CategorytService, private messageService: MessageService, private confirmService: ConfirmationService) { }
   getAll() {
     this.categoryService.getAll().subscribe(
@@ -30,12 +33,16 @@ export class CategoryComponent implements OnInit {
 
     )
   }
+  refrsesh() {
+    this.getAll()
+    this.ten = '';
+  }
   showSaveDialog(editar: boolean) {
     if (editar) {
       if (this.selectedCategory != null && this.selectedCategory.id != null) {
         this.addCategory = this.selectedCategory;
       } else {
-        this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
+        this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "chon muc can update" });
         return;
       }
     } else {
@@ -51,13 +58,14 @@ export class CategoryComponent implements OnInit {
     };
     if (ca.id == null) {
       this.categoryService.save(ca).subscribe(
-        Response => {
+        (Response: any) => {
+          this.categoryService = Response
           console.log(Response)
         }
       )
-      ca.id = this.category[this.category.length - 1].id + 1
-      this.category.push(ca as Category)
-      console.log("add function")
+      setTimeout(() => {
+        this.getAll();
+      }, 500);
     }
     else {
       console.log(ca)
@@ -72,15 +80,16 @@ export class CategoryComponent implements OnInit {
           }
 
         ));
+
     }
 
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
-
+    this.displaySaveDiglog = false
   }
 
   deletecategory() {
     if (this.selectedCategory == null || this.selectedCategory.id == null) {
-      this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
+      this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "hay chon muc can xoa" });
       return;
     }
     this.confirmService.confirm({
@@ -103,43 +112,19 @@ export class CategoryComponent implements OnInit {
       this.category.splice(index, 1);
     }
   }
+  search(name: String) {
+    this.categoryService.search(name).subscribe(
+      Response => {
+        this.category = Response;
+        console.log(Response)
+
+      }
+
+    )
+  }
   ngOnInit(): void {
 
     this.getAll()
-    this.items = [
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            this.update();
-          }
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-times',
-          command: () => {
-            this.delete();
-          }
-        }
-        ]
-      },
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Angular Website',
-          icon: 'pi pi-external-link',
-          url: 'http://angular.io'
-        },
-        {
-          label: 'Router',
-          icon: 'pi pi-upload',
-          routerLink: '/fileupload'
-        }
-        ]
-      }
-    ];
     this.items1 = [
       {
         label: "AddCategory",
@@ -147,7 +132,7 @@ export class CategoryComponent implements OnInit {
         command: () => this.showSaveDialog(false)
       },
       {
-        label: "Editar",
+        label: "Editor",
         icon: "pi pi-fw pi-user-edit",
         command: () => this.showSaveDialog(true)
       },
@@ -156,15 +141,9 @@ export class CategoryComponent implements OnInit {
         icon: "pi pi-fw pi-trash",
         command: () => this.deletecategory()
 
-      }
-    ]
-  }
-  update() {
-    this.msgs.push({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-  }
+      },
 
-  delete() {
-    this.msgs.push({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
+    ]
   }
 }
 

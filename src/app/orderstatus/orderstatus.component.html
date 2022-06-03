@@ -1,105 +1,154 @@
 <div class="hover_bkgr_fricc" (click)="ClickedOut($event)">
-<div class="mt-8 mb-5 ml-2">
+  <p-toast position="top-right"></p-toast>
+  <div class="mt-8 mb-5 ml-2">
     <div class="flex">
-        <div>
-            <label>Ma Hoa Don</label>
-            <input class="ml-2" #mahoadon type="text" 
-            (blur)="Search(mahoadon.value,searchtime.value, loaihoadon.value)" 
-            (keyup.enter)="Search(mahoadon.value,searchtime.value, loaihoadon.value)" pInputText />
-        </div>
-        <div>
-            <label class="ml-5">Thoi gian</label>
-            <p-calendar class="ml-2" placeholder="time"  
-            (keyup.enter)="Search(mahoadon.value,searchtime.value, loaihoadon.value)" 
-            (blur)="Search(mahoadon.value,searchtime.value, loaihoadon.value)" 
-             #searchtime></p-calendar>
-        </div>
-        <div class="ml-5">
-            <p-dropdown  [options]="type_tradings" 
-            #loaihoadon placeholder="Chon loai hoa don" optionLabel=""
-            [showClear]="true">
+      <div>
+        <label>Ma Hoa Don</label>
+        <input
+          class="ml-2"
+          #mahoadon
+          type="text"
+          (blur)="Search(mahoadon.value, searchtime.value, loaihoadon.value)"
+          (keyup.enter)="
+            Search(mahoadon.value, searchtime.value, loaihoadon.value)
+          "
+          pInputText
+        />
+      </div>
+      <div>
+        <label class="ml-5">Thoi gian</label>
+        <p-calendar
+          class="ml-2"
+          placeholder="time"
+          (keyup.enter)="
+            Search(mahoadon.value, searchtime.value, loaihoadon.value)
+          "
+          (blur)="Search(mahoadon.value, searchtime.value, loaihoadon.value)"
+          #searchtime
+        ></p-calendar>
+      </div>
+      <div class="ml-5">
+        <p-dropdown
+          [options]="type_tradings"
+          #loaihoadon
+          placeholder="Chon loai hoa don"
+          optionLabel=""
+          [showClear]="true"
+        >
         </p-dropdown>
-        </div>
-        <div class="ml-5">
-            <p-dropdown *ngIf="users"  [options]="users"
-             [(ngModel)]="nhanvien" placeholder="Chon nhan vien" optionLabel="full_name"
-            [showClear]="true">
+      </div>
+      <div class="ml-5">
+        <p-dropdown
+          *ngIf="users"
+          [options]="users"
+          [(ngModel)]="nhanvien"
+          placeholder="Chon nhan vien"
+          optionLabel="full_name"
+          [showClear]="true"
+        >
         </p-dropdown>
-        </div>
-        <div class="ml-5">
-            <button pButton type="button" label="search"
-             (click)="Search(mahoadon.value,searchtime.value, loaihoadon.value)"></button>
-        </div>
+      </div>
+      <div class="ml-5">
+        <button
+          pButton
+          type="button"
+          label="search"
+          (click)="Search(mahoadon.value, searchtime.value, loaihoadon.value)"
+        ></button>
+      </div>
     </div>
-</div>
-<p-table [value]="orders" [paginator]="true" [rows]="10" >
+  </div>
+  <p-table [value]="orders" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header" let-order>
-        <tr>
-            <th>mã đơn hàng</th>
-            <th>ngày tháng yêu cầu</th>
-            <th>tổng tiền</th>
-            <th>lý do</th>
-            <th>trạng thái của đơn hàng</th>
-            <th></th>
-        </tr>
+      <tr>
+        <th>mã đơn hàng</th>
+        <th>ngày tháng yêu cầu</th>
+        <th>tổng tiền</th>
+        <th>lý do</th>
+        <th>trạng thái của đơn hàng</th>
+        <th></th>
+      </tr>
     </ng-template>
     <ng-template pTemplate="body" let-order>
-        <tr>
-            <td>{{order.id}}</td>
-            <td ng-bind="date | date:'dd/MM/yyyy'">{{order.created_at |date}}</td>
-            <td> {{ order.total_price | currency: " " }} VND</td>
-            <td>{{order.description}}</td>
-            <td [ngSwitch]="order.status">
-                <span *ngSwitchCase="1">Thành công</span>
-                <span *ngSwitchCase="2">Chờ xác nhận</span>
-                <span *ngSwitchCase="3">Hủy</span>
-            </td>
-            <td><button (click)="detailOrder(order)"><i class="pi pi-check"></i></button></td>
-        </tr>
+      <tr>
+        <td>{{ order.id }}</td>
+        <td ng-bind="date | date:'dd/MM/yyyy'">
+          {{ order.created_at | date }}
+        </td>
+        <td>{{ order.total_price | currency: " " }} VND</td>
+        <td>{{ order.description }}</td>
+        <td [ngSwitch]="order.status">
+          <span *ngSwitchCase="1">Thành công</span>
+          <span *ngSwitchCase="2">Chờ xác nhận</span>
+          <span *ngSwitchCase="3">Hủy</span>
+        </td>
+        <td>
+          <button (click)="detailOrder(order)">
+            <i class="pi pi-check"></i>
+          </button>
+        </td>
+      </tr>
     </ng-template>
-</p-table>
-<p-dialog position="top" header="Chi Tiết Hóa Đơn" [(visible)]="geeks">
-    <p-dropdown class="mr-8" [options]="statuss" #status placeholder="Trang thái đơn hàng" optionLabel=""
-        [showClear]="true">
+  </p-table>
+  <p-dialog position="top" header="Chi Tiết Hóa Đơn" [(visible)]="geeks">
+    <p-dropdown
+      class="mr-8"
+      [options]="statuss"
+      #status
+      placeholder="Trang thái đơn hàng"
+      optionLabel=""
+      [showClear]="true"
+    >
     </p-dropdown>
-    <input #desciption type="text" class="p-inputtext-lg" placeholder="Lí do cập nhât" pInputText />
-    <button class="ml-8" *ngIf="order" pButton type="button" label="Cập nhật"
-        (click)="updateOrder(order, desciption.value, status.value)"></button>
+    <input
+      #desciption
+      type="text"
+      class="p-inputtext-lg"
+      placeholder="Lí do cập nhât"
+      pInputText
+    />
+    <button
+      class="ml-8"
+      *ngIf="order"
+      pButton
+      type="button"
+      label="Cập nhật"
+      (click)="updateOrder(order, desciption.value, status.value)"
+    ></button>
 
     <div class="mt-5" *ngIf="order">
-        <span>Mã Hóa Đơn: </span><span>{{order.id}}</span>
-        <br>
-        <br>
-        <span>Ngày Đặt: </span> <span>{{order.created_at | date}}</span>
-        <br>
-        <br>
-        <span>Người Phụ Trách: </span><span>{{orderDetail[0].nameuser}}</span>
-        <br>
-        <br>
-        <p-table [value]="orderDetail" [scrollable]="true" scrollHeight="400px">
-            <ng-template pTemplate="header" let-order>
-                <tr>
-                    <th>Tên hàng</th>
-                    <th>Loại hàng</th>
-                    <th>Nhà cung cấp</th>
-                    <th>Số lượng</th>
-                    <th>Giá tiền</th>
-                    <th>Tổng tiền</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-oorder>
-                <tr>
-                    <td>{{oorder.namesanpham}}</td>
-                    <td>{{oorder.loai}}</td>
-                    <td>{{oorder.nhacungcap}}</td>
-                    <td>{{oorder.soluong}}</td>
-                    <td>{{oorder.gia}}</td>
-                    <td>{{oorder.soluong*oorder.gia | currency: " " }} VND</td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <!-- //<p>{{order.total_price}}</p> -->
+      <span>Mã Hóa Đơn: </span><span>{{ order.id }}</span>
+      <br />
+      <br />
+      <span>Ngày Đặt: </span> <span>{{ order.created_at | date }}</span>
+      <br />
+      <br />
+      <span>Người Phụ Trách: </span><span>{{ orderDetail[0].nameuser }}</span>
+      <br />
+      <br />
+      <p-table [value]="orderDetail" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header" let-order>
+          <tr>
+            <th>Tên hàng</th>
+            <th>Loại hàng</th>
+            <th>Nhà cung cấp</th>
+            <th>Số lượng</th>
+            <th>Giá tiền</th>
+            <th>Tổng tiền</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-oorder>
+          <tr>
+            <td>{{ oorder.namesanpham }}</td>
+            <td>{{ oorder.loai }}</td>
+            <td>{{ oorder.nhacungcap }}</td>
+            <td>{{ oorder.soluong }}</td>
+            <td>{{ oorder.gia }}</td>
+            <td>{{ oorder.soluong * oorder.gia | currency: " " }} VND</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!-- //<p>{{order.total_price}}</p> -->
     </div>
-
-</p-dialog>
+  </p-dialog>
 </div>
