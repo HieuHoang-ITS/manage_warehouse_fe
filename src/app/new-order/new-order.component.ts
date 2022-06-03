@@ -52,7 +52,6 @@ export class NewOrderComponent implements OnInit {
     this.url = this.document.location.href;
     this.orderType = this.url.split('/orders/')[1];
   }
-
   ngOnInit(): void {
     this.getAllOrders();
     this.getAllUsers();

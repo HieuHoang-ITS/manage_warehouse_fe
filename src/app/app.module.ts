@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import {InputTextareaModule} from 'primeng/inputtextarea';
 //Component
 import { UserComponent } from './user/user.component';
 import { FeatureStatisticComponent } from './statis/statis.component';
@@ -15,8 +15,6 @@ import { ProductComponent } from './product/product.component';
 import { AddNewOrderComponent } from './add-new-order/add-new-order.component';
 import { DetailOrderComponent } from './detail-order/detail-order.component';
 import { NewOrderComponent } from './new-order/new-order.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { OrderstatusComponent } from './orderstatus/orderstatus.component';
 //primeng
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
@@ -25,10 +23,6 @@ import { AccordionModule } from 'primeng/accordion';
 import { PanelModule } from 'primeng/panel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuModule } from 'primeng/menu';
-import { MessageService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
@@ -39,8 +33,15 @@ import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { DragDropModule } from 'primeng/dragdrop';
 import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { HomepageComponent } from './homepage/homepage.component';
+import { OrderstatusComponent } from './orderstatus/orderstatus.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,8 +84,14 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     DragDropModule,
     TabViewModule,
+    ChartModule,
+    CalendarModule,
+    ConfirmDialogModule,
+    ToastModule,
+    InputTextareaModule,
     MultiSelectModule,
     OverlayPanelModule,
+
   ],
 
   providers: [MessageService, ConfirmationService],
