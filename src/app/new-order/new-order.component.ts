@@ -110,6 +110,7 @@ export class NewOrderComponent implements OnInit {
       .searchByFilter(filters, this.orderType)
       .subscribe((response) => {
         this.orderList = response;
+        this.orderList = this.orderList.sort((a, b) => (a.id > b.id ? 1 : -1));
         console.log(this.orderList);
         this.orderList.forEach((item) => {
           if (item.status.includes('1')) item.status = 'Thành Công';
