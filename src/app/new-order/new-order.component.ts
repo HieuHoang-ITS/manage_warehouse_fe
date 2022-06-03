@@ -39,7 +39,6 @@ export class NewOrderComponent implements OnInit {
     this.url = this.document.location.href;
     this.orderType = this.url.split('/orders/')[1];
   }
-
   ngOnInit(): void {
     // Get all order records
     if (this.orderType.length > 0) {
