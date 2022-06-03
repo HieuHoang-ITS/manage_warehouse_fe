@@ -88,7 +88,7 @@ export class AddNewOrderComponent implements OnInit {
 
   // ============================================
   // Function for saving new order record
-  async saveFunction() {
+  saveFunction(): boolean {
     // Define order record
     if (
       this.selectedProductList.length > 0 &&
@@ -121,6 +121,7 @@ export class AddNewOrderComponent implements OnInit {
       };
       console.log(this.newOrderSave);
       this.newOrderService.addNew(this.newOrderSave);
+      return true;
       // this.messageService.add({
       //   severity: 'success',
       //   summary: 'Congratulation',
@@ -145,6 +146,7 @@ export class AddNewOrderComponent implements OnInit {
           summary: 'Warning',
           detail: 'Customer phone is required',
         });
+      return false;
     }
   }
   //delay function
