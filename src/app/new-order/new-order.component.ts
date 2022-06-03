@@ -143,12 +143,11 @@ export class NewOrderComponent implements OnInit {
     });
   }
   deleteQueue() {
-    this.msg = [];
     console.log('Selected Orders: ' + this.selectedQueue);
     let deleteIDs: number[] = [];
     this.selectedQueue.forEach((element) => {
       if (element.status.toLowerCase().includes('chờ'))
-        this.msg.push({
+        this.messageService.add({
           severity: 'warn',
           summary: 'Warning',
           detail:
@@ -176,13 +175,15 @@ export class NewOrderComponent implements OnInit {
   saveFunction() {
     let status = this.addNewOrder.saveFunction();
     if (status) {
-      this.getAllOrders();
       this.modalRegDisplay = false;
       this.messageService.add({
         severity: 'success',
         summary: 'Congratulation',
         detail: 'New Order Registered',
       });
+      setTimeout(() => {
+        this.getAllOrders();
+      }, 500);
     }
   }
 }
