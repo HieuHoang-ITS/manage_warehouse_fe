@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   items1: MenuItem[] = [];
   displaySaveDiglog: boolean = false;
   msgs: Message[] = []
-  selectedProduct: Product = {} as any
+  selectedProduct: productDisplay = {} as any
   productList: productDisplay[] = [];
   nhacap?: String
   tenhang?: String
@@ -44,7 +44,12 @@ export class ProductComponent implements OnInit {
   showSaveDialog(editar: boolean) {
     if (editar) {
       if (this.selectedProduct != null && this.selectedProduct.id != null) {
-        this.addProduct = this.selectedProduct;
+        this.addProduct.name = this.selectedProduct.product_name;
+        this.addProduct.unit = this.selectedProduct.unit
+        this.addProduct.amount = this.selectedProduct.amount
+        this.addProduct.price = this.selectedProduct.price;
+        this.addProduct.category_id = 1;
+        this.addProduct.provider_id = 1;
       } else {
         this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "chon muc can update" });
         return;
@@ -135,40 +140,6 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
 
     this.getAll()
-    this.items = [
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            this.update();
-          }
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-times',
-          command: () => {
-            this.delete();
-          }
-        }
-        ]
-      },
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Angular Website',
-          icon: 'pi pi-external-link',
-          url: 'http://angular.io'
-        },
-        {
-          label: 'Router',
-          icon: 'pi pi-upload',
-          routerLink: '/fileupload'
-        }
-        ]
-      }
-    ];
     this.items1 = [
       {
         label: "AddProduct",
@@ -188,14 +159,6 @@ export class ProductComponent implements OnInit {
       }
     ]
   }
-  update() {
-    this.msgs.push({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-  }
-
-  delete() {
-    this.msgs.push({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
-  }
-
 
 
 
