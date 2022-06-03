@@ -6,9 +6,23 @@ import { Product } from '../models/product';
   providedIn: 'root',
 })
 export class ProductService {
-  private productUrl = 'http://localhost:8080/api/products';
-  constructor(private http: HttpClient) {}
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productUrl).pipe();
+  productUrl: string = "http://localhost:8080/api/v1/Products"
+  constructor(private http: HttpClient) { }
+  getAll(): Observable<any> {
+    return this.http.get(this.productUrl).pipe();
+  }
+
+  save(data: any): Observable<any> {
+    return this.http.post(this.productUrl + "/insert", data)
+  }
+  delete(id: number): Observable<any> {
+    let deleteUrl = this.productUrl + "/delete/" + id;
+    console.log(deleteUrl);
+    return this.http.delete(deleteUrl);
+  }
+  update(data: Product, id: any): Observable<any> {
+    let updateUrl = this.productUrl + "/update/" + id;
+    console.log(data);
+    return this.http.put(updateUrl, data).pipe();
   }
 }

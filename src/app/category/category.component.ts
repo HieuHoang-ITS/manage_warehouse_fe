@@ -44,51 +44,60 @@ export class CategoryComponent implements OnInit {
     this.displaySaveDiglog = true;
   }
   save() {
-    const ca = {
+    let ca = {
+      id: this.addCategory.id,
       name: this.addCategory.name,
       status: this.addCategory.status,
-      id: this.addCategory.id
     };
-    this.categoryService.save(ca).subscribe(
-      Response => {
-        console.log(Response)
+    if (ca.id == null) {
+      this.categoryService.save(ca).subscribe(
+        Response => {
+          console.log(Response)
+        }
+      )
+      ca.id = this.category[this.category.length - 1].id + 1
+      this.category.push(ca as Category)
+      console.log("add function")
+    }
+    else {
+      console.log(ca)
+      this.categoryService.update(ca, ca.id).subscribe(() =>
+        this.categoryService.getAll().subscribe(
+          (result: any) => {
+            this.category = result;
 
-      }
-    )
-    this.category.push(ca as Category)
-    this.validarCategory(this.addCategory)
+          },
+          error => {
+            console.log(error)
+          }
+
+        ));
+    }
+
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
 
   }
-  validarCategory(addCategory: Category) {
-    let index = this.category.findIndex((e) => e.id == addCategory.id);
 
-    if (index != -1) {
-      this.category[index] = addCategory;
-    } else {
-      this.category.push(addCategory);
-
-    }
-
-  }
   deletecategory() {
     if (this.selectedCategory == null || this.selectedCategory.id == null) {
       this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "Por favor seleccione un registro" });
       return;
     }
     this.confirmService.confirm({
-      message: "",
+      message: " ban co muon xoa khong",
       accept: () => {
         this.categoryService.delete(this.selectedCategory.id).subscribe(
           (result: any) => {
-            this.messageService.add({ severity: 'success', summary: "resultsdo", detail: "alo" })
-            this.deleteObject(result.id)
+            console.log('')
           }
         )
+        this.messageService.add({ severity: 'success', summary: "Delete", detail: "Record with id= '" + this.selectedCategory.id + "' has been deleted" })
+        this.deleteObject(this.selectedCategory.id)
       }
     })
   }
   deleteObject(id: number) {
+    console.log('Delete object check')
     let index = this.category.findIndex((e) => e.id == id);
     if (index != -1) {
       this.category.splice(index, 1);
