@@ -99,9 +99,9 @@
     </p-table>
   </p-panel>
   <p-dialog
-    header="Nueva category"
+    header="Add category"
     [(visible)]="displaySaveDiglog"
-    [style]="{ width: '400px' }"
+    [style]="{ width: '500px' }"
   >
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
@@ -113,7 +113,7 @@
             pInputText
             id="name"
             #addname
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addCategory.name"
           />
@@ -128,7 +128,7 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addCategory.status"
           />
