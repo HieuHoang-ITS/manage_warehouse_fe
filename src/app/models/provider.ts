@@ -1,10 +1,8 @@
 export interface Provider {
-
-    id: any,
-    name: string,
-    address: string,
-    tel: string,
-    status: string
-
+  id: any,
+  name: string,
+  address: string,
+  tel: string,
+  status: string
 }
 

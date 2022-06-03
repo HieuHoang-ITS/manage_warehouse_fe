@@ -1,4 +1,3 @@
-<p>category works!</p>
 <div class="ui-g">
   <p-toast></p-toast>
   <p-confirmDialog
@@ -6,25 +5,91 @@
     icon="pi pi-exclamation-triangle"
   ></p-confirmDialog>
   <p-panel
-    header="danh sach loai hang"
+    header="Products List"
     [toggleable]="true"
     [style]="{ width: '100%' }"
   >
     <div style="margin-bottom: 20px">
-      <p-menubar [model]="items1"></p-menubar>
+      <p-menubar [model]="items1">
+        <div class="flex flex-rows flex-wrap">
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="tenhang"
+              class="ml-2"
+              type="text"
+              #tenhanghoa
+              (blur)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              (keyup.enter)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              placeholder="Search Ten Hang..."
+              pInputText
+            />
+          </span>
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="loaihang"
+              class="ml-2"
+              type="text"
+              #loaihanghoa
+              (blur)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              (keyup.enter)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              placeholder="Search Loai Hang..."
+              pInputText
+            />
+          </span>
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="nhacap"
+              class="ml-2"
+              type="text"
+              #nhacungcap
+              (blur)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              (keyup.enter)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+              placeholder="Search Nhà Cung Cap ..."
+              pInputText
+            />
+          </span>
+          <div class="ml-5">
+            <button
+              icon="pi pi-search"
+              pButton
+              type="button"
+              label="search"
+              (click)="
+                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
+              "
+            ></button>
+          </div>
+          <div class="ml-5">
+            <button
+              pButton
+              icon=" pi pi-refresh"
+              type="button"
+              label="Refresh"
+              class="p-button-outlined"
+              (click)="refrsesh()"
+            ></button>
+          </div>
+        </div>
+      </p-menubar>
     </div>
     <ng-template pTemplate="icons">
-      <button
-        pButton
-        class="p-panel-header-icon p-link"
-        icon="pi pi-cog"
-        (click)="menu.toggle($event)"
-      ></button>
       <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
     </ng-template>
 
     <p-table
-      [value]="product"
+      [value]="productList"
       styleClass="p-datatable-gridlines"
       [paginator]="true"
       [rows]="10"
@@ -35,8 +100,8 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-          <th pSortableColumn="name">
-            Name <p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="product_name">
+            product_name <p-sortIcon field="product_name"></p-sortIcon>
           </th>
           <th pSortableColumn="unit">
             Unit <p-sortIcon field="unit"></p-sortIcon>
@@ -47,23 +112,51 @@
           <th pSortableColumn="price">
             Price <p-sortIcon field="price"></p-sortIcon>
           </th>
-          <th pSortableColumn="category_id">
-            Category_id <p-sortIcon field="category_id"></p-sortIcon>
+          <th pSortableColumn="category_name">
+            Category_name <p-sortIcon field="category_name"></p-sortIcon>
           </th>
-          <th pSortableColumn="provider_id">
-            Provider_id <p-sortIcon field="provider_id"></p-sortIcon>
+          <th pSortableColumn="provider_name">
+            provider_name <p-sortIcon field="provider_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="provider_address">
+            provider_address <p-sortIcon field="provider_address"></p-sortIcon>
+          </th>
+          <th pSortableColumn="category_status">
+            category_status <p-sortIcon field="category_status"></p-sortIcon>
+          </th>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-product>
         <tr [pSelectableRow]="product">
           <td>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
+          <td>{{ product.product_name }}</td>
           <td>{{ product.unit }}</td>
           <td>{{ product.amount }}</td>
           <td>{{ product.price }}</td>
-          <td>{{ product.category_id }}</td>
-          <td>{{ product.provider_id }}</td>
+          <td>{{ product.category_name }}</td>
+          <td>{{ product.provider_name }}</td>
+          <td>{{ product.provider_address }}</td>
+          <td>{{ product.category_status }}</td>
+
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="showSaveDialog(true)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deletecategory()"
+            ></button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -71,7 +164,7 @@
   <p-dialog
     header="Nueva product"
     [(visible)]="displaySaveDiglog"
-    [style]="{ width: '400px' }"
+    [style]="{ width: '500px' }"
   >
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
@@ -83,7 +176,7 @@
             pInputText
             id="name"
             #addname
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.name"
           />
@@ -98,7 +191,7 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.unit"
           />
@@ -113,7 +206,7 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.amount"
           />
@@ -128,13 +221,13 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.price"
           />
         </div>
       </div>
-      <div class="ui-g-12">
+      <!-- <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="Input_category_id">category_id</label>
         </div>
@@ -143,13 +236,13 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.category_id"
           />
         </div>
-      </div>
-      <div class="ui-g-12">
+      </div> -->
+      <!-- <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="Input_provoder_id">provider_id</label>
         </div>
@@ -158,12 +251,12 @@
             pInputText
             id="status"
             #addstatus
-            [style]="{ width: '350px' }"
+            [style]="{ width: '400px' }"
             required
             [(ngModel)]="addProduct.provider_id"
           />
         </div>
-      </div>
+      </div> -->
     </div>
 
     <p-footer>

@@ -1,1 +1,206 @@
-<p>user works!</p>
+<div class="ui-g">
+  <p-toast></p-toast>
+  <p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
+  <p-panel header="User List" [toggleable]="true" [style]="{ width: '100%' }">
+    <div style="margin-bottom: 20px">
+      <p-menubar [model]="items1">
+        <div class="flex flex-rows flex-wrap">
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="ten"
+              class="ml-2"
+              type="text"
+              #name
+              (blur)="search(name.value, email.value, tel.value)"
+              (keyup.enter)="search(name.value, email.value, tel.value)"
+              placeholder="Search Name..."
+              pInputText
+            />
+          </span>
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="mail"
+              class="ml-2"
+              type="text"
+              #email
+              (blur)="search(name.value, email.value, tel.value)"
+              (keyup.enter)="search(name.value, email.value, tel.value)"
+              placeholder="Search Email..."
+              pInputText
+            />
+          </span>
+          <span class="p-input-icon-left">
+            <input
+              [(ngModel)]="sdt"
+              class="ml-2"
+              type="text"
+              #tel
+              (blur)="search(name.value, email.value, tel.value)"
+              (keyup.enter)="search(name.value, email.value, tel.value)"
+              placeholder="Search Tel..."
+              pInputText
+            />
+          </span>
+          <div class="ml-5">
+            <button
+              icon="pi pi-search"
+              pButton
+              type="button"
+              label="search"
+              (click)="search(name.value, email.value, tel.value)"
+            ></button>
+          </div>
+          <div class="ml-5">
+            <button
+              pButton
+              icon=" pi pi-refresh"
+              type="button"
+              label="Refresh"
+              class="p-button-outlined"
+              (click)="refrsesh()"
+            ></button>
+          </div>
+        </div>
+      </p-menubar>
+    </div>
+    <ng-template pTemplate="icons">
+      <p-menu #menu id="config_menu" [model]="items" [popup]="true"> </p-menu>
+    </ng-template>
+
+    <p-table
+      [value]="user"
+      styleClass="p-datatable-gridlines"
+      [paginator]="true"
+      [rows]="10"
+      selectionMode="single"
+      [(selection)]="selectedUser"
+      dataKey="id"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="full_name">
+            Full_Name <p-sortIcon field="full_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tel">
+            Tel <p-sortIcon field="tel"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="address">
+            Address <p-sortIcon field="address"></p-sortIcon>
+          </th>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr [pSelectableRow]="user">
+          <td>{{ user.id }}</td>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.tel }}</td>
+          <td>{{ user.adress }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="showSaveDialog(true)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deletecategory()"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+  <p-dialog
+    header="Nueva category"
+    [(visible)]="displaySaveDiglog"
+    [style]="{ width: '400px' }"
+  >
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Full_Name">Full_Name</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="name"
+            #addname
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addUser.full_name"
+          />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Email">Email</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="status"
+            #addstatus
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addUser.email"
+          />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Tel">Tel</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="status"
+            #addstatus
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addUser.tel"
+          />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Input_Address">Address</label>
+        </div>
+        <div class="ui-g-8">
+          <input
+            pInputText
+            id="status"
+            #addstatus
+            [style]="{ width: '350px' }"
+            required
+            [(ngModel)]="addUser.address"
+          />
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <p-button
+        label="Save"
+        styleClass="ui-button-info"
+        (click)="save()"
+        icon="pi pi-check-circle"
+      ></p-button>
+    </p-footer>
+  </p-dialog>
+</div>

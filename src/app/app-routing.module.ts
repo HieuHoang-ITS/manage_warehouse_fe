@@ -7,6 +7,8 @@ import { NewOrderComponent } from './new-order/new-order.component';
 import { ProductComponent } from './product/product.component';
 import { FeatureStatisticComponent } from './statis/statis.component';
 import { OrderstatusComponent } from './orderstatus/orderstatus.component';
+import { ProviderComponent } from './provider/provider.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,10 +25,14 @@ const routes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'product', component: ProductComponent },
   { path: 'category', component: CategoryComponent },
+  { path: 'provider', component: ProviderComponent },
+  { path: 'user', component: UserComponent }
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

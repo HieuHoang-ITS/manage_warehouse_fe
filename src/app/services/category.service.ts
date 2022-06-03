@@ -25,4 +25,10 @@ export class CategorytService {
         console.log(data);
         return this.http.put(updateUrl, data).pipe();
     }
+    search(name: String): Observable<any> {
+        let searchUrl = this.categoryUrl + "/search/" + name
+
+        console.log(searchUrl)
+        return this.http.get<Category>(searchUrl)
+    }
 }
