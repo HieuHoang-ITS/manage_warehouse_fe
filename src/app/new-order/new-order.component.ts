@@ -69,6 +69,7 @@ export class NewOrderComponent implements OnInit {
           if (item.status.includes('2')) item.status = 'Chờ Xác Nhận';
           if (item.status.includes('3')) item.status = 'Hủy';
         });
+        console.log('Order Display: ' + this.orderList);
       });
     }
     if (this.orderType.toLowerCase().includes('record'))
@@ -170,18 +171,21 @@ export class NewOrderComponent implements OnInit {
   public delay(milliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
+  // ==========================================
+  //Save Function
   saveFunction() {
-    this.addNewOrder.saveFunction();
-    this.modalRegDisplay = false;
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Congratulation',
-      detail: 'New Order Registered',
-    });
-    this.getAllOrders();
+    let status = this.addNewOrder.saveFunction();
+    if (status) {
+      this.getAllOrders();
+      this.modalRegDisplay = false;
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Congratulation',
+        detail: 'New Order Registered',
+      });
+    }
   }
 }
-
 interface statusDisplay {
   type: number;
   label: string;
