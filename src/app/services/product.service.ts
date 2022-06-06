@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Product } from '../models/product';
 import { productDisplay } from '../models/order-display';
+import { Category } from '../models/category';
+import { Provider } from '../models/provider';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,5 +36,13 @@ export class ProductService {
 
     console.log(searchUrl)
     return this.http.get<productDisplay>(searchUrl)
+  }
+  getAllCategory(): Observable<any> {
+    let getURLca = 'http://localhost:8080/api/v1/Categories'
+    return this.http.get<Category>(getURLca).pipe()
+  }
+  getAllProvider(): Observable<any> {
+    let getURLpr = 'http://localhost:8080/api/v1/Providers'
+    return this.http.get<Provider>(getURLpr).pipe()
   }
 }

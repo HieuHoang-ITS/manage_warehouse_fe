@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem, Message, MessageService } from 'primeng/api';
+import { Category } from '../models/category';
 import { productDisplay } from '../models/order-display';
 import { Product } from '../models/product';
+import { Provider } from '../models/provider';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -21,18 +23,21 @@ export class ProductComponent implements OnInit {
   nhacap?: String
   tenhang?: String
   loaihang?: String
-
+  Categories: Category[] = [];
+  Providers: Provider[] = [];
+  selectedCategory?: Category;
+  selectedProvider?: Provider;
   constructor(private productService: ProductService, private messageService: MessageService, private confirmService: ConfirmationService) { }
   getAll() {
     this.productService.getAll().subscribe(
       (result: any) => {
         this.productList = result;
+        this.productList = this.productList.sort((a, b) => (a.id > b.id ? 1 : -1));
         console.log(result)
       },
       error => {
         console.log(error)
       }
-
     )
   }
   refrsesh() {
@@ -44,12 +49,25 @@ export class ProductComponent implements OnInit {
   showSaveDialog(editar: boolean) {
     if (editar) {
       if (this.selectedProduct != null && this.selectedProduct.id != null) {
+        this.addProduct.id = this.selectedProduct.id;
         this.addProduct.name = this.selectedProduct.product_name;
-        this.addProduct.unit = this.selectedProduct.unit
-        this.addProduct.amount = this.selectedProduct.amount
         this.addProduct.price = this.selectedProduct.price;
-        this.addProduct.category_id = 1;
-        this.addProduct.provider_id = 1;
+        this.addProduct.unit = this.selectedProduct.unit;
+        this.addProduct.amount = this.selectedProduct.amount;
+        this.Providers.forEach(item => {
+          if (item.name.toLowerCase().match(this.selectedProduct.provider_name.toLowerCase())) {
+            this.selectedProvider = item
+            this.addProduct.provider_id = item.id;
+          }
+        })
+        this.Categories.forEach(item => {
+          if (item.name.toLowerCase().match(this.selectedProduct.category_name.toLowerCase())) {
+            this.selectedCategory = item
+            this.addProduct.category_id = item.id;
+          }
+        })
+        console.log("--- showSaveDialog addProduct --- ")
+        console.log(this.addProduct)
       } else {
         this.messageService.add({ severity: 'warn', summary: "Advertencia!", detail: "chon muc can update" });
         return;
@@ -72,19 +90,18 @@ export class ProductComponent implements OnInit {
       unit: this.addProduct.unit,
       amount: this.addProduct.amount,
       price: this.addProduct.price,
-      category_id: this.addProduct.category_id,
-      provider_id: this.addProduct.provider_id
+      category_id: this.selectedCategory?.id,
+      provider_id: this.selectedProvider?.id,
     };
     if (pr.id == null) {
+      console.log("--- Add New ---")
+      console.log(pr)
       this.productService.save(pr).subscribe(
         Response => { console.log(Response) }
       )
-      setTimeout(() => {
-        this.getAll();
-      }, 500);
     }
-
     else {
+      console.log("--- Update ---")
       console.log(pr)
       this.productService.update(pr, pr.id).subscribe(() =>
         this.productService.getAll().subscribe(
@@ -96,10 +113,15 @@ export class ProductComponent implements OnInit {
           }
 
         ));
+      console.log(this.selectedCategory, "alo")
     }
+    setTimeout(() => {
+      this.getAll();
+    }, 500);
 
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "add thanh cong" })
     this.displaySaveDiglog = false
+    console.log(this.selectedCategory, "alo")
   }
   deletecategory() {
     if (this.selectedProduct == null || this.selectedProduct.id == null) {
@@ -116,6 +138,9 @@ export class ProductComponent implements OnInit {
         )
         this.messageService.add({ severity: 'success', summary: "Delete", detail: "Record with id= '" + this.selectedProduct.id + "' has been deleted" })
         this.deleteObject(this.selectedProduct.id)
+        setTimeout(() => {
+          this.getAll();
+        }, 500);
       }
     })
   }
@@ -139,7 +164,41 @@ export class ProductComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.getAll()
+    this.getAll();
+    this.items = [
+      {
+        label: 'Options',
+        items: [{
+          label: 'Update',
+          icon: 'pi pi-refresh',
+          command: () => {
+            this.update();
+          }
+        },
+        {
+          label: 'Delete',
+          icon: 'pi pi-times',
+          command: () => {
+            this.delete();
+          }
+        }
+        ]
+      },
+      {
+        label: 'Navigate',
+        items: [{
+          label: 'Angular Website',
+          icon: 'pi pi-external-link',
+          url: 'http://angular.io'
+        },
+        {
+          label: 'Router',
+          icon: 'pi pi-upload',
+          routerLink: '/fileupload'
+        }
+        ]
+      }
+    ];
     this.items1 = [
       {
         label: "AddProduct",
@@ -158,9 +217,27 @@ export class ProductComponent implements OnInit {
 
       }
     ]
+    this.gellAllCategoryProvider()
+  }
+  update() {
+    this.msgs.push({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
+  }
+
+  delete() {
+    this.msgs.push({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
   }
 
 
-
-
+  gellAllCategoryProvider() {
+    this.productService.getAllCategory().subscribe(
+      response => {
+        this.Categories = response;
+        console.log(this.Categories)
+      });
+    this.productService.getAllProvider().subscribe(
+      response => {
+        this.Providers = response;
+        console.log(this.Providers)
+      });
+  }
 }
