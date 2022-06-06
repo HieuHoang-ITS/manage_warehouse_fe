@@ -139,7 +139,7 @@ export class NewOrderComponent implements OnInit {
         'You are going to clear all selected order records. Continue to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => this.deleteQueue(),
-      reject: () => {},
+      reject: () => { },
     });
   }
   deleteQueue() {
