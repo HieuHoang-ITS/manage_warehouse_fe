@@ -14,10 +14,16 @@
     <div style="display:flex ;padding-top: 3%;padding-left: 3%;">
         <p-calendar placeholder="Month" [(ngModel)]="pieChartDate" view="month" dateFormat="mm/yy" [readonlyInput]="true"
                 inputId="monthpicker"></p-calendar>
-        <p-button (click)="showModalDialogpie()" icon="pi pi-external-link" label="Show"></p-button>
+        <p-button (click)="showModalDialogpie()" icon="pi pi-search" label=""></p-button>
     </div>
+    
 </div>
 <div class="card" style="width:50%;padding-left: 10%;">
+  <div class="p-field p-col-12 p-md-4">
+    <p-calendar selectionMode="range" placeholder="Month" [(ngModel)]="rangeDates" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+                inputId="monthpicker"></p-calendar>
+        <p-button (click)="showModalDialogline()" icon="pi pi-search" label=""></p-button>
+</div>
     <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
     <div style="padding-top:10% ;">
         <p-table [value]="productList">
@@ -43,6 +49,4 @@
           </p-table>
         </div>
     </div>
-    
-    
 </div>
