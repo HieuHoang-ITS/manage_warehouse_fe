@@ -13,7 +13,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
   getAll(): Observable<any> {
     return this.http
-      .get<productDisplay[]>('http://localhost:8080/api/orders' + '/register/product?type=import')
+      .get<productDisplay[]>(this.productUrl)
       .pipe();
   }
 
