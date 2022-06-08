@@ -122,11 +122,11 @@ export class AddNewOrderComponent implements OnInit {
       console.log(this.newOrderSave);
       this.newOrderService.addNew(this.newOrderSave);
       return true;
-      // this.messageService.add({
-      //   severity: 'success',
-      //   summary: 'Congratulation',
-      //   detail: 'New Order Registered',
-      // });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Congratulation',
+        detail: 'New Order Registered',
+      });
     } else {
       if (this.selectedProductList.length < 1)
         this.messageService.add({

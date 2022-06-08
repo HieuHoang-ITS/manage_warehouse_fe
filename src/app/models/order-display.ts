@@ -51,5 +51,6 @@ export interface Filters {
   id: string;
   username: string;
   status: string;
-  date: string;
+  toDate: string;
+  fromDate: string;
 }
