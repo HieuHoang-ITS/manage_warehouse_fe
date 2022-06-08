@@ -13,6 +13,9 @@
       <p-menubar [model]="items1">
         <div class="flex flex-rows flex-wrap">
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Name</label
+            >
             <input
               [(ngModel)]="ten"
               class="ml-2"
@@ -29,7 +32,7 @@
               icon="pi pi-search"
               pButton
               type="button"
-              label="search"
+              label="Search"
               (click)="search(name.value)"
             ></button>
           </div>
@@ -79,20 +82,23 @@
           <td>{{ category.name }}</td>
           <td>{{ category.status }}</td>
           <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
-              (click)="showSaveDialog(true)"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-warning"
-              (click)="deletecategory()"
-            ></button>
+            <div style="display: flex; flex-direction: row">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-success p-mr-2"
+                (click)="showSaveDialog(true)"
+              ></button>
+              <p class="mx-1"></p>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deletecategory()"
+              ></button>
+            </div>
           </td>
         </tr>
       </ng-template>

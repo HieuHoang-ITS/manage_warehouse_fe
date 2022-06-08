@@ -139,17 +139,17 @@ export class UserComponent implements OnInit {
         icon: "pi pi-fw pi-user-plus",
         command: () => this.showSaveDialog(false)
       },
-      {
-        label: "Editar",
-        icon: "pi pi-fw pi-user-edit",
-        command: () => this.showSaveDialog(true)
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-trash",
-        command: () => this.deletecategory()
+      // {
+      //   label: "Editar",
+      //   icon: "pi pi-fw pi-user-edit",
+      //   command: () => this.showSaveDialog(true)
+      // },
+      // {
+      //   label: "Delete",
+      //   icon: "pi pi-fw pi-trash",
+      //   command: () => this.deletecategory()
 
-      }
+      // }
     ]
   }
 }

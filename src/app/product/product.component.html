@@ -13,50 +13,57 @@
       <p-menubar [model]="items1">
         <div class="flex flex-rows flex-wrap">
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Product Name</label
+            >
             <input
+              class="mr-3"
               [(ngModel)]="tenhang"
-              class="ml-2"
+              class="mx-2"
               type="text"
               #tenhanghoa
-              (blur)="
-                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
-              "
               (keyup.enter)="
                 search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
               "
-              placeholder="Search Ten Hang..."
+              placeholder="Search Product Name..."
               pInputText
             />
           </span>
           <span class="p-input-icon-left">
+            <label
+              class="mx-2"
+              for=""
+              style="font-weight: bold; font-size: 15px"
+              >Category Name</label
+            >
             <input
               [(ngModel)]="loaihang"
-              class="ml-2"
+              class="ml-3"
+              class="mr-3"
               type="text"
               #loaihanghoa
-              (blur)="
-                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
-              "
               (keyup.enter)="
                 search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
               "
-              placeholder="Search Loai Hang..."
+              placeholder="Search Category Name..."
               pInputText
             />
           </span>
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Provider Name</label
+            >
             <input
+              class="mr-3"
+              class="mx-2"
               [(ngModel)]="nhacap"
               class="ml-2"
               type="text"
               #nhacungcap
-              (blur)="
-                search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
-              "
               (keyup.enter)="
                 search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
               "
-              placeholder="Search Nhà Cung Cap ..."
+              placeholder="Search Provider Name ..."
               pInputText
             />
           </span>
@@ -65,7 +72,7 @@
               icon="pi pi-search"
               pButton
               type="button"
-              label="search"
+              label="Search"
               (click)="
                 search(tenhanghoa.value, loaihanghoa.value, nhacungcap.value)
               "
@@ -101,7 +108,7 @@
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="product_name">
-            product_name <p-sortIcon field="product_name"></p-sortIcon>
+            Product Name <p-sortIcon field="product_name"></p-sortIcon>
           </th>
           <th pSortableColumn="unit">
             Unit <p-sortIcon field="unit"></p-sortIcon>
@@ -113,16 +120,16 @@
             Price <p-sortIcon field="price"></p-sortIcon>
           </th>
           <th pSortableColumn="category_name">
-            Category_name <p-sortIcon field="category_name"></p-sortIcon>
+            Category Name <p-sortIcon field="category_name"></p-sortIcon>
           </th>
           <th pSortableColumn="provider_name">
-            provider_name <p-sortIcon field="provider_name"></p-sortIcon>
+            Provider Name <p-sortIcon field="provider_name"></p-sortIcon>
           </th>
           <th pSortableColumn="provider_address">
-            provider_address <p-sortIcon field="provider_address"></p-sortIcon>
+            Provider Address <p-sortIcon field="provider_address"></p-sortIcon>
           </th>
           <th pSortableColumn="category_status">
-            category_status <p-sortIcon field="category_status"></p-sortIcon>
+            Category Status <p-sortIcon field="category_status"></p-sortIcon>
           </th>
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
@@ -142,27 +149,30 @@
           <td>{{ product.category_status }}</td>
 
           <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
-              (click)="showSaveDialog(true)"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-warning"
-              (click)="deletecategory()"
-            ></button>
+            <div style="display: flex; flex-direction: row">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-success p-mr-2"
+                (click)="showSaveDialog(true)"
+              ></button>
+              <p class="mx-1"></p>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger p-mr-2"
+                (click)="deletecategory()"
+              ></button>
+            </div>
           </td>
         </tr>
       </ng-template>
     </p-table>
   </p-panel>
   <p-dialog
-    header="Nueva product"
+    header="Add product "
     [(visible)]="displaySaveDiglog"
     [style]="{ width: '500px' }"
   >
@@ -205,6 +215,7 @@
         </div>
         <div class="ui-g-8">
           <input
+            readonly
             class="my-3"
             pInputText
             id="status"
