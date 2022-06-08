@@ -165,68 +165,27 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
 
     this.getAll();
-    this.items = [
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            this.update();
-          }
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-times',
-          command: () => {
-            this.delete();
-          }
-        }
-        ]
-      },
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Angular Website',
-          icon: 'pi pi-external-link',
-          url: 'http://angular.io'
-        },
-        {
-          label: 'Router',
-          icon: 'pi pi-upload',
-          routerLink: '/fileupload'
-        }
-        ]
-      }
-    ];
+
     this.items1 = [
       {
         label: "AddProduct",
         icon: "pi pi-fw pi-user-plus",
         command: () => this.showSaveDialog(false)
       },
-      {
-        label: "Editar",
-        icon: "pi pi-fw pi-user-edit",
-        command: () => this.showSaveDialog(true)
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-trash",
-        command: () => this.deletecategory()
+      // {
+      //   label: "Editar",
+      //   icon: "pi pi-fw pi-user-edit",
+      //   command: () => this.showSaveDialog(true)
+      // },
+      // {
+      //   label: "Delete",
+      //   icon: "pi pi-fw pi-trash",
+      //   command: () => this.deletecategory()
 
-      }
+      // }
     ]
     this.gellAllCategoryProvider()
   }
-  update() {
-    this.msgs.push({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-  }
-
-  delete() {
-    this.msgs.push({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
-  }
-
 
   gellAllCategoryProvider() {
     this.productService.getAllCategory().subscribe(

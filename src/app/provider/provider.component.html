@@ -13,39 +13,42 @@
       <p-menubar [model]="items1">
         <div class="flex flex-rows flex-wrap">
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Address</label
+            >
             <input
               [(ngModel)]="diachi"
-              class="ml-2"
+              class="ml-2 my-3 mx-2"
               type="text"
               #address
-              (blur)="search(address.value, tel.value)"
               (keyup.enter)="search(address.value, tel.value)"
               placeholder="Search Address..."
               pInputText
             />
           </span>
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px">Tel</label>
             <input
+              class="ml-2 my-3 mx-2"
               [(ngModel)]="sdt"
-              class="ml-2"
               type="text"
               #tel
-              (blur)="search(address.value, tel.value)"
               (keyup.enter)="search(address.value, tel.value)"
-              placeholder="Search Số ĐT ..."
+              placeholder="Search Tel ..."
               pInputText
             />
           </span>
           <div class="ml-5">
             <button
+              class="ml-2 my-3 mx-2"
               icon="pi pi-search"
               pButton
               type="button"
-              label="search"
+              label="Search"
               (click)="search(address.value, tel.value)"
             ></button>
           </div>
-          <div class="ml-5">
+          <div class="ml-5 ml-2 my-3 mx-2">
             <button
               pButton
               icon=" pi pi-refresh"
@@ -99,20 +102,23 @@
           <td>{{ provider.tel }}</td>
           <td>{{ provider.status }}</td>
           <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
-              (click)="showSaveDialog(true)"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-warning"
-              (click)="deletecategory()"
-            ></button>
+            <div style="display: flex; flex-direction: row">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-success p-mr-2"
+                (click)="showSaveDialog(true)"
+              ></button>
+              <p class="mx-1"></p>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger p-mr-2"
+                (click)="deletecategory()"
+              ></button>
+            </div>
           </td>
         </tr>
       </ng-template>

@@ -25,6 +25,7 @@ export class ProviderComponent implements OnInit {
       (result: any) => {
         console.log("hieu")
         this.provider = result;
+        this.provider = this.provider.sort((a, b) => (a.id > b.id ? 1 : -1));
       },
       error => {
         console.log(error)
@@ -127,65 +128,13 @@ export class ProviderComponent implements OnInit {
   ngOnInit(): void {
 
     this.getAll()
-    this.items = [
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            this.update();
-          }
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-times',
-          command: () => {
-            this.delete();
-          }
-        }
-        ]
-      },
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Angular Website',
-          icon: 'pi pi-external-link',
-          url: 'http://angular.io'
-        },
-        {
-          label: 'Router',
-          icon: 'pi pi-upload',
-          routerLink: '/fileupload'
-        }
-        ]
-      }
-    ];
     this.items1 = [
       {
         label: "AddProvider",
         icon: "pi pi-fw pi-user-plus",
         command: () => this.showSaveDialog(false)
       },
-      {
-        label: "Editar",
-        icon: "pi pi-fw pi-user-edit",
-        command: () => this.showSaveDialog(true)
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-trash",
-        command: () => this.deletecategory()
-
-      }
     ]
-  }
-  update() {
-    this.msgs.push({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-  }
-
-  delete() {
-    this.msgs.push({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
   }
 
 }

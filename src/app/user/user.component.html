@@ -9,36 +9,43 @@
       <p-menubar [model]="items1">
         <div class="flex flex-rows flex-wrap">
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Full Name</label
+            >
             <input
+              class="my-3 mx-3"
               [(ngModel)]="ten"
-              class="ml-2"
+              class="ml-2 mr-3"
               type="text"
               #name
-              (blur)="search(name.value, email.value, tel.value)"
               (keyup.enter)="search(name.value, email.value, tel.value)"
               placeholder="Search Name..."
               pInputText
             />
           </span>
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px"
+              >Email</label
+            >
             <input
+              class="my-3 mx-3"
               [(ngModel)]="mail"
-              class="ml-2"
+              class="ml-2 mr-3"
               type="text"
               #email
-              (blur)="search(name.value, email.value, tel.value)"
               (keyup.enter)="search(name.value, email.value, tel.value)"
               placeholder="Search Email..."
               pInputText
             />
           </span>
           <span class="p-input-icon-left">
+            <label for="" style="font-weight: bold; font-size: 15px">Tel</label>
             <input
+              class="my-3 mx-3"
               [(ngModel)]="sdt"
-              class="ml-2"
+              class="ml-2 mr-3"
               type="text"
               #tel
-              (blur)="search(name.value, email.value, tel.value)"
               (keyup.enter)="search(name.value, email.value, tel.value)"
               placeholder="Search Tel..."
               pInputText
@@ -49,7 +56,7 @@
               icon="pi pi-search"
               pButton
               type="button"
-              label="search"
+              label="Search"
               (click)="search(name.value, email.value, tel.value)"
             ></button>
           </div>
@@ -83,7 +90,7 @@
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
           <th pSortableColumn="full_name">
-            Full_Name <p-sortIcon field="full_name"></p-sortIcon>
+            Full Name <p-sortIcon field="full_name"></p-sortIcon>
           </th>
           <th pSortableColumn="email">
             Email <p-sortIcon field="email"></p-sortIcon>
@@ -108,20 +115,23 @@
           <td>{{ user.tel }}</td>
           <td>{{ user.adress }}</td>
           <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
-              (click)="showSaveDialog(true)"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-warning"
-              (click)="deletecategory()"
-            ></button>
+            <div style="display: flex; flex-direction: row">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-success p-mr-2"
+                (click)="showSaveDialog(true)"
+              ></button>
+              <p class="mx-1"></p>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deletecategory()"
+              ></button>
+            </div>
           </td>
         </tr>
       </ng-template>
