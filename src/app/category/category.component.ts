@@ -63,9 +63,7 @@ export class CategoryComponent implements OnInit {
           console.log(Response)
         }
       )
-      setTimeout(() => {
-        this.getAll();
-      }, 500);
+
     }
     else {
       console.log(ca)
@@ -85,6 +83,9 @@ export class CategoryComponent implements OnInit {
 
     this.messageService.add({ severity: 'success', summary: "Resultado", detail: "Via MessageService" })
     this.displaySaveDiglog = false
+    setTimeout(() => {
+      this.getAll();
+    }, 500);
   }
 
   deletecategory() {
@@ -130,17 +131,6 @@ export class CategoryComponent implements OnInit {
         label: "AddCategory",
         icon: "pi pi-fw pi-user-plus",
         command: () => this.showSaveDialog(false)
-      },
-      {
-        label: "Editor",
-        icon: "pi pi-fw pi-user-edit",
-        command: () => this.showSaveDialog(true)
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-trash",
-        command: () => this.deletecategory()
-
       },
 
     ]
