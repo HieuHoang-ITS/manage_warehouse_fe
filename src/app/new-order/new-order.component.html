@@ -2,7 +2,8 @@
 <div *ngIf="orderList">
   <p-toolbar>
     <div class="p-toolbar-group-left flex-row flex align-items-center">
-      <span class="p-float-label p-input-icon-right">
+      <label for="searchID" class="mx-2">ID</label>
+      <span id="searchID" class="p-float-label p-input-icon-right">
         <input
           (keydown.enter)="search()"
           type="text"
@@ -11,20 +12,35 @@
           [(ngModel)]="searchID"
         />
       </span>
+      <label for="searchUser" class="mx-2">User Name</label>
       <p-dropdown
+        id="searchUser"
         [options]="users"
         [(ngModel)]="selectedUser"
         optionLabel="full_name"
         placeholder="Select user"
       ></p-dropdown>
+      <label for="searchStatus" class="mx-2">Status</label>
       <p-dropdown
+        class="searchStatus"
         [options]="status"
         [(ngModel)]="selectedStatus"
         optionLabel="label"
         placeholder="Select status"
       ></p-dropdown>
+      <label for="searchDate" class="mx-2">From</label>
       <p-calendar
-        [(ngModel)]="dateValue"
+        id="searchDate"
+        [(ngModel)]="fromDate"
+        [hourFormat]="'24'"
+        dateFormat="mm/dd/yy"
+        [showButtonBar]="true"
+        [showIcon]="true"
+      ></p-calendar>
+      <label for="searchDate" class="mx-2">To</label>
+      <p-calendar
+        id="searchDate"
+        [(ngModel)]="toDate"
         [hourFormat]="'24'"
         dateFormat="mm/dd/yy"
         [showButtonBar]="true"
@@ -148,12 +164,19 @@
   </p-table>
 </div>
 <p-dialog
+  [style]="{ width: '90%', height: '70%' }"
   header="Detail Invoice"
   class="p-element ng-tns-c114-71 ng-star-inserted"
   [(visible)]="modalDetailDisplay"
   *ngIf="modalDetailDisplay"
 >
-  <app-detail-order [parentOrder]="selectedOrder"></app-detail-order>
+  <p class="font-bold -mt-1">ID: {{ selectedOrder.id }}</p>
+  <p class="font-bold -mt-2">Total Price: {{ selectedOrder.total_price }}</p>
+  <p class="font-bold -mt-2">Status: {{ selectedOrder.status }}</p>
+  <app-detail-order
+    [parentOrder]="selectedOrder"
+    styleClass="mt-3"
+  ></app-detail-order>
 </p-dialog>
 <p-dialog
   header="Register New Order"

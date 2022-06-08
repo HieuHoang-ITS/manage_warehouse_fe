@@ -25,11 +25,9 @@ export class NewOrderComponent implements OnInit {
   modalDetailDisplay: boolean = false;
   modalRegDisplay: boolean = false;
   isbuttonInRecord: boolean = false;
-
   // Define filter variable
   searchID: string = '';
   users: User[] = [];
-
   selectedUser?: User;
   selectedStatus: statusDisplay = {} as any;
   status: statusDisplay[] = [
@@ -37,8 +35,8 @@ export class NewOrderComponent implements OnInit {
     { type: 2, label: 'Chờ Xác Nhận' },
     { type: 3, label: 'Hủy' },
   ];
-  dateValue?: Date;
-
+  fromDate?: Date;
+  toDate?: Date;
   @ViewChild(AddNewOrderComponent)
   private addNewOrder!: AddNewOrderComponent;
   // Constructer
@@ -81,28 +79,42 @@ export class NewOrderComponent implements OnInit {
   }
   // ==========================================
   // Filter-based search function
+  dateToString(value: Date) {
+    let year = String(value.getFullYear());
+    let month = String(value.getMonth() + 1);
+    let day = String(value.getDate());
+    return year + '-' + month + '-' + day;
+  }
   search() {
     let id;
     let uid;
     let status;
-    let date;
+    let fromDate;
+    let toDate;
     if (this.searchID) id = this.searchID;
     else id = '';
     if (this.selectedUser) uid = this.selectedUser.id;
     else uid = '';
     if (this.selectedStatus) status = String(this.selectedStatus.type);
     else status = '';
-    if (this.dateValue) {
-      let year = String(this.dateValue.getFullYear());
-      let month = String(this.dateValue.getMonth() + 1);
-      let day = String(this.dateValue.getDate());
-      date = year + '-' + month + '-' + day;
-    } else date = '';
+
+    if (this.fromDate && this.toDate) {
+      if (this.fromDate < this.toDate) {
+        fromDate = this.dateToString(this.fromDate);
+        toDate = this.dateToString(this.toDate);
+      } else {
+        fromDate = this.dateToString(this.toDate);
+        toDate = this.dateToString(this.fromDate);
+      }
+    } else {
+      fromDate = toDate = '';
+    }
     let filters = {
       id: id,
       username: uid,
       status: status,
-      date: date,
+      fromDate: fromDate,
+      toDate: toDate,
     };
     console.log('Filter: ' + filters);
     this.newOrderService
@@ -120,9 +132,11 @@ export class NewOrderComponent implements OnInit {
   }
   // Refresh the selected filters
   refreshFilter() {
+    this.searchID = '';
     this.selectedUser = {} as any;
     this.selectedStatus = {} as any;
-    this.dateValue = undefined;
+    this.fromDate = undefined;
+    this.toDate = undefined;
   }
   // ==========================================
   // Select and delete functions
@@ -139,7 +153,7 @@ export class NewOrderComponent implements OnInit {
         'You are going to clear all selected order records. Continue to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => this.deleteQueue(),
-      reject: () => { },
+      reject: () => {},
     });
   }
   deleteQueue() {

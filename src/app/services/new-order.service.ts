@@ -40,14 +40,19 @@ export class NewOrderService {
   addNew(newOrderSave: newOrderSave) {
     this.http
       .post<newOrderSave[]>(this.url + '/register/save', newOrderSave)
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        console.log('**** Response received ****');
+        console.log(response);
+      });
   }
   //Put delete_flag
   deleteDisplayList(deleteIDs: number[]) {
     this.http
       .put<number[]>(this.url + '/change-delete-flag', deleteIDs)
       .pipe()
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
   //Get search by filter
   searchByFilter(filters: Filters, type: string) {
@@ -59,8 +64,10 @@ export class NewOrderService {
       filters.username +
       '&status=' +
       filters.status +
-      '&date=' +
-      filters.date +
+      '&fromDate=' +
+      filters.fromDate +
+      '&toDate=' +
+      filters.toDate +
       '&type=' +
       type;
     console.log(requestParams);
