@@ -158,9 +158,7 @@ export class ProductComponent implements OnInit {
         console.log(Response)
 
       }
-
     )
-
   }
   ngOnInit(): void {
 

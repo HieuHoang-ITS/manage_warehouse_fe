@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-<div *ngIf="orderList">
+<div>
   <p-toolbar>
     <div class="p-toolbar-group-left flex-row flex align-items-center">
       <label for="searchID" class="mx-2">ID</label>
@@ -99,7 +99,7 @@
   ></p-confirmDialog>
 
   <p-table
-    [value]="orderList"
+    [value]="orderList!"
     [paginator]="true"
     [rows]="10"
     selectionMode="multiple"
@@ -156,7 +156,7 @@
     <ng-template pTemplate="footer">
       <div
         class="flex align-items-center justify-content-between"
-        *ngIf="orderList.length == 0"
+        *ngIf="orderList!.length == 0"
       >
         Nothing in here
       </div>

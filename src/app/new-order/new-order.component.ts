@@ -15,8 +15,8 @@ import { User } from '../models/user';
 })
 export class NewOrderComponent implements OnInit {
   // Define in-use variable
-  orderList0?: OrderDisplay[];
-  orderList?: OrderDisplay[];
+  orderList0: OrderDisplay[] = [];
+  orderList: OrderDisplay[] = [];
   selectedQueue: Order[] = [];
   url: string = '';
   orderType: string = '';
@@ -153,7 +153,7 @@ export class NewOrderComponent implements OnInit {
         'You are going to clear all selected order records. Continue to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => this.deleteQueue(),
-      reject: () => {},
+      reject: () => { },
     });
   }
   deleteQueue() {
