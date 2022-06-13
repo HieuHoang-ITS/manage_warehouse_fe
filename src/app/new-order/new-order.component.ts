@@ -15,7 +15,6 @@ import { User } from '../models/user';
 })
 export class NewOrderComponent implements OnInit {
   // Define in-use variable
-  orderList0: OrderDisplay[] = [];
   orderList: OrderDisplay[] = [];
   selectedQueue: Order[] = [];
   url: string = '';
