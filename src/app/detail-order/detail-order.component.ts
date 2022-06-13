@@ -22,7 +22,7 @@ export class DetailOrderComponent implements OnInit {
         console.log(this.dOrderDisplayList);
       });
   }
-  // Function for locking and unlocking a single record
+  // Function for locking and unlocking a queue of record
   lockOrder(order: DetailOrderDisplay, frozen: boolean, index: number) {
     if (frozen) {
       this.dOrderDisplayList = this.dOrderDisplayList.filter(
