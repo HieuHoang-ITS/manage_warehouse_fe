@@ -15,7 +15,6 @@ import { User } from '../models/user';
 })
 export class NewOrderComponent implements OnInit {
   // Define in-use variable
-  orderList0: OrderDisplay[] = [];
   orderList: OrderDisplay[] = [];
   selectedQueue: Order[] = [];
   url: string = '';
@@ -25,6 +24,7 @@ export class NewOrderComponent implements OnInit {
   modalDetailDisplay: boolean = false;
   modalRegDisplay: boolean = false;
   isbuttonInRecord: boolean = false;
+
   // Define filter variable
   searchID: string = '';
   users: User[] = [];
@@ -37,8 +37,11 @@ export class NewOrderComponent implements OnInit {
   ];
   fromDate?: Date;
   toDate?: Date;
+
+  // Define parent viewchild
   @ViewChild(AddNewOrderComponent)
   private addNewOrder!: AddNewOrderComponent;
+
   // Constructer
   constructor(
     private messageService: MessageService,
@@ -51,11 +54,14 @@ export class NewOrderComponent implements OnInit {
     this.orderType = this.url.split('/orders/')[1];
   }
   ngOnInit(): void {
+    //initialize orders fetching
     this.getAllOrders();
+    //initialize users fetching
     this.getAllUsers();
   }
+
   // ==========================================
-  // Get table records
+  // Get orders records
   getAllOrders() {
     if (this.orderType.length > 0) {
       this.newOrderService.getNewOrders(this.orderType).subscribe((data) => {
@@ -77,6 +83,7 @@ export class NewOrderComponent implements OnInit {
       this.users = response;
     });
   }
+
   // ==========================================
   // Filter-based search function
   dateToString(value: Date) {
@@ -89,26 +96,18 @@ export class NewOrderComponent implements OnInit {
     let id;
     let uid;
     let status;
-    let fromDate;
-    let toDate;
+    let fromDate = '';
+    let toDate = '';
+
     if (this.searchID) id = this.searchID;
     else id = '';
     if (this.selectedUser) uid = this.selectedUser.id;
     else uid = '';
     if (this.selectedStatus) status = String(this.selectedStatus.type);
     else status = '';
+    if (this.fromDate) fromDate = this.dateToString(this.fromDate);
+    if (this.toDate) toDate = this.dateToString(this.toDate);
 
-    if (this.fromDate && this.toDate) {
-      if (this.fromDate < this.toDate) {
-        fromDate = this.dateToString(this.fromDate);
-        toDate = this.dateToString(this.toDate);
-      } else {
-        fromDate = this.dateToString(this.toDate);
-        toDate = this.dateToString(this.fromDate);
-      }
-    } else {
-      fromDate = toDate = '';
-    }
     let filters = {
       id: id,
       username: uid,
@@ -130,6 +129,7 @@ export class NewOrderComponent implements OnInit {
         });
       });
   }
+
   // Refresh the selected filters
   refreshFilter() {
     this.searchID = '';
@@ -138,14 +138,18 @@ export class NewOrderComponent implements OnInit {
     this.fromDate = undefined;
     this.toDate = undefined;
   }
+
   // ==========================================
-  // Select and delete functions
+  // Select and delete a specific record
+
+  // Add row to queue
   selectOrder(order: Order) {
     this.selectedOrder = order;
   }
   onRowSelect($event: any) {
     console.log('selected id: ' + $event);
   }
+  // Delete confirm dialog
   deleteConfirm() {
     this.confirmationService.confirm({
       header: 'Delete Confirmation',
@@ -153,9 +157,10 @@ export class NewOrderComponent implements OnInit {
         'You are going to clear all selected order records. Continue to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => this.deleteQueue(),
-      reject: () => { },
+      reject: () => {},
     });
   }
+  // Delete function
   deleteQueue() {
     console.log('Selected Orders: ' + this.selectedQueue);
     let deleteIDs: number[] = [];
@@ -177,13 +182,11 @@ export class NewOrderComponent implements OnInit {
     if (deleteIDs.length > 0) this.newOrderService.deleteDisplayList(deleteIDs);
     this.selectedQueue = [];
   }
+  // Clear delete queue
   clearFunction() {
     this.addNewOrder.clearFunction();
-    // delay
   }
-  public delay(milliseconds: number) {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  }
+
   // ==========================================
   //Save Function
   saveFunction() {

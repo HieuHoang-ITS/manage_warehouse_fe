@@ -23,6 +23,7 @@ export class AddNewOrderComponent implements OnInit {
   customerPhone: string = '';
   newOrderSave: newOrderSave = {} as any;
   createDate: Date = new Date();
+
   // Define lists to display
   productList: productDisplay[] = [];
   selectedProductList: productDisplay[] = [];
@@ -31,6 +32,7 @@ export class AddNewOrderComponent implements OnInit {
   selectedUser: User = {} as any;
   amountInputIsEnable: boolean = true;
 
+  // Constructor
   constructor(
     private productService: ProductService,
     private newOrderService: NewOrderService,
@@ -55,7 +57,6 @@ export class AddNewOrderComponent implements OnInit {
     // Get users list on initializing
     this.newOrderService.userDisplay().subscribe((response) => {
       this.userList = response;
-      console.log(this.userList);
     });
   }
   //=============================================
@@ -122,11 +123,6 @@ export class AddNewOrderComponent implements OnInit {
       console.log(this.newOrderSave);
       this.newOrderService.addNew(this.newOrderSave);
       return true;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Congratulation',
-        detail: 'New Order Registered',
-      });
     } else {
       if (this.selectedProductList.length < 1)
         this.messageService.add({
