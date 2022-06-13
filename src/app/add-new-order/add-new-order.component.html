@@ -5,19 +5,6 @@
         <h3>Trading Type: {{ orderType | uppercase }}</h3>
         <p>Create date: {{ createDate | date }}</p>
       </div>
-      <!-- <i class="pi pi-bars mx-2"></i> -->
-      <!-- <p-button
-        label="Save"
-        icon="pi pi-save "
-        styleClass="p-button-info p-button-rounded p-button-outlined"
-        (click)="saveFunction()"
-      ></p-button>
-      <p-button
-        icon="pi pi-trash"
-        label="Clear"
-        styleClass="p-button-success p-button-rounded p-button-outlined"
-        (click)="clearFunction()"
-      ></p-button> -->
     </div>
     <div class="p-toolbar-group-right">
       <h1>{{ totalPrice | currency: " " }} VND</h1>
@@ -68,7 +55,6 @@
               placeholder="Name"
               required
             />
-            <!-- <small id="email-help" class="ng-invalid">Not a valid name.</small> -->
           </div>
           <div class="flex flex-column mt-2">
             <label for="cphone" class="mb-1">Customer Phone</label>
