@@ -22,19 +22,14 @@ export class ProductService {
   }
   delete(id: number): Observable<any> {
     let deleteUrl = this.productUrl + "/delete/" + id;
-    console.log(deleteUrl);
     return this.http.delete(deleteUrl);
   }
   update(data: Product, id: any): Observable<any> {
     let updateUrl = this.productUrl + "/update/" + id;
-    console.log(data);
     return this.http.put(updateUrl, data).pipe();
   }
   search(tenhanghoa: String, loaihanghoa: String, nhacungcap: String): Observable<any> {
-
     let searchUrl = this.productUrl + "/search" + "?product_name=" + tenhanghoa + "&category_name=" + loaihanghoa + "&provider_name=" + nhacungcap
-
-    console.log(searchUrl)
     return this.http.get<productDisplay>(searchUrl)
   }
   getAllCategory(): Observable<any> {

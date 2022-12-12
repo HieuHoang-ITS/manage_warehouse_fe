@@ -10,20 +10,19 @@ import { doughChart } from '../models/thongke';
   providedIn: 'root',
 })
 export class ThongkeService {
-  thongkeUrl = 'http://localhost:8080/thang1';
-  pieChartUrl = 'http://localhost:8080/api/thongkeloaixuat/';
-  piechartUrlnhap = 'http://localhost:8080/api/thongkeloainhap/';
-  doughnutChartxuat = 'http://localhost:8080/api/thongkeloaixuat/';
-  doughnutChartnhap = 'http://localhost:8080/api/thongkeloainhap/';
-  productListURL = 'http://localhost:8080/thongkebasanphamnhapnhieunhat/';
+  thongkeUrl = 'http://localhost:8080/api/statistic/thang1';
+  pieChartUrl = 'http://localhost:8080/api/statistic/thongkeloaixuat/';
+  piechartUrlnhap = 'http://localhost:8080/api/statistic/thongkeloainhap/';
+  doughnutChartxuat = 'http://localhost:8080/api/statistic/thongkeloaixuat/';
+  doughnutChartnhap = 'http://localhost:8080/api/statistic/thongkeloainhap/';
+  productListURL = 'http://localhost:8080/api/statistic/thongkebasanphamnhapnhieunhat/';
   constructor(private httpclient: HttpClient) {}
   getDoanhThuTheoThang(): Observable<ThongKe[]> {
     return this.httpclient.get<ThongKe[]>(this.thongkeUrl).pipe();
   }
   getDoanhThuTheoKhoangThang(from: string, to: string) {
     let url =
-      'http://localhost:8080/thongketong' + '?from=' + from + '&to=' + to;
-    console.log(url);
+      'http://localhost:8080/api/statistic/thongketong' + '?from=' + from + '&to=' + to;
     return this.httpclient.get<ThongKe[]>(url).pipe();
   }
   getExportPerc(month: number, year: number) {

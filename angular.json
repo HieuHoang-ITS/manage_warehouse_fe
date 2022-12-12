@@ -103,5 +103,8 @@
       }
     }
   },
-  "defaultProject": "ngManageWarehouse"
+  "defaultProject": "ngManageWarehouse",
+  "cli": {
+    "analytics": false
+  }
 }

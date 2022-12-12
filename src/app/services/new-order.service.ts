@@ -9,6 +9,7 @@ import {
 } from '../models/order-display';
 import { User } from '../models/user';
 import { filter } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +25,12 @@ export class NewOrderService {
   }
   // Get all order records
   getNewOrders(type: string) {
-    return this.http.get<OrderDisplay[]>(this.url + '/' + type).pipe();
+    return this.http.get<OrderDisplay[]>(this.url + '/' + type, environment.httpOptions).pipe();
   }
   // Get formatted-products-to-display format list
   productDisplay(type: string) {
     return this.http
-      .get<productDisplay[]>(this.url + '/register/product?type=' + type)
+      .get<productDisplay[]>(this.url + '/register/product?type=' + type, environment.httpOptions)
       .pipe();
   }
   // Get users list
@@ -39,19 +40,16 @@ export class NewOrderService {
   // Post new order record
   addNew(newOrderSave: newOrderSave) {
     this.http
-      .post<newOrderSave[]>(this.url + '/register/save', newOrderSave)
+      .post<newOrderSave[]>(this.url + '/register/save', newOrderSave, environment.httpOptions)
       .subscribe((response) => {
-        console.log('**** Response received ****');
-        console.log(response);
       });
   }
   //Put delete_flag
   deleteDisplayList(deleteIDs: number[]) {
     this.http
-      .put<number[]>(this.url + '/change-delete-flag', deleteIDs)
+      .put<number[]>(this.url + '/change-delete-flag', deleteIDs, environment.httpOptions)
       .pipe()
       .subscribe((response) => {
-        console.log(response);
       });
   }
   //Get search by filter
@@ -70,7 +68,6 @@ export class NewOrderService {
       filters.toDate +
       '&type=' +
       type;
-    console.log(requestParams);
-    return this.http.get<OrderDisplay[]>(searchUrl + requestParams).pipe();
+    return this.http.get<OrderDisplay[]>(searchUrl + requestParams, environment.httpOptions).pipe();
   }
 }

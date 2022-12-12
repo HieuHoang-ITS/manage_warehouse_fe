@@ -9,17 +9,16 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class OrderService {
-  private orderUrl = 'http://localhost:8080/api/orderchoxacnhan/';
-  private orderUpdateUrl='http://localhost:8080/api/updateorder/'
-  private orderDetailUrl='http://localhost:8080/api/tabledetail/';
-  private orderSearchUrl="http://localhost:8080/api/search/";
-  private userUrl="http://localhost:8080/api/getuser";
+  private orderUrl = 'http://localhost:8080/api/approver/orderchoxacnhan/';
+  private orderUpdateUrl='http://localhost:8080/api/approver/updateorder/'
+  private orderDetailUrl='http://localhost:8080/api/approver/tabledetail/';
+  private orderSearchUrl="http://localhost:8080/api/approver/search/";
+  private userUrl="http://localhost:8080/api/approver/getuser";
   constructor(private http: HttpClient) { }
   // getProducts(): Observable<Product[]> {
   //   return this.http.get<Product[]>(this.productUrl).pipe();
   // }
   getOrders(type: any): Observable<Order[]>{
-    console.log('Check Order: ')
     return this.http.get<Order[]>(this.orderUrl+type).pipe();
   }
   getOrderDetail(id: any): Observable<any[]>{

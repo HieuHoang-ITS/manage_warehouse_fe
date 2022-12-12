@@ -1,0 +1,28 @@
+<p-menubar
+  [model]="items"
+  [autoDisplay]="true"
+  [style]="{ 'border-radius': '0px' }"
+>
+  <span class="p-float-label p-input-icon-right mr-4">
+    <input
+      id="float-input"
+      pinpu
+      type="text"
+      pInputText
+      [(ngModel)]="searchValue"
+      class="w-20rem"
+    />
+    <label for="float-input">Search</label>
+    <i class="pi pi-search"></i>
+  </span>
+  <button
+    pButton
+    type="button"
+    class="p-button-outlined p-button-rounded p-button-secondary"
+    icon="pi pi-users"
+    (click)="userPanel.toggle($event)"
+  ></button>
+</p-menubar>
+<p-overlayPanel #userPanel>
+  <p-button pRipple icon="pi pi-sign-out" label="Sign out" (onClick)="signOut()"></p-button>
+</p-overlayPanel>

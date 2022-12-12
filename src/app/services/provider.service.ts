@@ -17,19 +17,14 @@ export class ProvidertService {
     }
     delete(id: number): Observable<any> {
         let deleteUrl = this.providerUrl + "/delete/" + id;
-        console.log(deleteUrl);
         return this.http.delete(deleteUrl);
     }
     update(data: Provider, id: any): Observable<any> {
         let updateUrl = this.providerUrl + "/update/" + id;
-        console.log(data);
         return this.http.put(updateUrl, data).pipe();
     }
     search(address: String, tel: String): Observable<any> {
-
         let searchUrl = this.providerUrl + "/search" + "?address=" + address + "&tel=" + tel
-
-        console.log(searchUrl)
         return this.http.get<Provider>(searchUrl)
     }
 }

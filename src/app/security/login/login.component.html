@@ -1,0 +1,53 @@
+<div class="card border-0">
+    <div class="w-full h-full flex flex-row justify-content-center">
+        <div class="grid login-form" style="width: 70%; height: 40rem; margin-top: 10%;">
+            <div class="col-5 p-0">
+                <img
+                    src="https://www.sccgltd.com/wp-content/uploads/AdobeStock_450740420-cropped-1450x1250-1-1024x883.jpg">
+            </div>
+            <div class="col-7 p-0">
+                <form class="grid justify-content-center mt-5" [formGroup]="loginForm">
+                    <div class="mb-5 col-7">
+                        <h1>Login</h1>
+                        <label>Your best partner to manage your warehouse</label>
+                    </div>
+                    <div class="grid col-7">
+                        <div class="col-3">
+                            <label>Username</label>
+                        </div>
+                        <div class="col-9">
+                            <input [style]="{width:'100%'}" pInputText type="text" formControlName="username" [ngClass]="{ 'ng-dirty': submitted && getControl.username.errors }">
+                        </div>
+                    </div>
+                    <div class="grid col-7">
+                        <div class="col-3">
+                            <label>Password</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="password" style="width:100%" pPassword formControlName="password" [ngClass]="{ 'ng-dirty': submitted && getControl.password.errors }"/>
+                        </div>
+                    </div>
+                    <div class="grid justify-content-between col-7">
+                        <div class="col-5">
+                            <p-checkbox name="groupname" value="val1" label="Remember me"></p-checkbox>
+                        </div>
+                        <div class="col-7 text-right">
+                            <label class="mock-nav-label"> Forgot password? </label>
+                        </div>
+                    </div>
+                    <div class="grid justify-content-center col-8 mt-4">
+                        <div class="col-11">
+                            <button pButton type="submit" style="width: 100%" class="p-button-rounded" label="Login"
+                                (click)="login()"></button>
+                        </div>
+                        <div class="grid justify-content-start col-11">
+                            <label>Not registerd yet?</label>
+                            <label class="mock-nav-label ml-1">Create an account</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>

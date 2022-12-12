@@ -18,19 +18,14 @@ export class UserService {
     }
     delete(id: number): Observable<any> {
         let deleteUrl = this.userUrl + "/delete/" + id;
-        console.log(deleteUrl);
         return this.http.delete(deleteUrl);
     }
     update(data: User, id: any): Observable<any> {
         let updateUrl = this.userUrl + "/update/" + id;
-        console.log(data);
         return this.http.put(updateUrl, data).pipe();
     }
     search(name: String, email: String, tel: String): Observable<any> {
-
         let searchUrl = this.userUrl + "/search" + "?full_name=" + name + "&email=" + email + "&tel=" + tel
-
-        console.log(searchUrl)
         return this.http.get<Category>(searchUrl)
     }
 }
